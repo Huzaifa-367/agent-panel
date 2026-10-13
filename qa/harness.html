@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Panel harness</title>
+  <!-- Theme stand-ins from the prototype, then the real built webview. -->
+  <link rel="stylesheet" href="../prototype/css/tokens.css">
+  <link rel="stylesheet" href="../node_modules/@vscode/codicons/dist/codicon.css">
+  <link rel="stylesheet" href="../dist/webview.css">
+  <style>
+    html, body { background: var(--pv-page); }
+    #frame { width: var(--w, 420px); height: 100vh; border-right: 1px solid var(--vscode-widget-border); }
+  </style>
+</head>
+<body>
+  <div id="frame"><div id="app"></div></div>
+  <script src="catalogs.js"></script>
+  <script src="scenarios.js"></script>
+  <script src="../dist/webview.js"></script>
+</body>
+</html>

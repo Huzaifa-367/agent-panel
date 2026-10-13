@@ -1,0 +1,358 @@
+/* The dock: changes bar, composer, engine/model/mode pickers, menus and the @ mention popover. */
+
+.ap-dock {
+  flex: none;
+  position: relative;
+  padding: 0 var(--ap-3) var(--ap-3);
+}
+
+/* changes bar: pending changes across the thread */
+
+.ap-changes {
+  margin-bottom: -1px;
+  border: 1px solid var(--ap-border);
+  border-bottom: 0;
+  border-radius: var(--ap-r2) var(--ap-r2) 0 0;
+  background: var(--ap-bg);
+  font-size: var(--ap-t-sm);
+}
+
+.ap-changes[hidden] {
+  display: none;
+}
+
+.ap-changes__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ap-1);
+  height: 32px;
+  padding: 0 var(--ap-1) 0 var(--ap-1);
+}
+
+.ap-changes__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 var(--ap-1);
+  border: 0;
+  border-radius: var(--ap-r1);
+  background: none;
+  cursor: pointer;
+}
+
+.ap-changes__toggle:hover {
+  background: var(--ap-hover);
+}
+
+.ap-changes__toggle .ap-chev {
+  color: var(--ap-muted);
+}
+
+.ap-changes__stat {
+  display: inline-flex;
+  gap: 6px;
+  font-family: var(--ap-mono);
+  font-size: var(--ap-t-xs);
+}
+
+.ap-changes__list {
+  display: none;
+  max-height: 140px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0 0 var(--ap-1);
+  list-style: none;
+}
+
+.ap-changes.is-open .ap-changes__list {
+  display: block;
+}
+
+.ap-changes__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 var(--ap-2) 0 var(--ap-6);
+  cursor: pointer;
+}
+
+.ap-changes__item:hover {
+  background: var(--ap-hover);
+}
+
+.ap-changes__item .codicon {
+  color: var(--ap-muted);
+}
+
+.ap-changes__item .ap-file__path {
+  flex: 1;
+}
+
+/* composer */
+
+.ap-composer {
+  position: relative;
+  border: 1px solid var(--ap-input-border);
+  border-radius: var(--ap-r2);
+  background: var(--ap-input-bg);
+}
+
+.ap-changes:not([hidden]) + .ap-composer {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.ap-composer:focus-within {
+  border-color: var(--ap-focus);
+}
+
+.ap-composer__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ap-1);
+  padding: var(--ap-2) var(--ap-2) 0;
+}
+
+.ap-composer__input {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  max-height: 200px;
+  padding: var(--ap-2) var(--ap-3) var(--ap-1);
+  border: 0;
+  outline: 0;
+  resize: none;
+  background: none;
+  color: var(--ap-input-fg);
+  font: inherit;
+  line-height: var(--ap-lh);
+}
+
+.ap-composer__input::placeholder {
+  color: var(--ap-placeholder);
+}
+
+.ap-composer__bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: var(--ap-1) var(--ap-1) var(--ap-1) var(--ap-2);
+}
+
+/* engine switch: two-way segmented control */
+
+.ap-seg {
+  display: inline-flex;
+  padding: 2px;
+  margin-right: var(--ap-1);
+  border-radius: var(--ap-r1);
+  background: var(--ap-hover);
+}
+
+.ap-seg button {
+  height: 20px;
+  padding: 0 var(--ap-2);
+  border: 0;
+  border-radius: 3px;
+  background: none;
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+  cursor: pointer;
+}
+
+.ap-seg button .ap-engine {
+  color: inherit;
+  font-weight: 500;
+}
+
+.ap-seg button[aria-checked="true"] {
+  background: var(--ap-bg);
+  color: var(--ap-fg);
+  box-shadow: 0 0 0 1px var(--ap-border);
+}
+
+/* model and mode pickers */
+
+.ap-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 24px;
+  max-width: 140px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: var(--ap-r1);
+  background: none;
+  color: var(--ap-muted);
+  font-size: var(--ap-t-xs);
+  cursor: pointer;
+}
+
+.ap-picker:hover,
+.ap-picker[aria-expanded="true"] {
+  background: var(--ap-hover);
+  color: var(--ap-fg);
+}
+
+.ap-picker__label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ap-picker .codicon {
+  font-size: 12px;
+}
+
+/* send and stop */
+
+.ap-send {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-left: 2px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ap-btn-bg);
+  color: var(--ap-btn-fg);
+  cursor: pointer;
+}
+
+.ap-send:hover {
+  background: var(--ap-btn-hover);
+}
+
+.ap-send:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.ap-send--stop .codicon {
+  font-size: 12px;
+}
+
+/* hand-off row: planner -> builder, shown when mode is Hand-off */
+
+.ap-handoff-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 6px;
+  padding: 6px var(--ap-3);
+  border-bottom: 1px solid var(--ap-border);
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-handoff-row .ap-picker {
+  color: var(--ap-fg);
+}
+
+.ap-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.ap-check input {
+  margin: 0;
+  accent-color: var(--ap-focus);
+}
+
+/* menus (model, mode, history) */
+
+.ap-menu {
+  position: absolute;
+  z-index: 10;
+  bottom: calc(100% + 4px);
+  left: 0;
+  min-width: 220px;
+  max-width: calc(100% - 8px);
+  max-height: 320px;
+  overflow-y: auto;
+  padding: var(--ap-1);
+  border: 1px solid var(--ap-menu-border);
+  border-radius: var(--ap-r2);
+  background: var(--ap-menu-bg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  font-size: var(--ap-t-sm);
+}
+
+.ap-menu[hidden] {
+  display: none;
+}
+
+.ap-menu__label {
+  padding: var(--ap-1) var(--ap-2) 2px;
+  font-size: var(--ap-t-xs);
+  font-weight: 600;
+  color: var(--ap-muted);
+}
+
+.ap-menu__item {
+  display: grid;
+  grid-template-columns: 16px 1fr auto;
+  align-items: center;
+  gap: var(--ap-2);
+  width: 100%;
+  min-height: 26px;
+  padding: 3px var(--ap-2);
+  border: 0;
+  border-radius: var(--ap-r1);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ap-menu__item:hover,
+.ap-menu__item.is-active {
+  background: var(--ap-menu-sel);
+}
+
+.ap-menu__item .codicon-check {
+  visibility: hidden;
+}
+
+.ap-menu__item[aria-checked="true"] .codicon-check {
+  visibility: visible;
+}
+
+.ap-menu__hint {
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-menu__desc {
+  grid-column: 2 / -1;
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+  line-height: 1.4;
+}
+
+.ap-menu__sep {
+  height: 1px;
+  margin: var(--ap-1) 0;
+  background: var(--ap-menu-border);
+}
+
+/* @ mention popover: same surface as menus, file results with the match in bold */
+
+.ap-mention-pop .ap-menu__item {
+  grid-template-columns: 16px auto 1fr;
+}
+
+.ap-mention-pop mark {
+  background: none;
+  color: var(--ap-fg);
+  font-weight: 600;
+}
+
+.ap-mention-pop .ap-file__path {
+  direction: ltr;
+}

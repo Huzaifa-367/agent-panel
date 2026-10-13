@@ -1,0 +1,212 @@
+/* Panel shell and shared primitives: buttons, icon buttons, engine tags, chips, inline code. */
+
+.ap,
+.ap * {
+  box-sizing: border-box;
+}
+
+.ap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--ap-bg);
+  color: var(--ap-fg);
+  font-family: var(--ap-font);
+  font-size: var(--ap-t-md);
+  line-height: var(--ap-lh);
+  position: relative;
+}
+
+/* :where keeps these defaults at zero specificity, so component rules always win */
+:where(.ap) button {
+  font: inherit;
+  color: inherit;
+}
+
+/* hidden always wins over a component's own display */
+.ap [hidden] {
+  display: none !important;
+}
+
+:where(.ap) code {
+  font-family: var(--ap-mono);
+  font-size: 0.92em;
+  padding: 1px 4px;
+  border-radius: var(--ap-r1);
+  background: var(--ap-code-bg);
+}
+
+:where(.ap) .codicon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.ap-spacer {
+  flex: 1;
+}
+
+.ap-muted {
+  color: var(--ap-muted);
+}
+
+.ap-add {
+  color: var(--ap-added);
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-del {
+  color: var(--ap-removed);
+  font-variant-numeric: tabular-nums;
+}
+
+/* buttons */
+
+.ap-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ap-1);
+  height: 24px;
+  padding: 0 var(--ap-2);
+  border: 0;
+  border-radius: var(--ap-r1);
+  font-size: var(--ap-t-sm);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ap-btn--primary {
+  background: var(--ap-btn-bg);
+  color: var(--ap-btn-fg);
+  font-weight: 500;
+}
+
+.ap-btn--primary:hover {
+  background: var(--ap-btn-hover);
+}
+
+.ap-btn--secondary {
+  background: var(--ap-btn2-bg);
+  color: var(--ap-btn2-fg);
+}
+
+.ap-btn--secondary:hover {
+  background: var(--ap-btn2-hover);
+}
+
+.ap-btn--ghost {
+  background: none;
+  color: var(--ap-muted);
+}
+
+.ap-btn--ghost:hover {
+  background: var(--ap-hover);
+  color: var(--ap-fg);
+}
+
+.ap-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ap-r1);
+  background: none;
+  color: var(--ap-muted);
+  cursor: pointer;
+}
+
+.ap-icon-btn:hover {
+  background: var(--ap-hover);
+  color: var(--ap-fg);
+}
+
+.ap :focus-visible {
+  outline: 1px solid var(--ap-focus);
+  outline-offset: -1px;
+}
+
+/* engine tag: a dot and a word */
+
+.ap-engine {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: var(--ap-fg);
+}
+
+.ap-engine::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  /* the dot takes the engine colour, the word stays neutral */
+  background: var(--ap-engine-color, var(--ap-muted));
+  flex: none;
+}
+
+.ap-engine--claude {
+  --ap-engine-color: var(--ap-claude);
+}
+
+.ap-engine--cursor {
+  --ap-engine-color: var(--ap-cursor);
+}
+
+/* chips (attached files, mentions) */
+
+.ap-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ap-1);
+  max-width: 100%;
+  height: 22px;
+  padding: 0 var(--ap-1) 0 6px;
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-r1);
+  font-size: var(--ap-t-xs);
+  color: var(--ap-fg);
+  background: var(--ap-surface);
+}
+
+.ap-chip .codicon {
+  font-size: 12px;
+  color: var(--ap-muted);
+}
+
+.ap-chip button {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ap-muted);
+  cursor: pointer;
+}
+
+.ap-mention {
+  font-family: var(--ap-mono);
+  font-size: 0.92em;
+  color: var(--ap-link);
+}
+
+/* spinner for running steps */
+
+.ap-spin {
+  animation: ap-spin 1s linear infinite;
+}
+
+@keyframes ap-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-spin {
+    animation: none;
+  }
+}

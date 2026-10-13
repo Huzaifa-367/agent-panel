@@ -1,0 +1,1756 @@
+/* Pieces the live panel adds to the prototype: shell regions, usage, history, thinking,
+   model picker, mention groups, notices and small states. Same tokens, same scale. */
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--ap-bg);
+  overflow: hidden;
+}
+
+.ap-header-host {
+  flex: none;
+  position: relative;
+  z-index: 5;
+}
+
+.ap-banners:empty {
+  display: none;
+}
+
+.ap-banners .ap-banner + .ap-banner {
+  margin-top: var(--ap-1);
+}
+
+.ap-alert--info {
+  --ap-alert-color: var(--ap-link);
+}
+
+.ap-alert {
+  position: relative;
+}
+
+.ap-alert__close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+}
+
+.ap-banner .ap-alert__close + * {
+  padding-right: 20px;
+}
+
+/* lists inside steps are plain */
+.ap-steps__list > li {
+  list-style: none;
+}
+
+/* ----- usage button and popover ----- */
+
+.ap-usage {
+  height: 24px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: var(--ap-r1);
+  background: none;
+  cursor: pointer;
+}
+
+.ap-usage:hover,
+.ap-usage[aria-expanded="true"] {
+  background: var(--ap-hover);
+  color: var(--ap-fg);
+}
+
+.ap-usage .codicon {
+  font-size: 13px;
+}
+
+.ap-usage__bar.is-high > span,
+.ap-usage.is-high .ap-usage__bar > span {
+  background: var(--ap-warn);
+}
+
+.ap-usage__bar--wide {
+  width: 64px;
+  margin-right: 6px;
+}
+
+.ap-usage-pop {
+  top: calc(100% + 4px);
+  bottom: auto;
+  left: auto;
+  right: var(--ap-2);
+  width: min(320px, calc(100% - 16px));
+  max-height: 70vh;
+  padding: var(--ap-1) 0;
+}
+
+.ap-usage-pop__section {
+  padding: var(--ap-1) var(--ap-3) var(--ap-2);
+}
+
+.ap-usage-pop__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ap-2);
+  margin-bottom: var(--ap-2);
+  font-size: var(--ap-t-sm);
+}
+
+.ap-usage-pop__row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: center;
+  gap: 0 var(--ap-2);
+  min-height: 24px;
+  font-size: var(--ap-t-sm);
+}
+
+.ap-usage-pop__label {
+  color: var(--ap-muted);
+}
+
+.ap-usage-pop__value {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ap-usage-pop__note {
+  grid-column: 2;
+  margin-top: -2px;
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-usage-pop__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ap-1) var(--ap-2);
+  margin-top: var(--ap-2);
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ap-link);
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.ap-link:hover {
+  text-decoration: underline;
+}
+
+.ap-link .codicon {
+  font-size: 11px;
+}
+
+/* ----- history ----- */
+
+.ap-thread--history[hidden],
+.ap-thread[hidden] {
+  display: none;
+}
+
+.ap-history__item {
+  position: relative;
+  grid-template-columns: 1fr auto;
+}
+
+.ap-history__item.is-current {
+  background: var(--ap-hover);
+}
+
+.ap-history__delete {
+  position: absolute;
+  right: var(--ap-1);
+  top: 50%;
+  transform: translateY(-50%);
+  visibility: hidden;
+  background: var(--ap-hover);
+}
+
+.ap-history__item:hover .ap-history__delete,
+.ap-history__item:focus-within .ap-history__delete {
+  visibility: visible;
+}
+
+.ap-history__item:focus-visible {
+  outline: 1px solid var(--ap-focus);
+  outline-offset: -1px;
+}
+
+/* ----- messages ----- */
+
+.ap-user__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ap-1);
+  margin-bottom: 6px;
+}
+
+.ap-empty__lead {
+  margin: 0;
+}
+
+.ap-md--live {
+  white-space: pre-wrap;
+}
+
+.ap-md h4 {
+  margin: var(--ap-3) 0 var(--ap-1);
+  font-size: var(--ap-t-md);
+  font-weight: 600;
+}
+
+.ap-md blockquote {
+  margin: 0 0 var(--ap-2);
+  padding: 0 0 0 var(--ap-3);
+  border-left: 2px solid var(--ap-border);
+  color: var(--ap-muted);
+}
+
+.ap-md hr {
+  height: 1px;
+  margin: var(--ap-3) 0;
+  border: 0;
+  background: var(--ap-border);
+}
+
+.ap-md li > ul,
+.ap-md li > ol {
+  margin: 2px 0 0;
+}
+
+.ap-md del {
+  color: var(--ap-muted);
+}
+
+.ap-pending {
+  display: flex;
+  align-items: center;
+  gap: var(--ap-2);
+  min-height: 24px;
+  font-size: var(--ap-t-sm);
+  color: var(--ap-muted);
+}
+
+.ap-shimmer {
+  background: linear-gradient(90deg, var(--ap-muted) 30%, var(--ap-fg) 50%, var(--ap-muted) 70%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ap-shimmer 1.6s linear infinite;
+}
+
+@keyframes ap-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-shimmer {
+    animation: none;
+    color: var(--ap-muted);
+    background: none;
+  }
+}
+
+/* thinking: folds like a step group */
+
+.ap-thinking {
+  font-size: var(--ap-t-sm);
+}
+
+.ap-thinking.is-open > .ap-steps__summary .ap-chev {
+  transform: rotate(90deg);
+}
+
+.ap-thinking__body {
+  display: none;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 2px 0 0 6px;
+  padding: 0 0 0 var(--ap-2);
+  border-left: 1px solid var(--ap-border);
+  color: var(--ap-muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ap-thinking.is-open > .ap-thinking__body {
+  display: block;
+}
+
+/* turn footer: copy appears on hover */
+
+.ap-turn__foot {
+  align-items: center;
+}
+
+.ap-turn__copy {
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  opacity: 0;
+}
+
+.ap-turn:hover .ap-turn__copy,
+.ap-turn__copy:focus-visible {
+  opacity: 1;
+}
+
+.ap-turn__copy .codicon {
+  font-size: 12px;
+}
+
+.ap-turn__foot span + .ap-turn__copy::before {
+  content: none;
+}
+
+/* ----- file cards ----- */
+
+.ap-files {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ap-2);
+}
+
+.ap-files > .ap-btn {
+  align-self: flex-start;
+}
+
+.ap-file[data-state="superseded"] .ap-file__name,
+.ap-file[data-state="superseded"] .ap-file__stat {
+  opacity: 0.6;
+}
+
+.ap-file[data-state="rejected"] .ap-file__resolved .codicon-discard {
+  color: var(--ap-removed);
+}
+
+.ap-file__later {
+  font-size: var(--ap-t-xs);
+}
+
+.ap-file__head:focus-visible {
+  outline: 1px solid var(--ap-focus);
+  outline-offset: -1px;
+}
+
+/* ----- composer pieces ----- */
+
+/* the bar never pushes send off the edge: pickers shrink, buttons don't */
+.ap-composer__bar {
+  min-width: 0;
+}
+
+.ap-composer__bar > .ap-picker {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.ap-composer__bar > .ap-seg,
+.ap-composer__bar > .ap-icon-btn,
+.ap-composer__bar > .ap-send {
+  flex: none;
+}
+
+.ap-changes__toggle {
+  white-space: nowrap;
+}
+
+.ap-composer__pop:empty {
+  display: none;
+}
+
+.ap-composer__chips[hidden],
+.ap-handoff-row[hidden] {
+  display: none;
+}
+
+.ap-chip__label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.ap-picker .codicon:first-child:not(:only-child) {
+  font-size: 12px;
+}
+
+.ap-seg button {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ap-mode-menu {
+  width: 260px;
+}
+
+.ap-composer textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* ----- model picker ----- */
+
+.ap-model-menu,
+.ap-mention-pop {
+  left: 0;
+  right: 0;
+  min-width: 0;
+  max-width: none;
+}
+
+.ap-model-menu {
+  display: flex;
+  flex-direction: column;
+  max-height: min(420px, 60vh);
+  padding: 0;
+  overflow: hidden;
+}
+
+.ap-model-menu__search {
+  flex: none;
+  margin: var(--ap-2) var(--ap-2) var(--ap-1);
+  height: 26px;
+  padding: 0 var(--ap-2);
+  border: 1px solid var(--ap-input-border);
+  border-radius: var(--ap-r1);
+  background: var(--ap-input-bg);
+  color: var(--ap-input-fg);
+  font: inherit;
+  font-size: var(--ap-t-sm);
+  outline: 0;
+}
+
+.ap-model-menu__search:focus {
+  border-color: var(--ap-focus);
+}
+
+.ap-model-menu__list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 var(--ap-1) var(--ap-1);
+}
+
+.ap-model-menu__name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ap-model-menu__tags {
+  display: inline-flex;
+  gap: var(--ap-1);
+}
+
+.ap-model-menu__tag {
+  padding: 0 4px;
+  border: 1px solid var(--ap-border);
+  border-radius: 3px;
+  font-size: 10px;
+  line-height: 15px;
+  color: var(--ap-muted);
+  white-space: nowrap;
+}
+
+.ap-model-menu__plan {
+  flex: none;
+  padding: 6px var(--ap-3);
+  border-top: 1px solid var(--ap-menu-border);
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-variants {
+  margin: 2px 0 var(--ap-1) 26px;
+  padding: 6px var(--ap-2);
+  border-radius: var(--ap-r1);
+  background: var(--ap-hover);
+}
+
+.ap-variants:empty {
+  display: none;
+}
+
+.ap-variants__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ap-1) var(--ap-3);
+}
+
+.ap-variants__row + .ap-variants__row {
+  margin-top: 6px;
+}
+
+.ap-variants__label {
+  width: 40px;
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-variants__seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.ap-variants__seg button {
+  height: 20px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: none;
+  color: var(--ap-muted);
+  font-size: var(--ap-t-xs);
+  cursor: pointer;
+}
+
+.ap-variants__seg button:hover {
+  color: var(--ap-fg);
+}
+
+.ap-variants__seg button[aria-checked="true"] {
+  border-color: var(--ap-border);
+  background: var(--ap-menu-bg);
+  color: var(--ap-fg);
+}
+
+.ap-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ap-fg);
+  font-size: var(--ap-t-xs);
+  cursor: pointer;
+}
+
+.ap-switch__track {
+  position: relative;
+  width: 22px;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--ap-border);
+  transition: background 120ms ease;
+}
+
+.ap-switch__track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ap-fg);
+  transition: transform 120ms ease;
+}
+
+.ap-switch[aria-checked="true"] .ap-switch__track {
+  background: var(--ap-focus);
+}
+
+.ap-switch[aria-checked="true"] .ap-switch__track::after {
+  transform: translateX(10px);
+  background: #fff;
+}
+
+/* ----- @ mention popover ----- */
+
+.ap-mention-pop {
+  max-height: min(360px, 55vh);
+}
+
+.ap-mention-pop .ap-menu__item {
+  grid-template-columns: 16px minmax(0, auto) minmax(0, 1fr) auto;
+}
+
+.ap-mention-pop__label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ap-mention-pop__more {
+  color: var(--ap-muted);
+}
+
+.ap-mention-pop__back {
+  display: flex;
+  align-items: center;
+  gap: var(--ap-1);
+  width: 100%;
+  height: 26px;
+  padding: 0 var(--ap-2);
+  margin-bottom: 2px;
+  border: 0;
+  border-radius: var(--ap-r1);
+  background: none;
+  color: var(--ap-fg);
+  font-size: var(--ap-t-sm);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ap-mention-pop__back:hover {
+  background: var(--ap-menu-sel);
+}
+
+/* ----- plan card ----- */
+
+.ap-plan__body {
+  padding: var(--ap-2) var(--ap-3);
+  font-size: var(--ap-t-sm);
+}
+
+.ap-plan__editor {
+  display: block;
+  width: 100%;
+  min-height: 160px;
+  padding: var(--ap-2);
+  border: 1px solid var(--ap-input-border);
+  border-radius: var(--ap-r1);
+  background: var(--ap-input-bg);
+  color: var(--ap-input-fg);
+  font-family: var(--ap-mono);
+  font-size: var(--ap-t-sm);
+  line-height: 1.5;
+  resize: vertical;
+  outline: 0;
+}
+
+.ap-plan__editor:focus {
+  border-color: var(--ap-focus);
+}
+
+.ap-plan__head .ap-btn {
+  margin-left: auto;
+}
+
+/* narrow sidebars */
+
+@media (max-width: 380px) {
+  /* @ still works by typing it */
+  .ap-composer__bar > .ap-icon-btn {
+    display: none;
+  }
+
+  .ap-seg button {
+    padding: 0 6px;
+  }
+}
+
+@media (max-width: 360px) {
+  .ap-file__path {
+    display: none;
+  }
+
+  .ap-usage-pop__row {
+    grid-template-columns: 80px 1fr;
+  }
+
+  .ap-picker {
+    max-width: 104px;
+  }
+}
+
+
+/* ----- research pass: queue, context, images, checkpoints, to-dos, paths ----- */
+
+/* long chats: the browser skips layout and paint for turns off screen */
+.ap-turn:not(.is-running) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 120px;
+}
+
+.ap-queue {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--ap-1) var(--ap-1) 0;
+}
+
+.ap-queue[hidden] {
+  display: none;
+}
+
+.ap-queue__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 0 0 0 var(--ap-2);
+  border-radius: var(--ap-r1);
+  background: var(--ap-hover);
+  font-size: var(--ap-t-sm);
+  color: var(--ap-muted);
+}
+
+.ap-queue__now {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: var(--ap-r1);
+  background: transparent;
+  color: var(--ap-muted);
+  font: inherit;
+  font-size: var(--ap-t-xs);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ap-queue__now:hover,
+.ap-queue__now:focus-visible {
+  background: var(--ap-accent, var(--vscode-button-background));
+  color: var(--vscode-button-foreground, #fff);
+}
+
+.ap-queue__text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ap-fg);
+}
+
+.ap-context {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: var(--ap-r1);
+  background: none;
+  color: var(--ap-muted);
+  font-size: var(--ap-t-xs);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  flex: none;
+}
+
+.ap-context[hidden] {
+  display: none;
+}
+
+.ap-context:hover:not(:disabled) {
+  background: var(--ap-hover);
+  color: var(--ap-fg);
+}
+
+.ap-context:disabled {
+  cursor: default;
+}
+
+.ap-context .codicon {
+  font-size: 12px;
+}
+
+.ap-composer.is-drop {
+  border-color: var(--ap-focus);
+  border-style: dashed;
+}
+
+.ap-chip--image {
+  padding-left: 2px;
+}
+
+.ap-chip--image img {
+  width: 18px;
+  height: 18px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+/* user message: edit and restore appear on hover */
+
+.ap-turn--user {
+  position: relative;
+}
+
+.ap-user__actions {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--ap-r1);
+  background: var(--ap-surface);
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.ap-turn--user:hover .ap-user__actions,
+.ap-user__actions:focus-within {
+  opacity: 1;
+}
+
+.ap-user__actions .ap-icon-btn {
+  width: 22px;
+  height: 22px;
+}
+
+.ap-user__restore {
+  height: 22px;
+}
+
+.ap-todos {
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-r2);
+  background: var(--ap-surface);
+  font-size: var(--ap-t-sm);
+}
+
+.ap-todos__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ap-2);
+  height: 28px;
+  padding: 0 var(--ap-3);
+  border-bottom: 1px solid var(--ap-border);
+  font-weight: 500;
+}
+
+.ap-todos__head .ap-muted {
+  margin-left: auto;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-todos ul {
+  margin: 0;
+  padding: var(--ap-1) var(--ap-3) var(--ap-2);
+  list-style: none;
+}
+
+.ap-todo {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: var(--ap-2);
+  padding: 2px 0;
+}
+
+.ap-todo .codicon {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--ap-muted);
+}
+
+.ap-todo--in_progress .codicon {
+  color: var(--ap-focus);
+}
+
+.ap-todo--completed {
+  color: var(--ap-muted);
+}
+
+.ap-todo--completed span {
+  text-decoration: line-through;
+}
+
+.ap-todo--completed .codicon {
+  color: var(--ap-added);
+}
+
+.ap-md code.ap-path {
+  color: var(--ap-link);
+  cursor: pointer;
+}
+
+.ap-md code.ap-path:hover {
+  text-decoration: underline;
+}
+
+/* history: chats from Claude Code and Cursor */
+
+.ap-section-label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ap-2);
+}
+
+.ap-section-label__note {
+  font-weight: 400;
+  color: var(--ap-muted);
+  opacity: 0.8;
+}
+
+.ap-history__none {
+  margin: 0;
+  padding: 2px var(--ap-2) var(--ap-2);
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-history__none:empty {
+  display: none;
+}
+
+.ap-usage-pop__alert {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px var(--ap-2);
+  margin: var(--ap-1) 0;
+  padding: 6px var(--ap-2);
+  border-left: 2px solid var(--ap-warn);
+  border-radius: var(--ap-r1);
+  background: var(--ap-hover);
+  font-size: var(--ap-t-xs);
+  line-height: 1.45;
+}
+
+.ap-usage-pop__alert > span {
+  flex: 1 1 160px;
+}
+
+.ap-usage-pop__alert .codicon {
+  color: var(--ap-warn);
+}
+
+.ap-usage-pop__alert.is-error {
+  border-left-color: var(--ap-error);
+}
+
+.ap-usage-pop__alert.is-error .codicon {
+  color: var(--ap-error);
+}
+
+/* tables in answers: keep words whole, scroll when wide */
+.ap-md table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.ap-md th,
+.ap-md td {
+  overflow-wrap: normal;
+  word-break: normal;
+  vertical-align: top;
+  min-width: 48px;
+}
+
+.ap-md td code,
+.ap-md th code {
+  white-space: nowrap;
+}
+
+/* code and diffs: the editor's font, size and theme colours */
+.ap-diff,
+.ap-codeblock pre {
+  font-size: calc(var(--ap-code-size) - 1px);
+  font-weight: var(--vscode-editor-font-weight, normal);
+  line-height: 1.5;
+}
+
+.ap-diff {
+  background: var(--vscode-editor-background);
+}
+
+.ap-diff__row > .ln {
+  color: var(--vscode-editorLineNumber-foreground, var(--ap-muted));
+  opacity: 1;
+}
+
+.ap-syn-keyword { color: var(--ap-syn-keyword); }
+.ap-syn-string { color: var(--ap-syn-string); }
+.ap-syn-number { color: var(--ap-syn-number); }
+.ap-syn-func { color: var(--ap-syn-func); }
+.ap-syn-type { color: var(--ap-syn-type); }
+.ap-syn-var { color: var(--ap-syn-var); }
+.ap-syn-comment { color: var(--ap-syn-comment); font-style: italic; }
+
+.ap-usage-pop {
+  width: min(360px, calc(100% - 16px));
+}
+
+.ap-usage-pop__value {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* model picker rows, as Cursor draws them */
+.ap-model-menu .ap-model-row {
+  grid-template-columns: minmax(0, 1fr) auto 16px;
+  min-height: 28px;
+}
+
+.ap-model-menu__note {
+  color: var(--ap-muted);
+}
+
+.ap-model-menu .ap-menu__label {
+  padding-top: var(--ap-2);
+}
+
+.ap-model-menu .ap-menu__label:first-child {
+  padding-top: var(--ap-1);
+}
+
+.ap-model-menu .ap-variants {
+  margin-left: var(--ap-2);
+}
+
+/* menus and lists scroll with the theme's thin scrollbar, not a white one */
+.ap-menu,
+.ap-model-menu__list,
+.ap-thread,
+.ap-diff,
+.ap-composer__input {
+  scrollbar-width: thin;
+  scrollbar-color: var(--vscode-scrollbarSlider-background) transparent;
+}
+
+.ap ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.ap ::-webkit-scrollbar-thumb {
+  background: var(--vscode-scrollbarSlider-background);
+  border-radius: 4px;
+}
+
+.ap ::-webkit-scrollbar-thumb:hover {
+  background: var(--vscode-scrollbarSlider-hoverBackground, var(--vscode-scrollbarSlider-background));
+}
+
+.ap ::-webkit-scrollbar-track,
+.ap ::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* one focus ring: the composer's border; the text box itself draws none */
+.ap-composer__input:focus,
+.ap-composer__input:focus-visible {
+  outline: none;
+}
+
+.ap-composer:focus-within {
+  border-color: var(--ap-focus);
+  box-shadow: none;
+}
+
+.ap-queue__item,
+.ap-chip {
+  outline: none;
+}
+
+/* the mode label is short: it keeps its width and the model name gives way */
+.ap-composer__bar > .ap-picker--mode {
+  flex: none;
+}
+
+/* steps: file names open the file; edits open to their diff */
+.ap-step__file {
+  cursor: pointer;
+}
+
+.ap-step__file:hover {
+  color: var(--ap-link);
+  text-decoration: underline;
+}
+
+.ap-step__chev {
+  margin-left: -2px;
+  font-size: 11px !important;
+  color: var(--ap-muted);
+  transition: transform 120ms ease;
+}
+
+.ap-step-wrap.is-open > .ap-step .ap-step__chev {
+  transform: rotate(90deg);
+}
+
+.ap-step__side .ap-add,
+.ap-step__side .ap-del {
+  font-family: var(--ap-mono);
+}
+
+.ap-step__diff {
+  display: none;
+  margin: 2px 0 var(--ap-1) var(--ap-5);
+  max-height: 260px;
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-r1);
+}
+
+.ap-step-wrap.is-open > .ap-step__diff {
+  display: block;
+}
+
+/* the running group no longer forces itself open; the person's choice holds */
+.ap-steps.is-live:not(.is-open) > .ap-steps__list {
+  display: none;
+}
+
+/* ----- tabs ----- */
+.ap-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 4px var(--ap-2) 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--ap-border);
+}
+
+.ap-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.ap-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 1 auto;
+  min-width: 72px;
+  max-width: 180px;
+  height: 26px;
+  padding: 0 4px 0 8px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: var(--ap-r1) var(--ap-r1) 0 0;
+  color: var(--ap-muted);
+  font-size: var(--ap-t-xs);
+  cursor: pointer;
+}
+
+.ap-tab:hover {
+  color: var(--ap-fg);
+  background: var(--ap-hover);
+}
+
+.ap-tab.is-active {
+  color: var(--ap-fg);
+  background: var(--ap-bg);
+  border-color: var(--ap-border);
+  margin-bottom: -1px;
+}
+
+.ap-tab__icon {
+  flex: none;
+  font-size: 12px !important;
+}
+
+.ap-tab__title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ap-tab__close {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: none;
+  color: var(--ap-muted);
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.ap-tab:hover .ap-tab__close,
+.ap-tab.is-active .ap-tab__close {
+  visibility: visible;
+}
+
+.ap-tab__close:hover {
+  background: var(--ap-hover);
+  color: var(--ap-fg);
+}
+
+.ap-tab__close .codicon {
+  font-size: 12px;
+}
+
+/* ----- your messages: a clear box, pinned while its answer scrolls ----- */
+.ap-turn--user {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  margin-left: calc(var(--ap-3) * -1);
+  margin-right: calc(var(--ap-3) * -1);
+  padding: var(--ap-2) var(--ap-3);
+  background: var(--ap-bg);
+}
+
+.ap-turn--user + .ap-turn,
+.ap-turn + .ap-turn--user {
+  margin-top: var(--ap-3);
+}
+
+.ap-user {
+  max-height: 9.5em;
+  overflow-y: auto;
+  border-color: var(--vscode-input-border, var(--ap-border));
+  border-radius: var(--ap-r3);
+  background: var(--ap-input-bg);
+  scrollbar-width: thin;
+}
+
+.ap-turn--agent {
+  padding-top: var(--ap-1);
+}
+
+/* ----- the answer timeline ----- */
+.ap-steps__spin {
+  margin-left: 4px;
+  font-size: 11px !important;
+}
+
+.ap-edit {
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-r2);
+  background: var(--ap-surface);
+  overflow: hidden;
+}
+
+.ap-edit__head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 var(--ap-2);
+  font-size: var(--ap-t-sm);
+  cursor: pointer;
+}
+
+.ap-edit__head:hover {
+  background: var(--ap-hover);
+}
+
+.ap-edit__head .codicon {
+  color: var(--ap-muted);
+}
+
+.ap-edit__name {
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ap-edit__name:hover {
+  color: var(--ap-link);
+  text-decoration: underline;
+}
+
+.ap-edit__fail {
+  margin-left: auto;
+  color: var(--ap-error);
+}
+
+/* folded: a few lines of the change, fading out; open: all of it */
+.ap-edit__body {
+  position: relative;
+  max-height: 84px;
+  overflow: hidden;
+  border-top: 1px solid var(--ap-border);
+  cursor: pointer;
+}
+
+.ap-edit__body::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 28px;
+  background: linear-gradient(transparent, var(--vscode-editor-background));
+  pointer-events: none;
+}
+
+.ap-edit.is-open .ap-edit__body {
+  max-height: 360px;
+  overflow: auto;
+  cursor: auto;
+}
+
+.ap-edit.is-open .ap-edit__body::after {
+  display: none;
+}
+
+.ap-turn-files {
+  font-size: var(--ap-t-sm);
+}
+
+.ap-turn-files > .ap-files {
+  display: none;
+  margin-top: var(--ap-1);
+}
+
+.ap-turn-files.is-open > .ap-files {
+  display: flex;
+}
+
+.ap-turn-files.is-open > .ap-steps__summary .ap-chev {
+  transform: rotate(90deg);
+}
+
+.ap-turn-files .ap-steps__summary .ap-changes__stat {
+  margin-left: 2px;
+}
+
+/* ----- / menu: skills and commands with descriptions ----- */
+.ap-slash-pop .ap-slash-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 5px var(--ap-2);
+}
+
+.ap-slash-item__name {
+  font-weight: 500;
+}
+
+.ap-slash-item__desc {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-slash-more {
+  display: block;
+  width: 100%;
+  padding: 4px var(--ap-2);
+  border: 0;
+  background: none;
+  color: var(--ap-muted);
+  font-size: var(--ap-t-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ap-slash-more:hover {
+  color: var(--ap-fg);
+}
+
+.ap-thinking.is-live > .ap-thinking__body {
+  display: block;
+  max-height: 80px;
+}
+
+/* ----- context meter and popover ----- */
+.ap-ring {
+  --p: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: conic-gradient(var(--ap-muted) calc(var(--p) * 1%), var(--ap-border) 0);
+  -webkit-mask: radial-gradient(circle, transparent 3px, #000 3.5px);
+  mask: radial-gradient(circle, transparent 3px, #000 3.5px);
+}
+
+.ap-context-pop {
+  left: auto;
+  right: 0;
+  width: min(300px, 100%);
+  padding: var(--ap-2) var(--ap-3);
+  font-size: var(--ap-t-sm);
+}
+
+.ap-context-pop__head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--ap-2);
+}
+
+.ap-context-pop__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ap-3);
+  min-height: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-context-pop__bar {
+  display: block;
+  height: 5px;
+  margin: 4px 0 var(--ap-2);
+  border-radius: 3px;
+  background: var(--ap-border);
+  overflow: hidden;
+}
+
+.ap-context-pop__bar > span {
+  display: block;
+  height: 100%;
+  background: var(--ap-focus);
+}
+
+.ap-context-pop .ap-menu__label {
+  padding-left: 0;
+}
+
+.ap-context-pop__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ap-2);
+  margin-top: var(--ap-2);
+  padding-top: var(--ap-2);
+  border-top: 1px solid var(--ap-menu-border);
+  font-size: var(--ap-t-xs);
+}
+
+/* compact mode menu, descriptions on hover */
+.ap-mode-menu {
+  width: auto;
+  min-width: 170px;
+  left: auto;
+}
+
+.ap-mode-menu .ap-mode-item {
+  grid-template-columns: 16px 1fr 16px;
+}
+
+.ap-mode-menu .ap-mode-item .codicon-check {
+  visibility: hidden;
+}
+
+.ap-mode-menu .ap-mode-item[aria-checked="true"] .codicon-check {
+  visibility: visible;
+}
+
+/* attachments open on click */
+.ap-chip--open {
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--ap-t-xs);
+}
+
+.ap-chip--open:hover {
+  border-color: var(--ap-focus);
+  color: var(--ap-fg);
+}
+
+.ap-lightbox {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ap-2);
+  padding: var(--ap-4);
+  background: color-mix(in srgb, var(--ap-bg) 88%, transparent);
+  cursor: zoom-out;
+}
+
+.ap-lightbox img {
+  max-width: 100%;
+  max-height: calc(100% - 32px);
+  object-fit: contain;
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-r2);
+  background: var(--vscode-editor-background);
+}
+
+.ap-lightbox__name {
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+/* one exchange: your message and its answer; spacing between exchanges */
+.ap-exchange + .ap-exchange {
+  margin-top: var(--ap-4);
+}
+
+.ap-exchange > .ap-turn + .ap-turn {
+  margin-top: var(--ap-3);
+}
+
+.ap-exchange > .ap-turn--user:first-child {
+  margin-top: calc(var(--ap-2) * -1);
+}
+
+/* ----- model rows: name, settings on the same row, check ----- */
+.ap-model-menu .ap-model-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 16px;
+  align-items: center;
+  gap: var(--ap-2);
+  min-height: 30px;
+  padding: 2px var(--ap-1) 2px var(--ap-2);
+  border-radius: var(--ap-r1);
+}
+
+.ap-model-row:hover,
+.ap-model-row.is-active {
+  background: var(--ap-menu-sel);
+}
+
+.ap-model-row__name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ap-fg);
+  font-size: var(--ap-t-sm);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.ap-model-row.is-selected .ap-model-row__name {
+  font-weight: 600;
+}
+
+.ap-model-row__controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ap-model-row .codicon-check {
+  color: var(--ap-fg);
+}
+
+/* effort: dots on a track, knob on the chosen level */
+.ap-stepper-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.ap-stepper {
+  --n: 5;
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: repeat(var(--n), 12px);
+  align-items: center;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: var(--ap-input-bg);
+  border: 1px solid var(--ap-border);
+  cursor: pointer;
+  touch-action: none;
+}
+
+.ap-stepper__dot {
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 14px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.ap-stepper__dot::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: var(--ap-muted);
+  opacity: 0.6;
+}
+
+.ap-stepper__dot.is-below::after {
+  background: var(--ap-focus);
+  opacity: 1;
+}
+
+.ap-stepper__dot:hover::after {
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+.ap-stepper__knob {
+  --i: 0;
+  position: absolute;
+  top: 1px;
+  left: calc(3px + var(--i) * 12px);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ap-fg);
+  box-shadow: 0 0 0 2px var(--ap-focus);
+  transition: left 120ms ease;
+  pointer-events: none;
+}
+
+.ap-stepper__key {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ap-model-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--ap-r1);
+  background: none;
+  color: var(--ap-muted);
+  cursor: pointer;
+  opacity: 0.55;
+}
+
+.ap-model-toggle:hover {
+  opacity: 1;
+  color: var(--ap-fg);
+}
+
+.ap-model-toggle.is-on {
+  opacity: 1;
+  color: var(--ap-warn);
+  border-color: var(--ap-border);
+}
+
+.ap-model-toggle .codicon {
+  font-size: 12px;
+}
+
+.ap-ctx-chip {
+  height: 18px;
+  padding: 0 5px;
+  border: 1px solid var(--ap-border);
+  border-radius: 3px;
+  background: none;
+  color: var(--ap-muted);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.ap-ctx-chip:hover {
+  color: var(--ap-fg);
+}
+
+.ap-ctx-chip.is-costly {
+  color: var(--ap-warn);
+  border-color: var(--ap-warn);
+}
+
+.ap-model-menu__plan {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ap-2);
+}
+
+.ap-model-menu__alert {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px var(--ap-2);
+  margin: var(--ap-2) var(--ap-2) 0;
+  padding: 6px var(--ap-2);
+  border-left: 2px solid var(--ap-warn);
+  border-radius: var(--ap-r1);
+  background: var(--ap-hover);
+  font-size: var(--ap-t-xs);
+}
+
+.ap-model-menu__alert > span {
+  flex: 1 1 180px;
+}
+
+.ap-model-menu__alert .codicon {
+  color: var(--ap-warn);
+}
+
+@media (max-width: 380px) {
+  .ap-model-row .ap-ctx-chip {
+    display: none;
+  }
+}
+
+/* fixed slots: effort, thinking, context, fast */
+.ap-model-menu .ap-model-row__controls {
+  display: inline-grid;
+  grid-template-columns: 76px 20px 40px 20px;
+  justify-items: center;
+  gap: 2px;
+}
+
+.ap-model-row__slot {
+  width: 1px;
+}
+
+@media (max-width: 380px) {
+  .ap-model-menu .ap-model-row__controls {
+    grid-template-columns: 76px 20px 0 20px;
+  }
+}
+
+/* command colouring: paths, output tints and terminal colours, all from the theme */
+.ap-syn-path { color: var(--ap-syn-var); text-decoration: underline dotted; text-underline-offset: 2px; }
+.ap-out-ok { color: var(--vscode-terminal-ansiGreen, #4ec9b0); }
+.ap-out-warn { color: var(--vscode-terminal-ansiYellow, #dcdcaa); }
+.ap-out-error { color: var(--vscode-terminal-ansiRed, #f48771); }
+.ap-ansi-black { color: var(--vscode-terminal-ansiBlack, #666); }
+.ap-ansi-red { color: var(--vscode-terminal-ansiRed, #f48771); }
+.ap-ansi-green { color: var(--vscode-terminal-ansiGreen, #4ec9b0); }
+.ap-ansi-yellow { color: var(--vscode-terminal-ansiYellow, #dcdcaa); }
+.ap-ansi-blue { color: var(--vscode-terminal-ansiBlue, #569cd6); }
+.ap-ansi-magenta { color: var(--vscode-terminal-ansiMagenta, #c586c0); }
+.ap-ansi-cyan { color: var(--vscode-terminal-ansiCyan, #4ec9b0); }
+.ap-ansi-white { color: var(--vscode-terminal-ansiWhite, #ccc); }
+.ap-ansi-bold { font-weight: 700; }
+.ap-ansi-dim { opacity: 0.7; }

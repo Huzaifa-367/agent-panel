@@ -1,0 +1,159 @@
+/*
+ * Agent Panel design tokens.
+ *
+ * Two layers:
+ * 1. PREVIEW ONLY: the --vscode-* values under [data-theme]. In the real webview,
+ *    VS Code and Cursor inject these from the active theme. Do not copy them into the extension.
+ * 2. COPY INTO THE EXTENSION: the --ap-* block. Every component reads only --ap-* tokens.
+ */
+
+/* 1. Preview only: dark theme, close to Cursor Dark */
+:root,
+:root[data-theme="dark"] {
+  --vscode-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --vscode-font-size: 13px;
+  --vscode-editor-font-family: Menlo, Monaco, "SF Mono", Consolas, monospace;
+
+  --vscode-sideBar-background: #181818;
+  --vscode-editor-background: #1c1c1c;
+  --vscode-foreground: #d6d6d6;
+  --vscode-descriptionForeground: #8c8c8c;
+  --vscode-widget-border: #2c2c2c;
+  --vscode-editorWidget-background: #1f1f1f;
+  --vscode-list-hoverBackground: #252525;
+  --vscode-input-background: #1f1f1f;
+  --vscode-input-border: #333333;
+  --vscode-input-foreground: #e2e2e2;
+  --vscode-input-placeholderForeground: #6c6c6c;
+  --vscode-focusBorder: #4d8cf5;
+  --vscode-button-background: #e8e8e8;
+  --vscode-button-foreground: #141414;
+  --vscode-button-hoverBackground: #ffffff;
+  --vscode-button-secondaryBackground: #2a2a2a;
+  --vscode-button-secondaryForeground: #d6d6d6;
+  --vscode-button-secondaryHoverBackground: #333333;
+  --vscode-gitDecoration-addedResourceForeground: #72c48f;
+  --vscode-gitDecoration-deletedResourceForeground: #e5736f;
+  --vscode-diffEditor-insertedLineBackground: rgba(114, 196, 143, 0.11);
+  --vscode-diffEditor-removedLineBackground: rgba(229, 115, 111, 0.11);
+  --vscode-errorForeground: #f08a84;
+  --vscode-editorWarning-foreground: #dcb44a;
+  --vscode-charts-orange: #d98a5f;
+  --vscode-charts-blue: #6ea8f7;
+  --vscode-textCodeBlock-background: #222222;
+  --vscode-textLink-foreground: #6ea8f7;
+  --vscode-menu-background: #202020;
+  --vscode-menu-border: #333333;
+  --vscode-menu-selectionBackground: #2c2c2c;
+  --vscode-scrollbarSlider-background: rgba(128, 128, 128, 0.28);
+
+  /* page behind the frame (preview only) */
+  --pv-page: #0e0e0e;
+  --pv-note: #9a9a9a;
+}
+
+/* 1. Preview only: light theme */
+:root[data-theme="light"] {
+  --vscode-sideBar-background: #f7f7f7;
+  --vscode-editor-background: #ffffff;
+  --vscode-foreground: #2b2b2b;
+  --vscode-descriptionForeground: #6d6d6d;
+  --vscode-widget-border: #e2e2e2;
+  --vscode-editorWidget-background: #ffffff;
+  --vscode-list-hoverBackground: #ececec;
+  --vscode-input-background: #ffffff;
+  --vscode-input-border: #d4d4d4;
+  --vscode-input-foreground: #1f1f1f;
+  --vscode-input-placeholderForeground: #9a9a9a;
+  --vscode-focusBorder: #2f6fdb;
+  --vscode-button-background: #1f1f1f;
+  --vscode-button-foreground: #ffffff;
+  --vscode-button-hoverBackground: #000000;
+  --vscode-button-secondaryBackground: #e8e8e8;
+  --vscode-button-secondaryForeground: #2b2b2b;
+  --vscode-button-secondaryHoverBackground: #dddddd;
+  --vscode-gitDecoration-addedResourceForeground: #2e8549;
+  --vscode-gitDecoration-deletedResourceForeground: #c2384a;
+  --vscode-diffEditor-insertedLineBackground: rgba(46, 133, 73, 0.1);
+  --vscode-diffEditor-removedLineBackground: rgba(194, 56, 74, 0.09);
+  --vscode-errorForeground: #c2384a;
+  --vscode-editorWarning-foreground: #a87b00;
+  --vscode-charts-orange: #bf5f30;
+  --vscode-charts-blue: #2f6fdb;
+  --vscode-textCodeBlock-background: #efefef;
+  --vscode-textLink-foreground: #2f6fdb;
+  --vscode-menu-background: #ffffff;
+  --vscode-menu-border: #dcdcdc;
+  --vscode-menu-selectionBackground: #ededed;
+  --vscode-scrollbarSlider-background: rgba(100, 100, 100, 0.25);
+
+  --pv-page: #e6e6e6;
+  --pv-note: #5c5c5c;
+}
+
+/* 2. Copy into the extension */
+:root {
+  /* surfaces and text */
+  --ap-bg: var(--vscode-sideBar-background);
+  --ap-surface: var(--vscode-editorWidget-background);
+  --ap-hover: var(--vscode-list-hoverBackground);
+  --ap-fg: var(--vscode-foreground);
+  --ap-muted: var(--vscode-descriptionForeground);
+  --ap-border: var(--vscode-widget-border);
+  --ap-code-bg: var(--vscode-textCodeBlock-background);
+  --ap-link: var(--vscode-textLink-foreground);
+
+  /* input */
+  --ap-input-bg: var(--vscode-input-background);
+  --ap-input-border: var(--vscode-input-border, var(--vscode-widget-border));
+  --ap-input-fg: var(--vscode-input-foreground);
+  --ap-placeholder: var(--vscode-input-placeholderForeground);
+  --ap-focus: var(--vscode-focusBorder);
+
+  /* buttons */
+  --ap-btn-bg: var(--vscode-button-background);
+  --ap-btn-fg: var(--vscode-button-foreground);
+  --ap-btn-hover: var(--vscode-button-hoverBackground);
+  --ap-btn2-bg: var(--vscode-button-secondaryBackground);
+  --ap-btn2-fg: var(--vscode-button-secondaryForeground);
+  --ap-btn2-hover: var(--vscode-button-secondaryHoverBackground);
+
+  /* meaning */
+  --ap-added: var(--vscode-gitDecoration-addedResourceForeground);
+  --ap-removed: var(--vscode-gitDecoration-deletedResourceForeground);
+  --ap-added-bg: var(--vscode-diffEditor-insertedLineBackground);
+  --ap-removed-bg: var(--vscode-diffEditor-removedLineBackground);
+  --ap-error: var(--vscode-errorForeground);
+  --ap-warn: var(--vscode-editorWarning-foreground);
+
+  /* engines: a dot and a word, never a logo */
+  --ap-claude: var(--vscode-charts-orange);
+  --ap-cursor: var(--vscode-charts-blue);
+
+  /* menus */
+  --ap-menu-bg: var(--vscode-menu-background);
+  --ap-menu-border: var(--vscode-menu-border);
+  --ap-menu-sel: var(--vscode-menu-selectionBackground);
+
+  /* type: two families, four sizes */
+  --ap-font: var(--vscode-font-family);
+  --ap-mono: var(--vscode-editor-font-family);
+  --ap-t-xs: 11px;
+  --ap-t-sm: 12px;
+  --ap-t-md: 13px;
+  --ap-t-lg: 14px;
+  --ap-lh: 1.55;
+
+  /* spacing: 4px base */
+  --ap-1: 4px;
+  --ap-2: 8px;
+  --ap-3: 12px;
+  --ap-4: 16px;
+  --ap-5: 20px;
+  --ap-6: 24px;
+
+  /* radius */
+  --ap-r1: 4px;
+  --ap-r2: 6px;
+  --ap-r3: 8px;
+}

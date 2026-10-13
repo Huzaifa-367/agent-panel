@@ -1,0 +1,133 @@
+/* PREVIEW ONLY: the page around the panel (toolbar, frame, notes). Not part of the extension. */
+
+html,
+body {
+  margin: 0;
+  background: var(--pv-page);
+  color: var(--vscode-foreground);
+  font-family: var(--vscode-font-family);
+  font-size: 13px;
+}
+
+.pv-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  padding: 10px 16px;
+  background: var(--pv-page);
+  border-bottom: 1px solid var(--vscode-widget-border);
+}
+
+.pv-bar__name {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.pv-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.pv-nav a {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--vscode-descriptionForeground);
+  text-decoration: none;
+}
+
+.pv-nav a:hover {
+  color: var(--vscode-foreground);
+}
+
+.pv-nav a[aria-current="page"] {
+  color: var(--vscode-foreground);
+  background: var(--vscode-list-hoverBackground);
+}
+
+.pv-tools {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.pv-tools button {
+  font: inherit;
+  font-size: 12px;
+  color: var(--vscode-descriptionForeground);
+  background: none;
+  border: 1px solid var(--vscode-widget-border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+.pv-tools button[aria-pressed="true"] {
+  color: var(--vscode-foreground);
+  border-color: var(--vscode-descriptionForeground);
+}
+
+.pv-stage {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 24px 16px 48px;
+}
+
+.pv-frame {
+  flex: none;
+  width: var(--pv-w, 420px);
+  max-width: 100%;
+  height: min(860px, calc(100vh - 110px));
+  min-height: 560px;
+  border: 1px solid var(--vscode-widget-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.pv-notes {
+  max-width: 400px;
+  color: var(--pv-note);
+  line-height: 1.6;
+}
+
+.pv-notes h1 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--vscode-foreground);
+}
+
+.pv-notes h2 {
+  margin: 20px 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vscode-foreground);
+}
+
+.pv-notes ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.pv-notes code {
+  font-family: var(--vscode-editor-font-family);
+  font-size: 12px;
+  color: var(--vscode-foreground);
+}
+
+@media (max-width: 860px) {
+  .pv-stage {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .pv-frame {
+    width: 100%;
+  }
+}

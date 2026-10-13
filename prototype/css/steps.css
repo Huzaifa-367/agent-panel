@@ -1,0 +1,173 @@
+/* Tool steps: the folded summary row, the step list, command output and inline permission prompts. */
+
+.ap-steps {
+  font-size: var(--ap-t-sm);
+}
+
+.ap-steps__summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 24px;
+  padding: 0 var(--ap-1);
+  margin-left: calc(var(--ap-1) * -1);
+  border: 0;
+  border-radius: var(--ap-r1);
+  background: none;
+  color: var(--ap-muted);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ap-steps__summary:hover {
+  color: var(--ap-fg);
+  background: var(--ap-hover);
+}
+
+.ap-chev {
+  flex: none;
+  transition: transform 120ms ease;
+}
+
+.ap-steps.is-open > .ap-steps__summary .ap-chev,
+.ap-step-wrap.is-open > .ap-step .ap-chev,
+.ap-file.is-open > .ap-file__head .ap-chev,
+.ap-changes.is-open .ap-changes__toggle .ap-chev {
+  transform: rotate(90deg);
+}
+
+.ap-steps__list {
+  display: none;
+  margin: 2px 0 0;
+  padding: 0 0 0 var(--ap-2);
+  list-style: none;
+  border-left: 1px solid var(--ap-border);
+  margin-left: 6px;
+}
+
+.ap-steps.is-open > .ap-steps__list {
+  display: block;
+}
+
+/* a running group always shows its list */
+.ap-steps.is-running > .ap-steps__list {
+  display: block;
+}
+
+.ap-step {
+  display: flex;
+  align-items: center;
+  gap: var(--ap-2);
+  min-height: 24px;
+  padding-left: var(--ap-1);
+  color: var(--ap-muted);
+}
+
+.ap-step > .codicon {
+  flex: none;
+  font-size: 13px;
+}
+
+.ap-step__text {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ap-step__text code {
+  color: var(--ap-fg);
+}
+
+.ap-step__side {
+  margin-left: auto;
+  flex: none;
+  font-size: var(--ap-t-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-step--running {
+  color: var(--ap-fg);
+}
+
+.ap-step--failed > .codicon,
+.ap-step--failed .ap-step__side {
+  color: var(--ap-error);
+}
+
+.ap-step--denied .ap-step__text {
+  text-decoration: line-through;
+}
+
+.ap-step--ask > .codicon {
+  color: var(--ap-warn);
+}
+
+/* a step whose output can be opened */
+
+.ap-step--expandable {
+  cursor: pointer;
+}
+
+.ap-step--expandable:hover {
+  color: var(--ap-fg);
+}
+
+.ap-output {
+  display: none;
+  margin: 2px 0 var(--ap-1) var(--ap-5);
+  max-height: 160px;
+  overflow: auto;
+  padding: var(--ap-2);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-r1);
+  background: var(--ap-code-bg);
+  font-family: var(--ap-mono);
+  font-size: var(--ap-t-xs);
+  line-height: 1.5;
+  white-space: pre;
+  color: var(--ap-fg);
+}
+
+.ap-step-wrap.is-open > .ap-output {
+  display: block;
+}
+
+/* permission prompt, shown right under the step that asks */
+
+.ap-ask {
+  margin: var(--ap-1) 0 var(--ap-2) var(--ap-5);
+  padding: var(--ap-2) var(--ap-3);
+  border: 1px solid var(--ap-border);
+  border-left: 2px solid var(--ap-warn);
+  border-radius: var(--ap-r1);
+  background: var(--ap-surface);
+}
+
+.ap-ask__title {
+  margin: 0 0 6px;
+  font-size: var(--ap-t-sm);
+  color: var(--ap-fg);
+}
+
+.ap-ask pre {
+  margin: 0 0 var(--ap-2);
+  padding: 6px var(--ap-2);
+  border-radius: var(--ap-r1);
+  background: var(--ap-code-bg);
+  font-family: var(--ap-mono);
+  font-size: var(--ap-t-xs);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ap-ask__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ap-1);
+}
+
+.ap-ask__actions .ap-btn--primary {
+  margin-left: auto;
+}

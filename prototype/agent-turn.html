@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent turn · Agent Panel</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vscode/codicons@0.0.36/dist/codicon.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/thread.css">
+  <link rel="stylesheet" href="css/steps.css">
+  <link rel="stylesheet" href="css/file-card.css">
+  <link rel="stylesheet" href="css/composer.css">
+  <link rel="stylesheet" href="css/plan.css">
+</head>
+<body>
+  <div class="pv-bar">
+    <span class="pv-bar__name">Agent Panel prototype</span>
+    <nav class="pv-nav">
+      <a href="index.html">Overview</a>
+      <a href="agent-turn.html" aria-current="page">Agent turn</a>
+      <a href="handoff.html">Hand-off</a>
+      <a href="states.html">Permissions and errors</a>
+      <a href="empty.html">New chat and history</a>
+      <a href="pickers.html">Pickers and mentions</a>
+    </nav>
+    <div class="pv-tools">
+      <button data-pv-theme="dark">Dark</button>
+      <button data-pv-theme="light">Light</button>
+      <button data-pv-width="340">340</button>
+      <button data-pv-width="420">420</button>
+      <button data-pv-width="560">560</button>
+    </div>
+  </div>
+
+  <div class="pv-stage">
+    <div class="pv-frame">
+      <!-- ===== the webview starts here ===== -->
+      <div class="ap">
+        <header class="ap-header">
+          <div class="ap-header__title">Support tables overflow on phones</div>
+          <span class="ap-usage is-high" title="Claude weekly usage · resets Thu 9:00">
+            <span class="ap-usage__bar"><span style="width: 88%"></span></span>Week 88%
+          </span>
+          <button class="ap-icon-btn" title="History"><i class="codicon codicon-history"></i></button>
+          <button class="ap-icon-btn" title="New chat"><i class="codicon codicon-add"></i></button>
+          <button class="ap-icon-btn" title="More"><i class="codicon codicon-ellipsis"></i></button>
+        </header>
+
+        <main class="ap-thread" data-scroll="end">
+          <!-- user -->
+          <section class="ap-turn">
+            <div class="ap-user">The support tables overflow on phones. Wrap them in a horizontal scroller on both the central and tenant support pages.</div>
+          </section>
+
+          <!-- Claude turn, finished -->
+          <section class="ap-turn">
+            <div class="ap-turn__meta">
+              <span class="ap-engine ap-engine--claude">Claude</span><span>Opus</span><span>Agent</span>
+            </div>
+
+            <div class="ap-steps" data-collapsible>
+              <button class="ap-steps__summary" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <span>Explored · Read 3 files · Searched 1</span>
+              </button>
+              <ol class="ap-steps__list">
+                <li class="ap-step"><i class="codicon codicon-file"></i><span class="ap-step__text">Read <code>pages/central/support/index.tsx</code></span></li>
+                <li class="ap-step"><i class="codicon codicon-file"></i><span class="ap-step__text">Read <code>pages/tenant/support/index.tsx</code></span></li>
+                <li class="ap-step"><i class="codicon codicon-search"></i><span class="ap-step__text">Searched for <code>overflow-x-auto</code></span><span class="ap-step__side">6 results</span></li>
+                <li class="ap-step"><i class="codicon codicon-file"></i><span class="ap-step__text">Read <code>components/shared/kit/index.ts</code></span></li>
+              </ol>
+            </div>
+
+            <div class="ap-md">
+              <p>Both pages render the ticket table straight into the card, so on a narrow screen the table pushes the whole page sideways. I added a small <code>ScrollWrap</code> to the shared kit and used it on both pages.</p>
+            </div>
+
+            <!-- file card: open -->
+            <article class="ap-file is-open" data-collapsible data-state="pending" data-add="16" data-del="0" data-name="scroll-wrap.tsx" data-path="resources/js/components/shared/kit">
+              <header class="ap-file__head" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <i class="codicon codicon-file-code ap-file__icon"></i>
+                <span class="ap-file__name" title="Open file">scroll-wrap.tsx</span>
+                <span class="ap-file__path">resources/js/components/shared/kit</span>
+                <span class="ap-file__tag">New</span>
+                <span class="ap-file__stat"><span class="ap-add">+16</span><span class="ap-del">−0</span></span>
+                <span class="ap-file__resolved"><i class="codicon codicon-check"></i><span data-resolved-label>Accepted</span><button data-action="undo">Undo</button></span>
+              </header>
+              <div class="ap-file__body">
+                <div class="ap-diff"><div class="ap-diff__rows">
+                  <div class="ap-diff__hunk">@@ -0,0 +1,16 @@</div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">1</span><span class="sg">+</span><code>import { cn } from '@/lib/utils';</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">2</span><span class="sg">+</span><code>import type { ReactNode } from 'react';</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">3</span><span class="sg">+</span><code></code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">4</span><span class="sg">+</span><code>type ScrollWrapProps = {</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">5</span><span class="sg">+</span><code>    children: ReactNode;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">6</span><span class="sg">+</span><code>    className?: string;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">7</span><span class="sg">+</span><code>};</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">8</span><span class="sg">+</span><code></code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">9</span><span class="sg">+</span><code>/** Lets wide content scroll sideways inside its card instead of the page. */</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">10</span><span class="sg">+</span><code>export function ScrollWrap({ children, className }: ScrollWrapProps) {</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">11</span><span class="sg">+</span><code>    return (</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">12</span><span class="sg">+</span><code>        &lt;div className={cn('-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0', className)}&gt;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">13</span><span class="sg">+</span><code>            &lt;div className="min-w-max sm:min-w-0"&gt;{children}&lt;/div&gt;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">14</span><span class="sg">+</span><code>        &lt;/div&gt;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">15</span><span class="sg">+</span><code>    );</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">16</span><span class="sg">+</span><code>}</code></div>
+                </div></div>
+                <footer class="ap-file__actions">
+                  <button class="ap-btn ap-btn--ghost" data-action="open-diff"><i class="codicon codicon-diff"></i>Open diff</button>
+                  <span class="ap-spacer"></span>
+                  <button class="ap-btn ap-btn--ghost" data-action="reject">Reject</button>
+                  <button class="ap-btn ap-btn--primary" data-action="accept">Accept</button>
+                </footer>
+              </div>
+            </article>
+
+            <!-- file card: closed, with a folded run of unchanged lines -->
+            <article class="ap-file" data-collapsible data-state="pending" data-add="5" data-del="2" data-name="index.tsx" data-path="resources/js/pages/central/support">
+              <header class="ap-file__head" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <i class="codicon codicon-file-code ap-file__icon"></i>
+                <span class="ap-file__name" title="Open file">index.tsx</span>
+                <span class="ap-file__path">resources/js/pages/central/support</span>
+                <span class="ap-file__stat"><span class="ap-add">+5</span><span class="ap-del">−2</span></span>
+                <span class="ap-file__resolved"><i class="codicon codicon-check"></i><span data-resolved-label>Accepted</span><button data-action="undo">Undo</button></span>
+              </header>
+              <div class="ap-file__body">
+                <div class="ap-diff"><div class="ap-diff__rows">
+                  <div class="ap-diff__hunk">@@ -3,6 +3,7 @@</div>
+                  <div class="ap-diff__row"><span class="ln">3</span><span class="ln">3</span><span class="sg"></span><code>import { Card } from '@/components/ui/card';</code></div>
+                  <div class="ap-diff__row"><span class="ln">4</span><span class="ln">4</span><span class="sg"></span><code>import { Badge } from '@/components/ui/badge';</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">5</span><span class="sg">+</span><code>import { ScrollWrap } from '@/components/shared/kit/scroll-wrap';</code></div>
+                  <div class="ap-diff__row"><span class="ln">5</span><span class="ln">6</span><span class="sg"></span><code>import { Table } from '@/components/ui/table';</code></div>
+                  <button class="ap-diff__fold"><i class="codicon codicon-unfold"></i>37 unchanged lines</button>
+                  <div class="ap-diff__hunk">@@ -43,9 +44,11 @@ export default function SupportIndex</div>
+                  <div class="ap-diff__row"><span class="ln">43</span><span class="ln">44</span><span class="sg"></span><code>        &lt;Card&gt;</code></div>
+                  <div class="ap-diff__row is-del"><span class="ln">44</span><span class="ln"></span><span class="sg">−</span><code>            &lt;Table&gt;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">45</span><span class="sg">+</span><code>            &lt;ScrollWrap&gt;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">46</span><span class="sg">+</span><code>            &lt;Table&gt;</code></div>
+                  <div class="ap-diff__row"><span class="ln">45</span><span class="ln">47</span><span class="sg"></span><code>                &lt;TicketRows tickets={tickets} /&gt;</code></div>
+                  <div class="ap-diff__row is-del"><span class="ln">46</span><span class="ln"></span><span class="sg">−</span><code>            &lt;/Table&gt;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">48</span><span class="sg">+</span><code>            &lt;/Table&gt;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">49</span><span class="sg">+</span><code>            &lt;/ScrollWrap&gt;</code></div>
+                  <div class="ap-diff__row"><span class="ln">47</span><span class="ln">50</span><span class="sg"></span><code>        &lt;/Card&gt;</code></div>
+                </div></div>
+                <footer class="ap-file__actions">
+                  <button class="ap-btn ap-btn--ghost" data-action="open-diff"><i class="codicon codicon-diff"></i>Open diff</button>
+                  <span class="ap-spacer"></span>
+                  <button class="ap-btn ap-btn--ghost" data-action="reject">Reject</button>
+                  <button class="ap-btn ap-btn--primary" data-action="accept">Accept</button>
+                </footer>
+              </div>
+            </article>
+
+            <!-- file card: already accepted -->
+            <article class="ap-file" data-collapsible data-state="accepted" data-add="5" data-del="2" data-name="index.tsx" data-path="resources/js/pages/tenant/support">
+              <header class="ap-file__head" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <i class="codicon codicon-file-code ap-file__icon"></i>
+                <span class="ap-file__name" title="Open file">index.tsx</span>
+                <span class="ap-file__path">resources/js/pages/tenant/support</span>
+                <span class="ap-file__stat"><span class="ap-add">+5</span><span class="ap-del">−2</span></span>
+                <span class="ap-file__resolved"><i class="codicon codicon-check"></i><span data-resolved-label>Accepted</span><button data-action="undo">Undo</button></span>
+              </header>
+              <div class="ap-file__body">
+                <div class="ap-diff"><div class="ap-diff__rows">
+                  <div class="ap-diff__hunk">@@ -40,7 +40,9 @@ export default function TenantSupport</div>
+                  <div class="ap-diff__row is-del"><span class="ln">41</span><span class="ln"></span><span class="sg">−</span><code>            &lt;Table&gt;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">41</span><span class="sg">+</span><code>            &lt;ScrollWrap&gt;</code></div>
+                </div></div>
+                <footer class="ap-file__actions">
+                  <button class="ap-btn ap-btn--ghost" data-action="open-diff"><i class="codicon codicon-diff"></i>Open diff</button>
+                  <span class="ap-spacer"></span>
+                  <button class="ap-btn ap-btn--ghost" data-action="reject">Reject</button>
+                  <button class="ap-btn ap-btn--primary" data-action="accept">Accept</button>
+                </footer>
+              </div>
+            </article>
+
+            <div class="ap-turn__foot"><span>Done in 41s</span><span>3 files</span><span>$0.24</span></div>
+          </section>
+
+          <!-- user -->
+          <section class="ap-turn">
+            <div class="ap-user">Run the support e2e tests and fix anything that breaks.</div>
+          </section>
+
+          <!-- engine switch: context handed over -->
+          <div class="ap-turn ap-note">
+            <span class="ap-note__body"><i class="codicon codicon-arrow-swap"></i>Switched to Cursor · 2 messages and 3 changed files passed on <button>View</button></span>
+          </div>
+
+          <!-- Cursor turn, still running -->
+          <section class="ap-turn">
+            <div class="ap-turn__meta">
+              <span class="ap-engine ap-engine--cursor">Cursor</span><span>Auto</span><span>Agent</span>
+            </div>
+
+            <div class="ap-steps is-running">
+              <button class="ap-steps__summary" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <span>Read 1 file · Ran 2 commands · Edited 1 file</span>
+              </button>
+              <ol class="ap-steps__list">
+                <li class="ap-step"><i class="codicon codicon-file"></i><span class="ap-step__text">Read <code>e2e/central/support.spec.ts</code></span></li>
+                <li class="ap-step-wrap" data-collapsible>
+                  <div class="ap-step ap-step--failed ap-step--expandable" data-toggle>
+                    <i class="codicon codicon-terminal"></i><span class="ap-step__text">Ran <code>npx playwright test e2e/central/support.spec.ts</code></span><span class="ap-step__side">1 failed</span>
+                  </div>
+<pre class="ap-output">Running 4 tests using 2 workers
+
+  ✓ support list loads (1.8s)
+  ✘ table fits the card on mobile (2.4s)
+    Error: locator('.card > table') resolved to 0 elements
+  ✓ opens a ticket (1.1s)
+  ✓ filters by status (0.9s)
+
+  1 failed, 3 passed (6.2s)</pre>
+                </li>
+                <li class="ap-step"><i class="codicon codicon-edit"></i><span class="ap-step__text">Edited <code>support.spec.ts</code></span><span class="ap-step__side"><span class="ap-add">+2</span> <span class="ap-del">−1</span></span></li>
+                <li class="ap-step ap-step--running"><i class="codicon codicon-loading ap-spin"></i><span class="ap-step__text">Running <code>npx playwright test e2e/central/support.spec.ts</code></span><span class="ap-step__side">12s</span></li>
+              </ol>
+            </div>
+
+            <div class="ap-md">
+              <p>One test found the table as the card's first child. With the wrapper in between it found nothing, so I pointed it at the table by role instead. Running the tests again<span class="ap-caret"></span></p>
+            </div>
+
+            <article class="ap-file" data-collapsible data-state="pending" data-add="2" data-del="1" data-name="support.spec.ts" data-path="e2e/central">
+              <header class="ap-file__head" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <i class="codicon codicon-file-code ap-file__icon"></i>
+                <span class="ap-file__name" title="Open file">support.spec.ts</span>
+                <span class="ap-file__path">e2e/central</span>
+                <span class="ap-file__stat"><span class="ap-add">+2</span><span class="ap-del">−1</span></span>
+                <span class="ap-file__resolved"><i class="codicon codicon-check"></i><span data-resolved-label>Accepted</span><button data-action="undo">Undo</button></span>
+              </header>
+              <div class="ap-file__body">
+                <div class="ap-diff"><div class="ap-diff__rows">
+                  <div class="ap-diff__hunk">@@ -31,5 +31,6 @@ test('table fits the card on mobile'</div>
+                  <div class="ap-diff__row"><span class="ln">31</span><span class="ln">31</span><span class="sg"></span><code>    await page.setViewportSize({ width: 390, height: 844 });</code></div>
+                  <div class="ap-diff__row is-del"><span class="ln">32</span><span class="ln"></span><span class="sg">−</span><code>    const table = page.locator('.card &gt; table');</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">32</span><span class="sg">+</span><code>    // the table now sits inside ScrollWrap, so find it by role</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">33</span><span class="sg">+</span><code>    const table = page.getByRole('table');</code></div>
+                  <div class="ap-diff__row"><span class="ln">33</span><span class="ln">34</span><span class="sg"></span><code>    await expect(table).toBeVisible();</code></div>
+                </div></div>
+                <footer class="ap-file__actions">
+                  <button class="ap-btn ap-btn--ghost" data-action="open-diff"><i class="codicon codicon-diff"></i>Open diff</button>
+                  <span class="ap-spacer"></span>
+                  <button class="ap-btn ap-btn--ghost" data-action="reject">Reject</button>
+                  <button class="ap-btn ap-btn--primary" data-action="accept">Accept</button>
+                </footer>
+              </div>
+            </article>
+          </section>
+        </main>
+
+        <footer class="ap-dock">
+          <div class="ap-changes" data-collapsible hidden>
+            <div class="ap-changes__head">
+              <button class="ap-changes__toggle" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i><span data-changes-count></span>
+              </button>
+              <span class="ap-changes__stat"><span class="ap-add" data-changes-add></span><span class="ap-del" data-changes-del></span></span>
+              <span class="ap-spacer"></span>
+              <button class="ap-btn ap-btn--ghost" data-action="reject-all">Reject all</button>
+              <button class="ap-btn ap-btn--secondary" data-action="accept-all">Accept all</button>
+            </div>
+            <ul class="ap-changes__list"></ul>
+          </div>
+
+          <div class="ap-composer" data-engine="cursor" data-model-claude="opus" data-model-cursor="auto" data-mode="agent">
+            <div class="ap-composer__chips" hidden></div>
+            <textarea class="ap-composer__input" rows="1" placeholder="Ask, or type @ to add files"></textarea>
+            <div class="ap-composer__bar">
+              <div class="ap-seg" role="radiogroup" aria-label="Engine">
+                <button role="radio" data-engine="claude"><span class="ap-engine ap-engine--claude">Claude</span></button>
+                <button role="radio" data-engine="cursor"><span class="ap-engine ap-engine--cursor">Cursor</span></button>
+              </div>
+              <button class="ap-picker" data-menu="model" aria-expanded="false"><span class="ap-picker__label"></span><i class="codicon codicon-chevron-down"></i></button>
+              <button class="ap-picker" data-menu="mode" aria-expanded="false"><span class="ap-picker__label"></span><i class="codicon codicon-chevron-down"></i></button>
+              <span class="ap-spacer"></span>
+              <button class="ap-icon-btn" title="Add files (@)"><i class="codicon codicon-mention"></i></button>
+              <button class="ap-send ap-send--stop" title="Stop (⌘.)"><i class="codicon codicon-debug-stop"></i></button>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <!-- ===== the webview ends here ===== -->
+    </div>
+
+    <aside class="pv-notes">
+      <h1>Agent turn</h1>
+      <p>The main view: a finished Claude turn, a switch to Cursor, and a Cursor turn still running.</p>
+      <h2>Replicate</h2>
+      <ul>
+        <li>Each agent turn starts with <code>.ap-turn__meta</code>: engine dot and name, model, mode.</li>
+        <li>Consecutive tool steps fold into one <code>.ap-steps</code> row. A finished group is closed; a running group (<code>.is-running</code>) stays open with a spinner on the live step.</li>
+        <li>Command steps open to show their output (<code>.ap-step-wrap</code>). Failed steps go red with a short reason on the right.</li>
+        <li>Every changed file gets an <code>.ap-file</code> card: name, folder path cut from the left, a New tag for created files, +/− counts. Click the head to open the diff; Accept and Reject sit under it.</li>
+        <li>Long unchanged runs fold into <code>.ap-diff__fold</code>; clicking it fetches those lines.</li>
+        <li>The changes bar above the input lists every pending file across the thread, with totals and Accept all / Reject all. It hides when nothing is pending.</li>
+        <li>Switching engine shows an <code>.ap-note</code> saying what context was passed on.</li>
+        <li>While a turn runs, send becomes stop.</li>
+      </ul>
+      <h2>Try</h2>
+      <ul>
+        <li>Accept or reject a card and watch the changes bar update; Undo puts it back.</li>
+        <li>Switch engine under the input: the model list changes with it.</li>
+        <li>Use the width buttons: 340 is the narrowest sidebar.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script src="js/menus.js"></script>
+  <script src="js/prototype.js"></script>
+</body>
+</html>

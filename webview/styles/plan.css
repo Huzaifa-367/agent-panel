@@ -1,0 +1,104 @@
+/* Hand-off: the plan card a planner produces, with the button that sends it to the builder. */
+
+.ap-plan {
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-r2);
+  background: var(--ap-surface);
+}
+
+.ap-plan__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ap-2);
+  height: 34px;
+  padding: 0 var(--ap-1) 0 var(--ap-3);
+  border-bottom: 1px solid var(--ap-border);
+  font-size: var(--ap-t-sm);
+}
+
+.ap-plan__head strong {
+  font-weight: 600;
+}
+
+.ap-plan__steps {
+  margin: 0;
+  padding: var(--ap-2) var(--ap-3) var(--ap-2) calc(var(--ap-3) + 18px);
+  font-size: var(--ap-t-sm);
+}
+
+.ap-plan__steps li {
+  padding: 3px 0;
+}
+
+.ap-plan__steps li::marker {
+  color: var(--ap-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-plan__files {
+  display: block;
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-plan__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ap-1);
+  padding: 6px var(--ap-2) 6px var(--ap-3);
+  border-top: 1px solid var(--ap-border);
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-plan__foot .ap-btn--primary {
+  margin-left: auto;
+}
+
+/* once built, the plan card collapses to its head with a status */
+
+.ap-plan[data-state="built"] .ap-plan__steps,
+.ap-plan[data-state="built"] .ap-plan__foot {
+  display: none;
+}
+
+.ap-plan[data-state="built"] .ap-plan__head {
+  border-bottom: 0;
+}
+
+.ap-plan__status {
+  display: none;
+  font-size: var(--ap-t-xs);
+  color: var(--ap-muted);
+}
+
+.ap-plan[data-state="built"] .ap-plan__status {
+  display: inline;
+}
+
+/* review findings from the planner after the build */
+
+.ap-review {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--ap-t-sm);
+}
+
+.ap-review li {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: var(--ap-2);
+  padding: 3px 0;
+}
+
+.ap-review .codicon-pass {
+  color: var(--ap-added);
+  margin-top: 3px;
+}
+
+.ap-review .codicon-warning {
+  color: var(--ap-warn);
+  margin-top: 3px;
+}

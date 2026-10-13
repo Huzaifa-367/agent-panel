@@ -1,0 +1,2568 @@
+{
+ "availableDefaultModels2": [
+  {
+   "name": "default",
+   "defaultOn": true,
+   "supportsAgent": true,
+   "degradationStatus": 0,
+   "tooltipData": {
+    "primaryText": "",
+    "secondaryText": "",
+    "secondaryWarningText": false,
+    "icon": "",
+    "tertiaryText": "",
+    "tertiaryTextUrl": "",
+    "markdownContent": "**Auto**<br />Good default for everyday tasks, balanced for quality and speed."
+   },
+   "tooltipDataForMaxMode": {
+    "primaryText": "",
+    "secondaryText": "",
+    "secondaryWarningText": false,
+    "icon": "",
+    "tertiaryText": "",
+    "tertiaryTextUrl": "",
+    "markdownContent": "**Auto**<br />Good default for everyday tasks, balanced for quality and speed."
+   },
+   "supportsThinking": false,
+   "supportsImages": true,
+   "supportsMaxMode": true,
+   "supportsNonMaxMode": true,
+   "clientDisplayName": "Auto",
+   "serverModelName": "default",
+   "isRecommendedForBackgroundComposer": false,
+   "supportsPlanMode": true,
+   "supportsSandboxing": true,
+   "inputboxShortModelName": "Auto",
+   "parameterDefinitions": [],
+   "variants": [
+    {
+     "parameterValues": [],
+     "displayName": "Auto",
+     "displayNameOutsidePicker": "Auto",
+     "isMaxMode": false,
+     "isDefaultMaxConfig": true,
+     "isDefaultNonMaxConfig": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Auto**<br />Good default for everyday tasks, balanced for quality and speed."
+     },
+     "variantStringRepresentation": "default[]",
+     "legacySlug": "default"
+    }
+   ],
+   "legacySlugs": [],
+   "idAliases": [
+    "auto"
+   ],
+   "tagline": "Balanced quality and speed, recommended for most tasks",
+   "cloudAgentEffortModes": [],
+   "modelPickerBadges": []
+  },
+  {
+   "name": "grok-4.7",
+   "defaultOn": true,
+   "supportsAgent": true,
+   "degradationStatus": 0,
+   "supportsThinking": true,
+   "supportsImages": false,
+   "supportsMaxMode": true,
+   "supportsNonMaxMode": true,
+   "contextTokenLimit": 256000,
+   "contextTokenLimitForMaxMode": 500000,
+   "clientDisplayName": "Grok 4.7",
+   "serverModelName": "grok-4.7",
+   "isRecommendedForBackgroundComposer": false,
+   "supportsPlanMode": true,
+   "supportsSandboxing": true,
+   "inputboxShortModelName": "Grok 4.7",
+   "supportsCmdK": false,
+   "parameterDefinitions": [
+    {
+     "id": "context",
+     "name": "Context",
+     "markdownTooltip": "Context size the model has available.",
+     "parameterType": {
+      "enumParameter": {
+       "values": [
+        {
+         "value": "256k",
+         "displayName": "256K",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "500k",
+         "displayName": "500K",
+         "increasesModelCost": true,
+         "modelPickerBadges": []
+        }
+       ]
+      }
+     }
+    },
+    {
+     "id": "reasoning_effort",
+     "name": "Effort",
+     "markdownTooltip": "Controls how much reasoning effort the model uses before responding.",
+     "parameterType": {
+      "enumParameter": {
+       "values": [
+        {
+         "value": "low",
+         "displayName": "Low",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "medium",
+         "displayName": "Medium",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "high",
+         "displayName": "High",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "xhigh",
+         "displayName": "Extra High",
+         "modelPickerBadges": []
+        }
+       ]
+      }
+     },
+     "isCycleableByHotkey": true
+    },
+    {
+     "id": "fast",
+     "name": "Fast",
+     "markdownTooltip": "Significantly faster but consumes more usage",
+     "parameterType": {
+      "booleanParameter": {
+       "values": [
+        {
+         "value": "false"
+        },
+        {
+         "value": "true",
+         "displayName": "Fast\u200b\u200b",
+         "increasesModelCost": true
+        }
+       ]
+      }
+     },
+     "isCycleableByHotkey": false
+    }
+   ],
+   "variants": [
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "256k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Low</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Low</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />256k context window<br /><br />*Version: low effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=256k,reasoning_effort=low,fast=false]",
+     "legacySlug": "grok-4.7-low"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "256k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Low Fast\u200b\u200b</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Low Fast\u200b\u200b</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7 (fast)**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />256k context window<br /><br />*Version: low effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=256k,reasoning_effort=low,fast=true]",
+     "legacySlug": "grok-4.7-low-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "256k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Medium</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Medium</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />256k context window<br /><br />*Version: medium effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=256k,reasoning_effort=medium,fast=false]",
+     "legacySlug": "grok-4.7-medium"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "256k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Medium Fast\u200b\u200b</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Medium Fast\u200b\u200b</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7 (fast)**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />256k context window<br /><br />*Version: medium effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=256k,reasoning_effort=medium,fast=true]",
+     "legacySlug": "grok-4.7-medium-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "256k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> High</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> High</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />256k context window<br /><br />*Version: high effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=256k,reasoning_effort=high,fast=false]",
+     "legacySlug": "grok-4.7-high"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "256k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> High Fast\u200b\u200b</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> High Fast\u200b\u200b</span>",
+     "isMaxMode": false,
+     "isDefaultMaxConfig": true,
+     "isDefaultNonMaxConfig": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7 (fast)**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />256k context window<br /><br />*Version: high effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=256k,reasoning_effort=high,fast=true]",
+     "legacySlug": "grok-4.7-high-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "256k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Extra High</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Extra High</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />256k context window<br /><br />*Version: extra high effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=256k,reasoning_effort=xhigh,fast=false]",
+     "legacySlug": "grok-4.7-xhigh"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "256k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Extra High Fast\u200b\u200b</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Extra High Fast\u200b\u200b</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7 (fast)**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />256k context window<br /><br />*Version: extra high effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=256k,reasoning_effort=xhigh,fast=true]",
+     "legacySlug": "grok-4.7-xhigh-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "500k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Low</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Low</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />500k context window<br /><br />*Version: low effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=500k,reasoning_effort=low,fast=false]",
+     "legacySlug": "grok-4.7-low"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "500k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Low Fast\u200b\u200b</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Low Fast\u200b\u200b</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7 (fast)**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />500k context window<br /><br />*Version: low effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=500k,reasoning_effort=low,fast=true]",
+     "legacySlug": "grok-4.7-low-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "500k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Medium</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Medium</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />500k context window<br /><br />*Version: medium effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=500k,reasoning_effort=medium,fast=false]",
+     "legacySlug": "grok-4.7-medium"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "500k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Medium Fast\u200b\u200b</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Medium Fast\u200b\u200b</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7 (fast)**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />500k context window<br /><br />*Version: medium effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=500k,reasoning_effort=medium,fast=true]",
+     "legacySlug": "grok-4.7-medium-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "500k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> High</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> High</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />500k context window<br /><br />*Version: high effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=500k,reasoning_effort=high,fast=false]",
+     "legacySlug": "grok-4.7-high"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "500k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> High Fast\u200b\u200b</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> High Fast\u200b\u200b</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7 (fast)**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />500k context window<br /><br />*Version: high effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=500k,reasoning_effort=high,fast=true]",
+     "legacySlug": "grok-4.7-high-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "500k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Extra High</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Extra High</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />500k context window<br /><br />*Version: extra high effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=500k,reasoning_effort=xhigh,fast=false]",
+     "legacySlug": "grok-4.7-xhigh"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "500k"
+      },
+      {
+       "id": "reasoning_effort",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Extra High Fast\u200b\u200b</span>",
+     "displayNameOutsidePicker": "Grok 4.7 <span style=\"color: var(--cursor-text-tertiary);\"> Extra High Fast\u200b\u200b</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Grok 4.7 (fast)**<br />SpaceXAI's most powerful model, built for complex coding and knowledge work.<br /><br />500k context window<br /><br />*Version: extra high effort*"
+     },
+     "variantStringRepresentation": "grok-4.7[context=500k,reasoning_effort=xhigh,fast=true]",
+     "legacySlug": "grok-4.7-xhigh-fast"
+    }
+   ],
+   "legacySlugs": [
+    "grok-4.7",
+    "grok-4.7-low",
+    "grok-4.7-low-fast",
+    "grok-4.7-medium",
+    "grok-4.7-medium-fast",
+    "grok-4.7-high",
+    "grok-4.7-high-fast",
+    "grok-4.7-xhigh",
+    "grok-4.7-xhigh-fast"
+   ],
+   "idAliases": [],
+   "namedModelSectionIndex": 1,
+   "vendorName": "cursor",
+   "vendor": {
+    "id": 6,
+    "displayName": "Cursor"
+   },
+   "cloudAgentEffortModes": [],
+   "supportsSmartModeClassifier": false,
+   "modelPickerBadges": [
+    {
+     "label": "New",
+     "variant": 1,
+     "dismissOnSelection": true
+    }
+   ]
+  },
+  {
+   "name": "composer-2.5",
+   "defaultOn": true,
+   "supportsAgent": true,
+   "degradationStatus": 0,
+   "tooltipData": {
+    "primaryText": "",
+    "secondaryText": "",
+    "secondaryWarningText": false,
+    "icon": "",
+    "tertiaryText": "",
+    "tertiaryTextUrl": "",
+    "markdownContent": "**Composer 2.5 (Fast)**<br />Cursor's fast and efficient model -- great for everyday use.<br /><br />200k context window"
+   },
+   "tooltipDataForMaxMode": {
+    "primaryText": "",
+    "secondaryText": "",
+    "secondaryWarningText": false,
+    "icon": "",
+    "tertiaryText": "",
+    "tertiaryTextUrl": "",
+    "markdownContent": "**Composer 2.5 (Fast)**<br />Cursor's fast and efficient model -- great for everyday use.<br /><br />200k context window"
+   },
+   "supportsThinking": true,
+   "supportsImages": false,
+   "supportsMaxMode": true,
+   "supportsNonMaxMode": true,
+   "contextTokenLimit": 200000,
+   "contextTokenLimitForMaxMode": 200000,
+   "clientDisplayName": "Composer 2.5",
+   "serverModelName": "composer-2.5",
+   "isRecommendedForBackgroundComposer": false,
+   "supportsPlanMode": true,
+   "supportsSandboxing": true,
+   "inputboxShortModelName": "Composer 2.5",
+   "supportsCmdK": false,
+   "parameterDefinitions": [
+    {
+     "id": "fast",
+     "name": "Fast",
+     "markdownTooltip": "Significantly faster but consumes more usage",
+     "parameterType": {
+      "booleanParameter": {
+       "values": [
+        {
+         "value": "false"
+        },
+        {
+         "value": "true",
+         "displayName": "Fast",
+         "increasesModelCost": true
+        }
+       ]
+      }
+     },
+     "isCycleableByHotkey": true
+    }
+   ],
+   "variants": [
+    {
+     "parameterValues": [
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Composer 2.5 <span style=\"color: var(--cursor-text-tertiary);\">Fast</span>",
+     "displayNameOutsidePicker": "Composer 2.5 <span style=\"color: var(--cursor-text-tertiary);\">Fast</span>",
+     "isMaxMode": false,
+     "isDefaultMaxConfig": true,
+     "isDefaultNonMaxConfig": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Composer 2.5 (Fast)**<br />Cursor's fast and efficient model -- great for everyday use.<br /><br />200k context window"
+     },
+     "variantStringRepresentation": "composer-2.5[fast=true]",
+     "legacySlug": "composer-2.5-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Composer 2.5",
+     "displayNameOutsidePicker": "Composer 2.5",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Composer 2.5**<br />Cursor's fast and efficient model -- great for everyday use.<br /><br />200k context window"
+     },
+     "variantStringRepresentation": "composer-2.5[fast=false]",
+     "legacySlug": "composer-2.5"
+    }
+   ],
+   "legacySlugs": [
+    "composer-2.5-fast"
+   ],
+   "idAliases": [
+    "composer-latest",
+    "composer",
+    "composer-2-5"
+   ],
+   "namedModelSectionIndex": 1,
+   "vendorName": "cursor",
+   "vendor": {
+    "id": 6,
+    "displayName": "Cursor"
+   },
+   "cloudAgentEffortModes": [],
+   "modelPickerBadges": []
+  },
+  {
+   "name": "claude-opus-5-5",
+   "defaultOn": true,
+   "supportsAgent": true,
+   "degradationStatus": 0,
+   "tooltipData": {
+    "primaryText": "",
+    "secondaryText": "",
+    "secondaryWarningText": false,
+    "icon": "",
+    "tertiaryText": "",
+    "tertiaryTextUrl": "",
+    "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br />*Version: medium effort*"
+   },
+   "tooltipDataForMaxMode": {
+    "primaryText": "",
+    "secondaryText": "",
+    "secondaryWarningText": false,
+    "icon": "",
+    "tertiaryText": "",
+    "tertiaryTextUrl": "",
+    "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br />*Version: medium effort*"
+   },
+   "supportsThinking": true,
+   "supportsImages": true,
+   "supportsMaxMode": true,
+   "supportsNonMaxMode": true,
+   "contextTokenLimit": 300000,
+   "contextTokenLimitForMaxMode": 1000000,
+   "clientDisplayName": "Claude Opus 5.5",
+   "serverModelName": "claude-opus-5-5",
+   "isRecommendedForBackgroundComposer": false,
+   "supportsPlanMode": true,
+   "supportsSandboxing": true,
+   "inputboxShortModelName": "Claude Opus 5.5",
+   "supportsCmdK": false,
+   "parameterDefinitions": [
+    {
+     "id": "context",
+     "name": "Context",
+     "markdownTooltip": "Context size the model has available.",
+     "parameterType": {
+      "enumParameter": {
+       "values": [
+        {
+         "value": "300k",
+         "displayName": "300K",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "1m",
+         "displayName": "1M",
+         "increasesModelCost": true,
+         "modelPickerBadges": []
+        }
+       ]
+      }
+     }
+    },
+    {
+     "id": "effort",
+     "name": "Effort",
+     "markdownTooltip": "Effort the model uses to generate its response.",
+     "parameterType": {
+      "enumParameter": {
+       "values": [
+        {
+         "value": "low",
+         "displayName": "Low",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "medium",
+         "displayName": "Medium",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "high",
+         "displayName": "High",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "xhigh",
+         "displayName": "Extra High",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "max",
+         "displayName": "Max",
+         "modelPickerBadges": []
+        }
+       ]
+      }
+     },
+     "isCycleableByHotkey": true
+    },
+    {
+     "id": "fast",
+     "name": "Fast",
+     "markdownTooltip": "2x more expensive, but significantly faster speeds.",
+     "parameterType": {
+      "booleanParameter": {
+       "values": [
+        {
+         "value": "false"
+        },
+        {
+         "value": "true",
+         "displayName": "Fast",
+         "increasesModelCost": true
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "variants": [
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Low</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Low</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br />*Version: low effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=low,fast=false]",
+     "legacySlug": "claude-opus-5-5-low"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Low Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Low Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: low effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=low,fast=true]",
+     "legacySlug": "claude-opus-5-5-low-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Medium</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Medium</span>",
+     "isMaxMode": false,
+     "isDefaultMaxConfig": true,
+     "isDefaultNonMaxConfig": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br />*Version: medium effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=medium,fast=false]",
+     "legacySlug": "claude-opus-5-5-medium"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Medium Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Medium Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: medium effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=medium,fast=true]",
+     "legacySlug": "claude-opus-5-5-medium-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">High</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">High</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br />*Version: high effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=high,fast=false]",
+     "legacySlug": "claude-opus-5-5-high"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">High Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">High Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: high effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=high,fast=true]",
+     "legacySlug": "claude-opus-5-5-high-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Extra High</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Extra High</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br />*Version: extra high effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=xhigh,fast=false]",
+     "legacySlug": "claude-opus-5-5-xhigh"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Extra High Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Extra High Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: extra high effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=xhigh,fast=true]",
+     "legacySlug": "claude-opus-5-5-xhigh-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "max"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Max</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Max</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br />*Version: max effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=max,fast=false]",
+     "legacySlug": "claude-opus-5-5-max"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "300k"
+      },
+      {
+       "id": "effort",
+       "value": "max"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Max Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">Max Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />300k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: max effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=300k,effort=max,fast=true]",
+     "legacySlug": "claude-opus-5-5-max-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Low</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Low</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br />*Version: low effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=low,fast=false]",
+     "legacySlug": "claude-opus-5-5-low"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Low Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Low Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: low effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=low,fast=true]",
+     "legacySlug": "claude-opus-5-5-low-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Medium</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Medium</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br />*Version: medium effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=medium,fast=false]",
+     "legacySlug": "claude-opus-5-5-medium"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Medium Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Medium Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: medium effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=medium,fast=true]",
+     "legacySlug": "claude-opus-5-5-medium-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M High</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M High</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br />*Version: high effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=high,fast=false]",
+     "legacySlug": "claude-opus-5-5-high"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M High Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M High Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: high effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=high,fast=true]",
+     "legacySlug": "claude-opus-5-5-high-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Extra High</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Extra High</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br />*Version: extra high effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=xhigh,fast=false]",
+     "legacySlug": "claude-opus-5-5-xhigh"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Extra High Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Extra High Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: extra high effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=xhigh,fast=true]",
+     "legacySlug": "claude-opus-5-5-xhigh-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "max"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Max</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Max</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br />*Version: max effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=max,fast=false]",
+     "legacySlug": "claude-opus-5-5-max"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "effort",
+       "value": "max"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Max Fast</span>",
+     "displayNameOutsidePicker": "Claude Opus 5.5 <span style=\"color: var(--cursor-text-tertiary);\">1M Max Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**Claude Opus 5.5 (fast)**<br />Anthropic's large model class, great for difficult agentic tasks.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same Claude Opus 5.5 model at 2x the price, using Anthropic's fast mode.</span><br /><br />*Version: max effort*"
+     },
+     "variantStringRepresentation": "claude-opus-5-5[context=1m,effort=max,fast=true]",
+     "legacySlug": "claude-opus-5-5-max-fast"
+    }
+   ],
+   "legacySlugs": [
+    "claude-opus-5-5-low",
+    "claude-opus-5-5-low-fast",
+    "claude-opus-5-5-medium",
+    "claude-opus-5-5-medium-fast",
+    "claude-opus-5-5-high",
+    "claude-opus-5-5-high-fast",
+    "claude-opus-5-5-xhigh",
+    "claude-opus-5-5-xhigh-fast",
+    "claude-opus-5-5-max",
+    "claude-opus-5-5-max-fast"
+   ],
+   "idAliases": [
+    "opus-latest",
+    "opus",
+    "opus-5.5",
+    "opus-5-5"
+   ],
+   "namedModelSectionIndex": 1,
+   "vendorName": "anthropic",
+   "vendor": {
+    "id": 1,
+    "displayName": "Anthropic"
+   },
+   "cloudAgentEffortModes": [],
+   "modelPickerBadges": []
+  },
+  {
+   "name": "gpt-5.6-luna",
+   "defaultOn": false,
+   "supportsAgent": true,
+   "degradationStatus": 0,
+   "tooltipData": {
+    "primaryText": "",
+    "secondaryText": "",
+    "secondaryWarningText": false,
+    "icon": "",
+    "tertiaryText": "",
+    "tertiaryTextUrl": "",
+    "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br />*Version: medium reasoning effort*"
+   },
+   "tooltipDataForMaxMode": {
+    "primaryText": "",
+    "secondaryText": "",
+    "secondaryWarningText": false,
+    "icon": "",
+    "tertiaryText": "",
+    "tertiaryTextUrl": "",
+    "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br />*Version: medium reasoning effort*"
+   },
+   "supportsThinking": true,
+   "supportsImages": true,
+   "supportsMaxMode": true,
+   "supportsNonMaxMode": true,
+   "contextTokenLimit": 272000,
+   "contextTokenLimitForMaxMode": 1000000,
+   "clientDisplayName": "GPT-5.6 Luna",
+   "serverModelName": "gpt-5.6-luna",
+   "isRecommendedForBackgroundComposer": false,
+   "supportsPlanMode": true,
+   "supportsSandboxing": true,
+   "inputboxShortModelName": "GPT-5.6 Luna",
+   "parameterDefinitions": [
+    {
+     "id": "context",
+     "name": "Context",
+     "markdownTooltip": "Context size the model has available.",
+     "parameterType": {
+      "enumParameter": {
+       "values": [
+        {
+         "value": "272k",
+         "displayName": "272K",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "1m",
+         "displayName": "1M",
+         "increasesModelCost": true,
+         "modelPickerBadges": []
+        }
+       ]
+      }
+     }
+    },
+    {
+     "id": "reasoning",
+     "name": "Reasoning",
+     "markdownTooltip": "Reasoning effort the model uses to generate its response.",
+     "parameterType": {
+      "enumParameter": {
+       "values": [
+        {
+         "value": "none",
+         "displayName": "None",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "low",
+         "displayName": "Low",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "medium",
+         "displayName": "Medium",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "high",
+         "displayName": "High",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "xhigh",
+         "displayName": "Extra High",
+         "modelPickerBadges": []
+        },
+        {
+         "value": "max",
+         "displayName": "Max",
+         "modelPickerBadges": []
+        }
+       ]
+      }
+     },
+     "isCycleableByHotkey": true
+    },
+    {
+     "id": "fast",
+     "name": "Fast",
+     "markdownTooltip": "2x more expensive, but faster speeds.",
+     "parameterType": {
+      "booleanParameter": {
+       "values": [
+        {
+         "value": "false"
+        },
+        {
+         "value": "true",
+         "displayName": "Fast",
+         "increasesModelCost": true
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "variants": [
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "none"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">None</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">None</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br />*Version: none reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=none,fast=false]",
+     "legacySlug": "gpt-5.6-luna-none"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "none"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">None Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">None Fast</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: none reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=none,fast=true]",
+     "legacySlug": "gpt-5.6-luna-none-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Low</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Low</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br />*Version: low reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=low,fast=false]",
+     "legacySlug": "gpt-5.6-luna-low"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Low Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Low Fast</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: low reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=low,fast=true]",
+     "legacySlug": "gpt-5.6-luna-low-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Medium</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Medium</span>",
+     "isMaxMode": false,
+     "isDefaultMaxConfig": true,
+     "isDefaultNonMaxConfig": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br />*Version: medium reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=medium,fast=false]",
+     "legacySlug": "gpt-5.6-luna-medium"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Medium Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Medium Fast</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: medium reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=medium,fast=true]",
+     "legacySlug": "gpt-5.6-luna-medium-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">High</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">High</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br />*Version: high reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=high,fast=false]",
+     "legacySlug": "gpt-5.6-luna-high"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">High Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">High Fast</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: high reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=high,fast=true]",
+     "legacySlug": "gpt-5.6-luna-high-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Extra High</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Extra High</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br />*Version: extra high reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=xhigh,fast=false]",
+     "legacySlug": "gpt-5.6-luna-xhigh"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Extra High Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Extra High Fast</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: extra high reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=xhigh,fast=true]",
+     "legacySlug": "gpt-5.6-luna-xhigh-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "max"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Max</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Max</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br />*Version: max reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=max,fast=false]",
+     "legacySlug": "gpt-5.6-luna-max"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "272k"
+      },
+      {
+       "id": "reasoning",
+       "value": "max"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Max Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">Max Fast</span>",
+     "isMaxMode": false,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />272k context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: max reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=272k,reasoning=max,fast=true]",
+     "legacySlug": "gpt-5.6-luna-max-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "none"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M None</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M None</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br />*Version: none reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=none,fast=false]",
+     "legacySlug": "gpt-5.6-luna-none"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "none"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M None Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M None Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: none reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=none,fast=true]",
+     "legacySlug": "gpt-5.6-luna-none-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Low</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Low</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br />*Version: low reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=low,fast=false]",
+     "legacySlug": "gpt-5.6-luna-low"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "low"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Low Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Low Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: low reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=low,fast=true]",
+     "legacySlug": "gpt-5.6-luna-low-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Medium</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Medium</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br />*Version: medium reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=medium,fast=false]",
+     "legacySlug": "gpt-5.6-luna-medium"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "medium"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Medium Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Medium Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: medium reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=medium,fast=true]",
+     "legacySlug": "gpt-5.6-luna-medium-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M High</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M High</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br />*Version: high reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=high,fast=false]",
+     "legacySlug": "gpt-5.6-luna-high"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "high"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M High Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M High Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: high reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=high,fast=true]",
+     "legacySlug": "gpt-5.6-luna-high-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Extra High</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Extra High</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br />*Version: extra high reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=xhigh,fast=false]",
+     "legacySlug": "gpt-5.6-luna-xhigh"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "xhigh"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Extra High Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Extra High Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: extra high reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=xhigh,fast=true]",
+     "legacySlug": "gpt-5.6-luna-xhigh-fast"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "max"
+      },
+      {
+       "id": "fast",
+       "value": "false"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Max</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Max</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br />*Version: max reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=max,fast=false]",
+     "legacySlug": "gpt-5.6-luna-max"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "context",
+       "value": "1m"
+      },
+      {
+       "id": "reasoning",
+       "value": "max"
+      },
+      {
+       "id": "fast",
+       "value": "true"
+      }
+     ],
+     "displayName": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Max Fast</span>",
+     "displayNameOutsidePicker": "GPT-5.6 Luna <span style=\"color: var(--cursor-text-tertiary);\">1M Max Fast</span>",
+     "isMaxMode": true,
+     "tooltipData": {
+      "primaryText": "",
+      "secondaryText": "",
+      "secondaryWarningText": false,
+      "icon": "",
+      "tertiaryText": "",
+      "tertiaryTextUrl": "",
+      "markdownContent": "**GPT-5.6 Luna (fast)**<br />Fast, affordable GPT-5.6 tier with strong capability at the lowest GPT-5.6 cost. Roughly corresponds to nano on earlier GPT models.<br /><br />1M context window<br /><br /><span style=\"color:var(--vscode-editorWarning-foreground);\">The same GPT-5.6 Luna model, using OpenAI's fast priority processing at 2x the price.</span><br /><br />*Version: max reasoning effort*"
+     },
+     "variantStringRepresentation": "gpt-5.6-luna[context=1m,reasoning=max,fast=true]",
+     "legacySlug": "gpt-5.6-luna-max-fast"
+    }
+   ],
+   "legacySlugs": [
+    "gpt-5.6-luna-none",
+    "gpt-5.6-luna-none-fast",
+    "gpt-5.6-luna-low",
+    "gpt-5.6-luna-low-fast",
+    "gpt-5.6-luna-medium",
+    "gpt-5.6-luna-medium-fast",
+    "gpt-5.6-luna-high",
+    "gpt-5.6-luna-high-fast",
+    "gpt-5.6-luna-xhigh",
+    "gpt-5.6-luna-xhigh-fast",
+    "gpt-5.6-luna-max",
+    "gpt-5.6-luna-max-fast"
+   ],
+   "idAliases": [
+    "gpt-5-6-luna"
+   ],
+   "namedModelSectionIndex": 1,
+   "vendorName": "openai",
+   "vendor": {
+    "id": 2,
+    "displayName": "OpenAI"
+   },
+   "cloudAgentEffortModes": [],
+   "modelPickerBadges": []
+  },
+  {
+   "name": "claude-haiku-4-5",
+   "defaultOn": false,
+   "supportsAgent": true,
+   "degradationStatus": 0,
+   "supportsThinking": true,
+   "supportsImages": true,
+   "supportsMaxMode": true,
+   "supportsNonMaxMode": true,
+   "contextTokenLimit": 200000,
+   "contextTokenLimitForMaxMode": 200000,
+   "clientDisplayName": "Claude Haiku 4.5",
+   "serverModelName": "claude-haiku-4-5",
+   "isRecommendedForBackgroundComposer": false,
+   "supportsPlanMode": true,
+   "supportsSandboxing": true,
+   "inputboxShortModelName": "Claude Haiku 4.5",
+   "parameterDefinitions": [
+    {
+     "id": "thinking",
+     "name": "Thinking",
+     "markdownTooltip": "Does the model use thinking to generate its response?",
+     "parameterType": {
+      "booleanParameter": {
+       "values": [
+        {
+         "value": "false"
+        },
+        {
+         "value": "true"
+        }
+       ]
+      }
+     },
+     "isCycleableByHotkey": true
+    }
+   ],
+   "variants": [
+    {
+     "parameterValues": [
+      {
+       "id": "thinking",
+       "value": "false"
+      }
+     ],
+     "displayName": "Claude Haiku 4.5 <span style=\"color: var(--cursor-text-tertiary);\">No Thinking</span>",
+     "displayNameOutsidePicker": "Claude Haiku 4.5 <span style=\"color: var(--cursor-text-tertiary);\">No Thinking</span>",
+     "isMaxMode": false,
+     "variantStringRepresentation": "claude-haiku-4-5[thinking=false]",
+     "legacySlug": "claude-4.5-haiku"
+    },
+    {
+     "parameterValues": [
+      {
+       "id": "thinking",
+       "value": "true"
+      }
+     ],
+     "displayName": "Claude Haiku 4.5",
+     "displayNameOutsidePicker": "Claude Haiku 4.5",
+     "isMaxMode": false,
+     "isDefaultMaxConfig": true,
+     "isDefaultNonMaxConfig": true,
+     "variantStringRepresentation": "claude-haiku-4-5[thinking=true]",
+     "legacySlug": "claude-4.5-haiku-thinking"
+    }
+   ],
+   "legacySlugs": [
+    "claude-4.5-haiku",
+    "claude-4.5-haiku-thinking"
+   ],
+   "idAliases": [
+    "haiku-latest",
+    "haiku",
+    "haiku-4.5",
+    "haiku-4-5"
+   ],
+   "namedModelSectionIndex": 1,
+   "vendorName": "anthropic",
+   "vendor": {
+    "id": 1,
+    "displayName": "Anthropic"
+   },
+   "cloudAgentEffortModes": [],
+   "supportsSmartModeClassifier": true,
+   "modelPickerBadges": []
+  }
+ ],
+ "aiSettings": {
+  "modelOverrideEnabled": [
+   "default",
+   "claude-haiku-4-5",
+   "claude-sonnet-4-5",
+   "claude-opus-4-6",
+   "composer-2.5",
+   "kimi-k2.7-code",
+   "glm-5.2",
+   "grok-4.6",
+   "gpt-5.6-luna",
+   "grok-4.7"
+  ],
+  "modelParameterPreferences": {
+   "gpt-5.6-luna": {
+    "modelId": "gpt-5.6-luna",
+    "parameters": [
+     {
+      "id": "context",
+      "value": "272k"
+     },
+     {
+      "id": "reasoning",
+      "value": "medium"
+     },
+     {
+      "id": "fast",
+      "value": "false"
+     }
+    ],
+    "updatedAt": "2026-09-04T22:23:06.988Z"
+   }
+  },
+  "modelConfig": {
+   "composer": {
+    "modelName": "grok-4.7",
+    "maxMode": false,
+    "selectedModels": [
+     {
+      "modelId": "grok-4.7",
+      "parameters": [
+       {
+        "id": "context",
+        "value": "256k"
+       },
+       {
+        "id": "reasoning_effort",
+        "value": "high"
+       },
+       {
+        "id": "fast",
+        "value": "true"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "modelOverrideDisabled": [
+   "claude-sonnet-4",
+   "claude-sonnet-4-5",
+   "gemini-3-flash",
+   "gpt-5.2",
+   "claude-opus-4-5",
+   "gpt-5-mini",
+   "gpt-5.6-sol"
+  ]
+ }
+}

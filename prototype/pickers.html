@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pickers and mentions · Agent Panel</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vscode/codicons@0.0.36/dist/codicon.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/thread.css">
+  <link rel="stylesheet" href="css/steps.css">
+  <link rel="stylesheet" href="css/file-card.css">
+  <link rel="stylesheet" href="css/composer.css">
+  <link rel="stylesheet" href="css/plan.css">
+</head>
+<body>
+  <div class="pv-bar">
+    <span class="pv-bar__name">Agent Panel prototype</span>
+    <nav class="pv-nav">
+      <a href="index.html">Overview</a>
+      <a href="agent-turn.html">Agent turn</a>
+      <a href="handoff.html">Hand-off</a>
+      <a href="states.html">Permissions and errors</a>
+      <a href="empty.html">New chat and history</a>
+      <a href="pickers.html" aria-current="page">Pickers and mentions</a>
+    </nav>
+    <div class="pv-tools">
+      <button data-pv-theme="dark">Dark</button>
+      <button data-pv-theme="light">Light</button>
+      <button data-pv-width="340">340</button>
+      <button data-pv-width="420">420</button>
+      <button data-pv-width="560">560</button>
+    </div>
+  </div>
+
+  <div class="pv-stage">
+    <div class="pv-frame">
+      <!-- ===== the webview starts here ===== -->
+      <div class="ap">
+        <header class="ap-header">
+          <div class="ap-header__title">SLA badge colours</div>
+          <span class="ap-usage is-high" title="Claude weekly usage · resets Thu 9:00">
+            <span class="ap-usage__bar"><span style="width: 88%"></span></span>Week 88%
+          </span>
+          <button class="ap-icon-btn" title="History"><i class="codicon codicon-history"></i></button>
+          <button class="ap-icon-btn" title="New chat"><i class="codicon codicon-add"></i></button>
+          <button class="ap-icon-btn" title="More"><i class="codicon codicon-ellipsis"></i></button>
+        </header>
+
+        <main class="ap-thread">
+          <section class="ap-turn">
+            <div class="ap-user">Which colour tokens does the NEMT kit use for warning and danger?</div>
+          </section>
+          <section class="ap-turn">
+            <div class="ap-turn__meta">
+              <span class="ap-engine ap-engine--claude">Claude</span><span>Sonnet</span><span>Plan</span>
+            </div>
+            <div class="ap-md">
+              <p>Both live in <code>nemt/resources/css/shared/tokens.css</code>:</p>
+              <table>
+                <thead><tr><th>Token</th><th>Used for</th></tr></thead>
+                <tbody>
+                  <tr><td><code>--warning</code></td><td>Amber states, due soon</td></tr>
+                  <tr><td><code>--destructive</code></td><td>Red states, overdue</td></tr>
+                </tbody>
+              </table>
+              <div class="ap-codeblock">
+                <div class="ap-codeblock__head"><span>css</span><span class="ap-spacer"></span><button class="ap-icon-btn" title="Copy" data-action="copy"><i class="codicon codicon-copy"></i></button></div>
+<pre><code>.sla-soon { color: var(--warning); }
+.sla-overdue { color: var(--destructive); }</code></pre>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <footer class="ap-dock">
+          <div class="ap-composer" data-engine="claude" data-model-claude="sonnet" data-model-cursor="auto" data-mode="plan">
+            <!-- @ mention popover: open while the word before the caret starts with @ -->
+            <div class="ap-menu ap-mention-pop" data-menu-id="mention" data-static role="listbox">
+              <div class="ap-menu__label">Files</div>
+              <button class="ap-menu__item is-active" data-action="mention" data-file="sla-badge.tsx"><i class="codicon codicon-file-code"></i><span><mark>sla</mark>-badge.tsx</span><span class="ap-file__path">resources/js/components/shared/kit</span></button>
+              <button class="ap-menu__item" data-action="mention" data-file="TicketSlaTest.php"><i class="codicon codicon-file-code"></i><span>Ticket<mark>Sla</mark>Test.php</span><span class="ap-file__path">tests/Feature/Support</span></button>
+              <button class="ap-menu__item" data-action="mention" data-file="sla.php"><i class="codicon codicon-file-code"></i><span><mark>sla</mark>.php</span><span class="ap-file__path">config</span></button>
+              <div class="ap-menu__sep"></div>
+              <div class="ap-menu__label">Folders</div>
+              <button class="ap-menu__item" data-action="mention" data-file="support/"><i class="codicon codicon-folder"></i><span>support</span><span class="ap-file__path">resources/js/pages/central</span></button>
+            </div>
+
+            <div class="ap-composer__chips">
+              <span class="ap-chip"><i class="codicon codicon-file"></i><span>tokens.css</span><button title="Remove"><i class="codicon codicon-close"></i></button></span>
+            </div>
+            <textarea class="ap-composer__input" rows="1">Use those tokens in @sla</textarea>
+            <div class="ap-composer__bar">
+              <div class="ap-seg" role="radiogroup" aria-label="Engine">
+                <button role="radio" data-engine="claude"><span class="ap-engine ap-engine--claude">Claude</span></button>
+                <button role="radio" data-engine="cursor"><span class="ap-engine ap-engine--cursor">Cursor</span></button>
+              </div>
+              <button class="ap-picker" data-menu="model" aria-expanded="false"><span class="ap-picker__label"></span><i class="codicon codicon-chevron-down"></i></button>
+              <button class="ap-picker" data-menu="mode" aria-expanded="false"><span class="ap-picker__label"></span><i class="codicon codicon-chevron-down"></i></button>
+              <span class="ap-spacer"></span>
+              <button class="ap-icon-btn" title="Add files (@)"><i class="codicon codicon-mention"></i></button>
+              <button class="ap-send" title="Send (Enter)"><i class="codicon codicon-arrow-up"></i></button>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <!-- ===== the webview ends here ===== -->
+    </div>
+
+    <aside class="pv-notes">
+      <h1>Pickers and mentions</h1>
+      <p>The engine switch, model and mode menus, the @ file popover, and how answers with tables and code render.</p>
+      <h2>Replicate</h2>
+      <ul>
+        <li>Engine switch (<code>.ap-seg</code>): two options, each a coloured dot and a name. Each engine remembers its own model.</li>
+        <li>Model menu: grouped by engine, labelled with whose plan pays for it. Cursor's list comes from <code>agent --list-models</code>, cached.</li>
+        <li>Mode menu: Agent, Plan, Hand-off, each with one line on what it does.</li>
+        <li>Menus open upward from their button, stay inside the panel, close on Escape or an outside click.</li>
+        <li>Typing <code>@</code> opens the file popover above the box: fuzzy match in bold, folder path muted, arrow keys and Enter pick, the pick becomes a chip.</li>
+        <li>Code blocks have a language label and a copy button; tables use quiet rules.</li>
+      </ul>
+      <h2>Try</h2>
+      <ul>
+        <li>Pick a file in the popover: it turns into a chip.</li>
+        <li>Open the model and mode menus; switch engine and open the model menu again.</li>
+        <li>Copy the code block.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script src="js/menus.js"></script>
+  <script src="js/prototype.js"></script>
+</body>
+</html>

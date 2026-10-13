@@ -1,0 +1,16 @@
+src/**
+webview/**
+test/**
+prototype/**
+node_modules/**
+dist-test/**
+*.ts
+tsconfig.json
+esbuild.mjs
+PLAN.md
+.gitignore
+**/*.map
+*.vsix
+!dist/**
+!node_modules/@vscode/codicons/dist/**
+qa/**

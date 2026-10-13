@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hand-off · Agent Panel</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vscode/codicons@0.0.36/dist/codicon.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/thread.css">
+  <link rel="stylesheet" href="css/steps.css">
+  <link rel="stylesheet" href="css/file-card.css">
+  <link rel="stylesheet" href="css/composer.css">
+  <link rel="stylesheet" href="css/plan.css">
+</head>
+<body>
+  <div class="pv-bar">
+    <span class="pv-bar__name">Agent Panel prototype</span>
+    <nav class="pv-nav">
+      <a href="index.html">Overview</a>
+      <a href="agent-turn.html">Agent turn</a>
+      <a href="handoff.html" aria-current="page">Hand-off</a>
+      <a href="states.html">Permissions and errors</a>
+      <a href="empty.html">New chat and history</a>
+      <a href="pickers.html">Pickers and mentions</a>
+    </nav>
+    <div class="pv-tools">
+      <button data-pv-theme="dark">Dark</button>
+      <button data-pv-theme="light">Light</button>
+      <button data-pv-width="340">340</button>
+      <button data-pv-width="420">420</button>
+      <button data-pv-width="560">560</button>
+    </div>
+  </div>
+
+  <div class="pv-stage">
+    <div class="pv-frame">
+      <!-- ===== the webview starts here ===== -->
+      <div class="ap">
+        <header class="ap-header">
+          <div class="ap-header__title">SLA countdown on support tickets</div>
+          <span class="ap-usage is-high" title="Claude weekly usage · resets Thu 9:00">
+            <span class="ap-usage__bar"><span style="width: 88%"></span></span>Week 88%
+          </span>
+          <button class="ap-icon-btn" title="History"><i class="codicon codicon-history"></i></button>
+          <button class="ap-icon-btn" title="New chat"><i class="codicon codicon-add"></i></button>
+          <button class="ap-icon-btn" title="More"><i class="codicon codicon-ellipsis"></i></button>
+        </header>
+
+        <main class="ap-thread">
+          <section class="ap-turn">
+            <div class="ap-user">Add an SLA countdown to each open support ticket: 24 hours from creation, amber under 4 hours, red when overdue.</div>
+          </section>
+
+          <!-- planner: Claude in Plan mode -->
+          <section class="ap-turn">
+            <div class="ap-turn__meta">
+              <span class="ap-engine ap-engine--claude">Claude</span><span>Opus</span><span>Planner</span>
+            </div>
+
+            <div class="ap-steps" data-collapsible>
+              <button class="ap-steps__summary" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <span>Explored · Read 5 files · Searched 2</span>
+              </button>
+              <ol class="ap-steps__list">
+                <li class="ap-step"><i class="codicon codicon-file"></i><span class="ap-step__text">Read <code>app/Models/Ticket.php</code></span></li>
+                <li class="ap-step"><i class="codicon codicon-file"></i><span class="ap-step__text">Read <code>app/Http/Resources/TicketResource.php</code></span></li>
+                <li class="ap-step"><i class="codicon codicon-search"></i><span class="ap-step__text">Searched for <code>created_at</code> in <code>pages/*/support</code></span><span class="ap-step__side">4 results</span></li>
+              </ol>
+            </div>
+
+            <article class="ap-plan" data-state="ready">
+              <header class="ap-plan__head">
+                <i class="codicon codicon-checklist"></i>
+                <strong>Plan</strong>
+                <span class="ap-muted">5 steps</span>
+                <span class="ap-plan__status">· Built by <span class="ap-engine ap-engine--cursor">Cursor</span></span>
+                <span class="ap-spacer"></span>
+                <button class="ap-btn ap-btn--ghost">Edit plan</button>
+              </header>
+              <ol class="ap-plan__steps">
+                <li>Add <code>sla_due_at</code> to tickets and set it to 24 hours after creation.
+                  <span class="ap-plan__files">database/migrations · app/Models/Ticket.php</span></li>
+                <li>Send <code>sla_due_at</code> with each ticket.
+                  <span class="ap-plan__files">app/Http/Resources/TicketResource.php</span></li>
+                <li>Add an <code>SlaBadge</code> to the shared kit: counts down, amber under 4 hours, red when overdue.
+                  <span class="ap-plan__files">resources/js/components/shared/kit/sla-badge.tsx</span></li>
+                <li>Show the badge in both support tables.
+                  <span class="ap-plan__files">pages/central/support · pages/tenant/support</span></li>
+                <li>A feature test for the due date and an e2e check for the badge.
+                  <span class="ap-plan__files">tests/Feature/Support · e2e/central</span></li>
+              </ol>
+              <footer class="ap-plan__foot">
+                <span>Builder</span>
+                <span class="ap-engine ap-engine--cursor">Cursor</span><span>· Auto</span>
+                <label class="ap-check" style="margin-left: var(--ap-2)"><input type="checkbox" checked> Review after</label>
+                <button class="ap-btn ap-btn--primary" data-action="build">Build with Cursor</button>
+              </footer>
+            </article>
+          </section>
+
+          <div class="ap-turn ap-note">
+            <span class="ap-note__body"><i class="codicon codicon-arrow-right"></i>Plan and request passed to Cursor</span>
+          </div>
+
+          <!-- builder: Cursor in Agent mode -->
+          <section class="ap-turn">
+            <div class="ap-turn__meta">
+              <span class="ap-engine ap-engine--cursor">Cursor</span><span>Auto</span><span>Builder</span>
+            </div>
+            <div class="ap-steps" data-collapsible>
+              <button class="ap-steps__summary" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <span>Edited 6 files · Ran 2 commands</span>
+              </button>
+              <ol class="ap-steps__list">
+                <li class="ap-step"><i class="codicon codicon-terminal"></i><span class="ap-step__text">Ran <code>php artisan test --filter=TicketSla</code></span><span class="ap-step__side">2 passed</span></li>
+                <li class="ap-step"><i class="codicon codicon-terminal"></i><span class="ap-step__text">Ran <code>npx playwright test e2e/central/support.spec.ts</code></span><span class="ap-step__side">5 passed</span></li>
+              </ol>
+            </div>
+            <div class="ap-md"><p>Built all five steps. Both test runs pass.</p></div>
+
+            <article class="ap-file" data-collapsible data-state="pending" data-add="24" data-del="0" data-name="2026_10_13_add_sla_due_at_to_tickets.php" data-path="database/migrations">
+              <header class="ap-file__head" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <i class="codicon codicon-file-code ap-file__icon"></i>
+                <span class="ap-file__name">2026_10_13_add_sla_due_at_to_tickets.php</span>
+                <span class="ap-file__path">database/migrations</span>
+                <span class="ap-file__tag">New</span>
+                <span class="ap-file__stat"><span class="ap-add">+24</span><span class="ap-del">−0</span></span>
+                <span class="ap-file__resolved"><i class="codicon codicon-check"></i><span data-resolved-label>Accepted</span><button data-action="undo">Undo</button></span>
+              </header>
+              <div class="ap-file__body">
+                <div class="ap-diff"><div class="ap-diff__rows">
+                  <div class="ap-diff__hunk">@@ -0,0 +1,24 @@</div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">9</span><span class="sg">+</span><code>        Schema::table('tickets', function (Blueprint $table) {</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">10</span><span class="sg">+</span><code>            $table-&gt;timestamp('sla_due_at')-&gt;nullable()-&gt;index();</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">11</span><span class="sg">+</span><code>        });</code></div>
+                </div></div>
+                <footer class="ap-file__actions">
+                  <button class="ap-btn ap-btn--ghost" data-action="open-diff"><i class="codicon codicon-diff"></i>Open diff</button>
+                  <span class="ap-spacer"></span>
+                  <button class="ap-btn ap-btn--ghost" data-action="reject">Reject</button>
+                  <button class="ap-btn ap-btn--primary" data-action="accept">Accept</button>
+                </footer>
+              </div>
+            </article>
+
+            <article class="ap-file" data-collapsible data-state="pending" data-add="31" data-del="0" data-name="sla-badge.tsx" data-path="resources/js/components/shared/kit">
+              <header class="ap-file__head" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <i class="codicon codicon-file-code ap-file__icon"></i>
+                <span class="ap-file__name">sla-badge.tsx</span>
+                <span class="ap-file__path">resources/js/components/shared/kit</span>
+                <span class="ap-file__tag">New</span>
+                <span class="ap-file__stat"><span class="ap-add">+31</span><span class="ap-del">−0</span></span>
+                <span class="ap-file__resolved"><i class="codicon codicon-check"></i><span data-resolved-label>Accepted</span><button data-action="undo">Undo</button></span>
+              </header>
+              <div class="ap-file__body">
+                <div class="ap-diff"><div class="ap-diff__rows">
+                  <div class="ap-diff__hunk">@@ -0,0 +1,31 @@</div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">12</span><span class="sg">+</span><code>    const hoursLeft = (due.getTime() - now) / 3_600_000;</code></div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">13</span><span class="sg">+</span><code>    const tone = hoursLeft &lt; 0 ? 'overdue' : hoursLeft &lt; 4 ? 'soon' : 'ok';</code></div>
+                </div></div>
+                <footer class="ap-file__actions">
+                  <button class="ap-btn ap-btn--ghost" data-action="open-diff"><i class="codicon codicon-diff"></i>Open diff</button>
+                  <span class="ap-spacer"></span>
+                  <button class="ap-btn ap-btn--ghost" data-action="reject">Reject</button>
+                  <button class="ap-btn ap-btn--primary" data-action="accept">Accept</button>
+                </footer>
+              </div>
+            </article>
+
+            <article class="ap-file" data-collapsible data-state="pending" data-add="6" data-del="0" data-name="Ticket.php" data-path="app/Models">
+              <header class="ap-file__head" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i>
+                <i class="codicon codicon-file-code ap-file__icon"></i>
+                <span class="ap-file__name">Ticket.php</span>
+                <span class="ap-file__path">app/Models</span>
+                <span class="ap-file__stat"><span class="ap-add">+6</span><span class="ap-del">−0</span></span>
+                <span class="ap-file__resolved"><i class="codicon codicon-check"></i><span data-resolved-label>Accepted</span><button data-action="undo">Undo</button></span>
+              </header>
+              <div class="ap-file__body">
+                <div class="ap-diff"><div class="ap-diff__rows">
+                  <div class="ap-diff__hunk">@@ -18,6 +18,12 @@ class Ticket extends Model</div>
+                  <div class="ap-diff__row is-add"><span class="ln"></span><span class="ln">20</span><span class="sg">+</span><code>    protected $casts = ['sla_due_at' =&gt; 'datetime'];</code></div>
+                </div></div>
+                <footer class="ap-file__actions">
+                  <button class="ap-btn ap-btn--ghost" data-action="open-diff"><i class="codicon codicon-diff"></i>Open diff</button>
+                  <span class="ap-spacer"></span>
+                  <button class="ap-btn ap-btn--ghost" data-action="reject">Reject</button>
+                  <button class="ap-btn ap-btn--primary" data-action="accept">Accept</button>
+                </footer>
+              </div>
+            </article>
+
+            <button class="ap-btn ap-btn--ghost"><i class="codicon codicon-ellipsis"></i>3 more files</button>
+            <div class="ap-turn__foot"><span>Done in 2m 14s</span><span>6 files</span></div>
+          </section>
+
+          <div class="ap-turn ap-note">
+            <span class="ap-note__body"><i class="codicon codicon-arrow-left"></i>Diff sent back to Claude for review, read-only</span>
+          </div>
+
+          <!-- reviewer: Claude, read-only -->
+          <section class="ap-turn">
+            <div class="ap-turn__meta">
+              <span class="ap-engine ap-engine--claude">Claude</span><span>Opus</span><span>Review</span>
+            </div>
+            <ul class="ap-review">
+              <li><i class="codicon codicon-pass"></i><span>Migration, model cast and resource match the plan.</span></li>
+              <li><i class="codicon codicon-pass"></i><span>Badge thresholds are right: amber under 4 hours, red when overdue.</span></li>
+              <li><i class="codicon codicon-warning"></i><span><code>sla_due_at</code> is set in the controller, so tickets created by the email importer get none. Set it in a model <code>creating</code> hook instead.</span></li>
+            </ul>
+            <div class="ap-alert__actions" style="margin-left: 0">
+              <button class="ap-btn ap-btn--secondary">Fix with Cursor</button>
+              <button class="ap-btn ap-btn--ghost">Fix with Claude</button>
+            </div>
+            <div class="ap-turn__foot"><span>Done in 19s</span><span>$0.09</span></div>
+          </section>
+        </main>
+
+        <footer class="ap-dock">
+          <div class="ap-changes" data-collapsible hidden>
+            <div class="ap-changes__head">
+              <button class="ap-changes__toggle" data-toggle>
+                <i class="codicon codicon-chevron-right ap-chev"></i><span data-changes-count></span>
+              </button>
+              <span class="ap-changes__stat"><span class="ap-add" data-changes-add></span><span class="ap-del" data-changes-del></span></span>
+              <span class="ap-spacer"></span>
+              <button class="ap-btn ap-btn--ghost" data-action="reject-all">Reject all</button>
+              <button class="ap-btn ap-btn--secondary" data-action="accept-all">Accept all</button>
+            </div>
+            <ul class="ap-changes__list"></ul>
+          </div>
+
+          <div class="ap-composer" data-engine="claude" data-model-claude="opus" data-model-cursor="auto" data-mode="handoff">
+            <div class="ap-handoff-row">
+              <span>Plan with</span>
+              <button class="ap-picker"><span class="ap-engine ap-engine--claude">Claude</span><span class="ap-muted">Opus</span><i class="codicon codicon-chevron-down"></i></button>
+              <i class="codicon codicon-arrow-right"></i>
+              <span>Build with</span>
+              <button class="ap-picker"><span class="ap-engine ap-engine--cursor">Cursor</span><span class="ap-muted">Auto</span><i class="codicon codicon-chevron-down"></i></button>
+              <label class="ap-check"><input type="checkbox" checked> Review after</label>
+            </div>
+            <div class="ap-composer__chips" hidden></div>
+            <textarea class="ap-composer__input" rows="1" placeholder="Describe the change to plan"></textarea>
+            <div class="ap-composer__bar">
+              <div class="ap-seg" role="radiogroup" aria-label="Engine">
+                <button role="radio" data-engine="claude"><span class="ap-engine ap-engine--claude">Claude</span></button>
+                <button role="radio" data-engine="cursor"><span class="ap-engine ap-engine--cursor">Cursor</span></button>
+              </div>
+              <button class="ap-picker" data-menu="model" aria-expanded="false"><span class="ap-picker__label"></span><i class="codicon codicon-chevron-down"></i></button>
+              <button class="ap-picker" data-menu="mode" aria-expanded="false"><span class="ap-picker__label"></span><i class="codicon codicon-chevron-down"></i></button>
+              <span class="ap-spacer"></span>
+              <button class="ap-icon-btn" title="Add files (@)"><i class="codicon codicon-mention"></i></button>
+              <button class="ap-send" title="Send (Enter)"><i class="codicon codicon-arrow-up"></i></button>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <!-- ===== the webview ends here ===== -->
+    </div>
+
+    <aside class="pv-notes">
+      <h1>Hand-off</h1>
+      <p>One engine plans, the other builds, and the planner can review the result. Claude plans and reviews here; Cursor builds.</p>
+      <h2>Replicate</h2>
+      <ul>
+        <li>With mode set to Hand-off, the composer shows <code>.ap-handoff-row</code>: planner, builder, and a Review after box. The engine switch below still picks who answers a plain message.</li>
+        <li>The planner runs read-only and its answer becomes an <code>.ap-plan</code> card: numbered steps, the files each step touches, Edit plan, and Build with &lt;builder&gt;.</li>
+        <li>The turn label says the role: Planner, Builder, Review.</li>
+        <li>Each hand-over gets an <code>.ap-note</code> saying what was passed.</li>
+        <li>The builder's turn looks like any agent turn. More than three file cards fold behind "N more files".</li>
+        <li>The review is a short <code>.ap-review</code> list: pass or warning per point, then buttons to send the fixes to either engine.</li>
+      </ul>
+      <h2>Try</h2>
+      <ul>
+        <li>Build with Cursor collapses the plan card to its head with "Built by Cursor".</li>
+        <li>Change the mode under the input: the hand-off row hides outside Hand-off.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <script src="js/menus.js"></script>
+  <script src="js/prototype.js"></script>
+</body>
+</html>

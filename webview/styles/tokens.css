@@ -1,0 +1,79 @@
+/* Agent Panel tokens: every component reads --ap-*, mapped from the editor theme. */
+
+:root {
+  /* surfaces and text */
+  --ap-bg: var(--vscode-sideBar-background);
+  --ap-surface: var(--vscode-editorWidget-background);
+  --ap-hover: var(--vscode-list-hoverBackground);
+  --ap-fg: var(--vscode-foreground);
+  --ap-muted: var(--vscode-descriptionForeground);
+  --ap-border: var(--vscode-widget-border);
+  --ap-code-bg: var(--vscode-textCodeBlock-background);
+  --ap-link: var(--vscode-textLink-foreground);
+
+  /* input */
+  --ap-input-bg: var(--vscode-input-background);
+  --ap-input-border: var(--vscode-input-border, var(--vscode-widget-border));
+  --ap-input-fg: var(--vscode-input-foreground);
+  --ap-placeholder: var(--vscode-input-placeholderForeground);
+  --ap-focus: var(--vscode-focusBorder);
+
+  /* buttons */
+  --ap-btn-bg: var(--vscode-button-background);
+  --ap-btn-fg: var(--vscode-button-foreground);
+  --ap-btn-hover: var(--vscode-button-hoverBackground);
+  --ap-btn2-bg: var(--vscode-button-secondaryBackground);
+  --ap-btn2-fg: var(--vscode-button-secondaryForeground);
+  --ap-btn2-hover: var(--vscode-button-secondaryHoverBackground);
+
+  /* meaning */
+  --ap-added: var(--vscode-gitDecoration-addedResourceForeground);
+  --ap-removed: var(--vscode-gitDecoration-deletedResourceForeground);
+  --ap-added-bg: var(--vscode-diffEditor-insertedLineBackground);
+  --ap-removed-bg: var(--vscode-diffEditor-removedLineBackground);
+  --ap-error: var(--vscode-errorForeground);
+  --ap-warn: var(--vscode-editorWarning-foreground);
+
+  /* engines: a dot and a word, never a logo */
+  --ap-claude: var(--vscode-charts-orange);
+  --ap-cursor: var(--vscode-charts-blue);
+
+  /* syntax: the theme's own symbol colours, with Dark+ fallbacks */
+  --ap-syn-keyword: var(--vscode-symbolIcon-keywordForeground, #c586c0);
+  --ap-syn-string: var(--vscode-debugTokenExpression-string, #ce9178);
+  --ap-syn-number: var(--vscode-debugTokenExpression-number, #b5cea8);
+  --ap-syn-func: var(--vscode-symbolIcon-functionForeground, #dcdcaa);
+  --ap-syn-type: var(--vscode-symbolIcon-classForeground, #4ec9b0);
+  --ap-syn-var: var(--vscode-symbolIcon-variableForeground, #9cdcfe);
+  --ap-syn-comment: var(--vscode-editorCodeLens-foreground, var(--vscode-descriptionForeground));
+
+  /* code follows the editor's font and size */
+  --ap-code-size: var(--vscode-editor-font-size, 12px);
+
+  /* menus */
+  --ap-menu-bg: var(--vscode-menu-background);
+  --ap-menu-border: var(--vscode-menu-border);
+  --ap-menu-sel: var(--vscode-menu-selectionBackground);
+
+  /* type: two families, four sizes */
+  --ap-font: var(--vscode-font-family);
+  --ap-mono: var(--vscode-editor-font-family);
+  --ap-t-xs: 11px;
+  --ap-t-sm: 12px;
+  --ap-t-md: 13px;
+  --ap-t-lg: 14px;
+  --ap-lh: 1.55;
+
+  /* spacing: 4px base */
+  --ap-1: 4px;
+  --ap-2: 8px;
+  --ap-3: 12px;
+  --ap-4: 16px;
+  --ap-5: 20px;
+  --ap-6: 24px;
+
+  /* radius */
+  --ap-r1: 4px;
+  --ap-r2: 6px;
+  --ap-r3: 8px;
+}

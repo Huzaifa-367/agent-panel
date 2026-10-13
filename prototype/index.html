@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Panel prototype</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <style>
+    .pv-doc { max-width: 720px; padding: 32px 16px 64px; margin: 0 auto; line-height: 1.6; }
+    .pv-doc h1 { margin: 0 0 8px; font-size: 20px; }
+    .pv-doc h2 { margin: 32px 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .pv-doc p, .pv-doc li { color: var(--pv-note); }
+    .pv-doc code { font-family: var(--vscode-editor-font-family); font-size: 12px; color: var(--vscode-foreground); }
+    .pv-pages { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--vscode-widget-border); }
+    .pv-pages li { padding: 12px 0; border-bottom: 1px solid var(--vscode-widget-border); }
+    .pv-pages a { color: var(--vscode-foreground); font-weight: 600; text-decoration: none; }
+    .pv-pages a:hover { text-decoration: underline; }
+    .pv-pages span { display: block; }
+  </style>
+</head>
+<body>
+  <div class="pv-bar">
+    <span class="pv-bar__name">Agent Panel prototype</span>
+    <nav class="pv-nav">
+      <a href="index.html" aria-current="page">Overview</a>
+      <a href="agent-turn.html">Agent turn</a>
+      <a href="handoff.html">Hand-off</a>
+      <a href="states.html">Permissions and errors</a>
+      <a href="empty.html">New chat and history</a>
+      <a href="pickers.html">Pickers and mentions</a>
+    </nav>
+    <div class="pv-tools">
+      <button data-pv-theme="dark">Dark</button>
+      <button data-pv-theme="light">Light</button>
+    </div>
+  </div>
+
+  <main class="pv-doc">
+    <h1>Agent Panel prototype</h1>
+    <p>The visual spec for the panel's webview. One chat that runs Claude (your Claude plan) and Cursor (your Cursor plan), in Cursor's own look: quiet, dense, and drawn from the editor's theme.</p>
+
+    <h2>States</h2>
+    <ul class="pv-pages">
+      <li><a href="agent-turn.html">Agent turn</a><span>Tool steps, file cards with +/− and diffs, Accept and Reject, the changes bar, switching engine mid-thread, a turn still running.</span></li>
+      <li><a href="handoff.html">Hand-off</a><span>Claude plans, Cursor builds, Claude reviews: the plan card, hand-over notes, review findings.</span></li>
+      <li><a href="states.html">Permissions and errors</a><span>Inline permission prompts, denied steps, engine errors, a folder without git.</span></li>
+      <li><a href="empty.html">New chat and history</a><span>The empty thread and recent threads for the workspace.</span></li>
+      <li><a href="pickers.html">Pickers and mentions</a><span>Engine switch, model and mode menus, the @ file popover, tables and code blocks.</span></li>
+    </ul>
+
+    <h2>Direction</h2>
+    <ul>
+      <li>Cursor's chat, rebuilt with discipline. The loudest thing on screen is the work: file names and +/− counts. Everything else is muted.</li>
+      <li>Every colour and font comes from the editor theme through <code>--ap-*</code> tokens, so it fits any Cursor theme, dark or light.</li>
+      <li>Two families (UI font, editor font), four sizes (11, 12, 13, 14), spacing on a 4px scale.</li>
+      <li>Engines are a coloured dot and a word: orange for Claude, blue for Cursor. No logos.</li>
+      <li>No gradients, glass, emoji icons or stacked shadows. Icons are codicons.</li>
+    </ul>
+
+    <h2>Files</h2>
+    <ul>
+      <li><code>css/tokens.css</code>: theme tokens. The <code>--ap-*</code> block goes into the extension; the <code>--vscode-*</code> values are preview stand-ins.</li>
+      <li><code>css/base.css</code>, <code>thread.css</code>, <code>steps.css</code>, <code>file-card.css</code>, <code>composer.css</code>, <code>plan.css</code>: one file per component group.</li>
+      <li><code>css/preview.css</code>: this page's chrome only.</li>
+      <li><code>js/menus.js</code>, <code>js/prototype.js</code>: menus and interactions; the behaviour is part of the spec.</li>
+    </ul>
+  </main>
+
+  <script src="js/prototype.js"></script>
+</body>
+</html>
