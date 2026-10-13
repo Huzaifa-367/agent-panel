@@ -1,6 +1,6 @@
 import { copyFileSync, existsSync, mkdtempSync, rmSync, writeFileSync, unlinkSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, dirname, relative } from 'node:path';
+import { join, dirname, relative, resolve, isAbsolute } from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 
@@ -121,13 +121,8 @@ export class ChangeTracker {
   /** Put files back to how they were in `tree`, deleting ones it doesn't have. Files only, chat untouched. */
   async restore(tree: string, paths: string[]): Promise<void> {
     for (const rel of paths) {
-      const abs = join(this.workspaceRoot, rel);
-      let content: Buffer | null = null;
-      try {
-        content = await gitBuffer(this.workspaceRoot, ['show', `${tree}:${rel}`]);
-      } catch {
-        content = null;
-      }
+      const abs = safeAbs(this.workspaceRoot, rel);
+      const content = await blobAt(this.workspaceRoot, tree, rel);
       if (content === null) {
         if (existsSync(abs)) unlinkSync(abs);
       } else {
@@ -142,6 +137,7 @@ export class ChangeTracker {
 
   /** The diff of one file between two trees, e.g. one turn's own change. */
   async patchBetween(baseTree: string, afterTree: string, relPath: string): Promise<string> {
+    if (!OBJECT_ID.test(baseTree) || !OBJECT_ID.test(afterTree)) throw new Error('Invalid tree id');
     return git(this.workspaceRoot, ['diff', baseTree, afterTree, '--', relPath]);
   }
 
@@ -190,7 +186,7 @@ export class ChangeTracker {
       return;
     }
     if (r.state === 'rejected') {
-      const abs = join(this.workspaceRoot, relPath);
+      const abs = safeAbs(this.workspaceRoot, relPath);
       if (r.file.status === 'deleted') {
         if (existsSync(abs)) unlinkSync(abs);
       } else if (r.afterTree) {
@@ -216,27 +212,17 @@ export class ChangeTracker {
     } catch {
       /* keep the last turn's tree */
     }
+    const abs = safeAbs(this.workspaceRoot, relPath);
+    // Read the base first: if git fails, throw before touching the file or the state.
+    const content = file.status === 'added' ? null : await blobAt(this.workspaceRoot, file.baseTree, relPath);
     this.resolved.set(relPath, { state: 'rejected', file, afterTree });
-    const abs = join(this.workspaceRoot, relPath);
-    if (file.status === 'added') {
+    if (content === null) {
       if (existsSync(abs)) {
         unlinkSync(abs);
       }
     } else {
-      let content: Buffer | null = null;
-      try {
-        content = await gitBuffer(this.workspaceRoot, ['show', `${file.baseTree}:${relPath}`]);
-      } catch {
-        content = null;
-      }
-      if (content === null) {
-        if (existsSync(abs)) {
-          unlinkSync(abs);
-        }
-      } else {
-        mkdirSync(dirname(abs), { recursive: true });
-        writeFileSync(abs, content);
-      }
+      mkdirSync(dirname(abs), { recursive: true });
+      writeFileSync(abs, content);
     }
     this.pending.delete(relPath);
     this.invalidate();
@@ -247,6 +233,27 @@ export class ChangeTracker {
       await this.reject(rel);
     }
   }
+}
+
+/** A git object id, so a value from the webview can never become a git option. */
+export const OBJECT_ID = /^[0-9a-f]{7,64}$/;
+
+/** `root/rel`, refusing paths that leave the workspace. */
+export function safeAbs(root: string, rel: string): string {
+  const abs = resolve(root, rel);
+  const back = relative(root, abs);
+  if (!back || back.startsWith('..') || isAbsolute(back)) throw new Error(`Refusing a path outside the workspace: ${rel}`);
+  return abs;
+}
+
+/**
+ * The file's content in `tree`, or null only when git confirms the tree has no such path.
+ * Any other git failure throws, so a Reject can never delete a file by mistake.
+ */
+export async function blobAt(root: string, tree: string, rel: string): Promise<Buffer | null> {
+  const listed = await git(root, ['ls-tree', '--name-only', '-z', tree, '--', rel]);
+  if (!listed.split('\0').includes(rel)) return null;
+  return gitBuffer(root, ['show', `${tree}:${rel}`]);
 }
 
 export async function assertGitRepo(root: string): Promise<void> {

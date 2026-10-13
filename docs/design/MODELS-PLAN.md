@@ -1,8 +1,10 @@
+> Historical design record. Researched on one Mac in October 2026.
+
 # Models, effort and context: research and plan
 
-**Status: built in 0.6.0.** Verified on this Mac: the bracket model form runs in Cursor's CLI (`claude-opus-5-5[context=300k,effort=low,fast=false]` → "Claude Opus 5.5 300K Low"), and a live `set_model` switched one warm Claude process from Haiku 5.5 to Sonnet 5.5 between turns with no restart (Agent mode; in Plan mode Claude Code answers Haiku turns with Sonnet).
+**Status: built in 0.6.0.** Verified on the build machine: the bracket model form runs in Cursor's CLI (`claude-opus-5-5[context=300k,effort=low,fast=false]` → "Claude Opus 5.5 300K Low"), and a live `set_model` switched one warm Claude process from Haiku 5.5 to Sonnet 5.5 between turns with no restart (Agent mode; in Plan mode Claude Code answers Haiku turns with Sonnet).
 
-Researched 2026-10-13 on this Mac: Cursor 2026.10 (app and `agent` CLI 2026.10.01), Claude Code 2.1.296 (CLI and the official extension). Nothing here writes to Cursor's or Claude's own files; everything is read-only.
+Researched 2026-10-13 on the build machine: Cursor 2026.10 (app and `agent` CLI 2026.10.01), Claude Code 2.1.296 (CLI and the official extension). Nothing here writes to Cursor's or Claude's own files; everything is read-only.
 
 ## What we found
 

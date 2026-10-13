@@ -1,4 +1,4 @@
-import { store, post, savePersisted } from './store';
+import { store, post, savePersisted, isRunning } from './store';
 import { h, icon, iconButton } from './dom';
 import { renderHeader, renderHistory } from './header';
 import { renderThread, resetThread, paintStream } from './thread';
@@ -33,7 +33,7 @@ function addToParts(m: ChatMessage, kind: 'text' | 'thinking' | 'step', value: s
 const app = document.getElementById('app')!;
 const headerEl = h('div', { class: 'ap-header-host' });
 const bannerEl = h('div', { class: 'ap-banners' });
-const threadEl = h('main', { class: 'ap-thread', 'aria-live': 'polite' });
+const threadEl = h('main', { class: 'ap-thread' });
 const historyEl = h('main', { class: 'ap-thread ap-thread--history' });
 const changesEl = h('div', { class: 'ap-changes' });
 const composer = createComposer();
@@ -117,6 +117,20 @@ function applyState(next: HostState): void {
   renderAll();
 }
 
+let renderFrame = 0;
+/** Bursts of step events (a subagent running many tools) repaint once per frame, not once per event. */
+function scheduleRender(): void {
+  if (renderFrame) return;
+  renderFrame = requestAnimationFrame(() => {
+    renderFrame = 0;
+    try {
+      renderThread(threadEl);
+    } catch (err) {
+      console.error('Agent Panel: render failed', err);
+    }
+  });
+}
+
 function scheduleStream(id: string): void {
   dirty.add(id);
   if (streamFrame) return;
@@ -128,7 +142,15 @@ function scheduleStream(id: string): void {
 }
 
 window.addEventListener('message', (event: MessageEvent) => {
-  const msg = event.data as { type: string } & Record<string, unknown>;
+  try {
+    handleHostMessage(event.data);
+  } catch (err) {
+    console.error('Agent Panel: host message failed', err);
+  }
+});
+
+function handleHostMessage(data: unknown): void {
+  const msg = data as { type: string } & Record<string, unknown>;
   const host = store.host;
   switch (msg.type) {
     case 'state':
@@ -172,7 +194,7 @@ window.addEventListener('message', (event: MessageEvent) => {
       if (i >= 0) steps[i] = step;
       else steps.push(step);
       addToParts(m, 'step', step.id);
-      renderThread(threadEl);
+      scheduleRender();
       break;
     }
     case 'turn-done': {
@@ -221,7 +243,7 @@ window.addEventListener('message', (event: MessageEvent) => {
     default:
       break;
   }
-});
+}
 
 // Close menus on an outside click; ⌘. stops; Escape closes the open menu.
 document.addEventListener('click', (e) => {
@@ -233,7 +255,7 @@ document.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key === '.') {
     e.preventDefault();
-    if (store.host?.running) post({ type: 'stop' });
+    if (isRunning()) post({ type: 'stop' });
   } else if (e.key === 'Escape' && store.ui.menu) {
     store.ui.menu = null;
     renderAll();

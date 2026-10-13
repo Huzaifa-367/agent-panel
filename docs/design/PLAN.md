@@ -1,23 +1,23 @@
+> Historical design record from the first builds. For how the extension works today, read [ARCHITECTURE.md](../ARCHITECTURE.md). Some details here (versions, paths) were true on the build date.
+
 # Agent Panel: build brief
 
 A chat panel for Cursor (and VS Code) that looks and feels like Cursor's own chat, and runs two engines in one thread:
 
-- **Claude**: the owner's installed Claude Code CLI (`claude`, 2.1.296), signed in with the owner's Claude subscription.
-- **Cursor**: the owner's installed Cursor Agent CLI (`agent`, 2026.10.01), signed in with the owner's Cursor subscription.
+- **Claude**: the user's installed Claude Code CLI (`claude`, 2.1.296), signed in with the user's Claude subscription.
+- **Cursor**: the user's installed Cursor Agent CLI (`agent`, 2026.10.01), signed in with the user's Cursor subscription.
 
-The panel never touches credentials. It only starts the two CLIs as child processes, unmodified, the way the owner would run them in a terminal. For the owner's personal use only; not to be published.
+The panel never touches credentials. It only starts the two CLIs as child processes, unmodified, the way the user would run them in a terminal. 
 
-## Decisions (do not change without asking the owner)
+## Decisions (design record)
 
 | Decision | Choice |
 | --- | --- |
-| Location | Its own repository, `~/Documents/GitHub/agent-panel`. It started inside AiLixar and was moved out. |
 | Name | "Agent Panel". Never "Claude Code" or Cursor branding (Anthropic and Cursor naming rules). |
 | Modes | 1. **Switch per message**: one thread, engine picked per message. 2. **Hand-off**: one engine plans, the other builds, optionally the first reviews. |
 | Not in scope | Running both engines in parallel on the same prompt. |
-| Stack | TypeScript, esbuild, `@types/vscode`, `@vscode/vsce` (dev only). Webview in plain TypeScript and CSS, no UI framework. Any runtime dependency needs the owner's OK; write a small markdown renderer instead of adding one. |
+| Stack | TypeScript, esbuild, `@types/vscode`, `@vscode/vsce` (dev only). Webview in plain TypeScript and CSS, no UI framework. Any runtime dependency is an explicit decision; write a small markdown renderer instead of adding one. |
 | Change tracking | Git tree snapshots, the same for both engines (see below). The workspace must be a git repo; otherwise show a clear message and disable Accept/Reject. |
-| Commits | Do not commit. The owner reviews and commits. Leave the uncommitted files under `nemt/` alone. |
 
 ## Engines
 
@@ -132,7 +132,7 @@ Never touch the user's index, stash, HEAD or branches.
 6. Pending changes build up across turns until accepted or rejected. A file's base is the tree from before the first turn that changed it.
 7. "Open diff" uses `vscode.diff` with a read-only virtual document (`agent-panel-base:` scheme) holding the base content on the left and the real file on the right.
 
-Edits the owner makes during a turn will show up in that turn's diff. Accept that for now and note it in the README.
+Edits the user makes during a turn will show up in that turn's diff. Accept that for now and note it in the README.
 
 ## Modes
 

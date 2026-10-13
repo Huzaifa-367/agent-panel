@@ -1754,3 +1754,25 @@ body,
 .ap-ansi-white { color: var(--vscode-terminal-ansiWhite, #ccc); }
 .ap-ansi-bold { font-weight: 700; }
 .ap-ansi-dim { opacity: 0.7; }
+
+/* Chat tabs in the sidebar header (chats live in this sidebar) */
+.ap-header__tabs {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border-bottom: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.ap-header__tabs .ap-tab {
+  margin-bottom: 0;
+  border: 1px solid transparent;
+  border-radius: var(--ap-r1);
+  max-width: 160px;
+}
+
+.ap-header__tabs .ap-tab.is-active {
+  background: var(--ap-hover);
+  border-color: var(--ap-border);
+}

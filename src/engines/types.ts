@@ -97,6 +97,8 @@ export interface Engine {
   startTurn(options: EngineTurnOptions): EngineHandle;
   /** Optional warm-up so the first real turn is not a cold spawn. */
   prewarm?(workspaceRoot: string, model: string, effort?: string, sessionId?: string, fast?: boolean, chatId?: string): void;
+  /** End the CLI process of one chat, or of every chat when no id is given. */
+  dispose(chatId?: string): void;
 }
 
 export function basename(path: string): string {

@@ -103,6 +103,8 @@ function fileCard(m: ChatMessage, f: TurnFile, isLatest: boolean): HTMLElement {
   head.addEventListener('click', toggle);
   head.addEventListener('keydown', (e) => {
     const k = (e as KeyboardEvent).key;
+    // Nested buttons (Undo, Accept) handle their own Enter and Space.
+    if (e.target !== head) return;
     if (k === 'Enter' || k === ' ') {
       e.preventDefault();
       toggle();
@@ -173,8 +175,10 @@ export function renderDiff(patch: string, lang = ''): HTMLElement[] {
 
   const lines = patch.split('\n');
   if (lines[lines.length - 1] === '') lines.pop();
+  let inHunk = false;
   for (const line of lines) {
     if (line.startsWith('@@')) {
+      inHunk = true;
       flushQuiet();
       const m = /@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@(.*)/.exec(line);
       if (m) {
@@ -184,7 +188,8 @@ export function renderDiff(patch: string, lang = ''): HTMLElement[] {
       nodes.push(h('div', { class: 'ap-diff__hunk' }, line));
       continue;
     }
-    if (/^(diff |index |--- |\+\+\+ |new file mode|deleted file mode|similarity|rename )/.test(line)) continue;
+    // File headers only precede a hunk; inside one, `-- x` is a removed line and must stay.
+    if (!inHunk && /^(diff |index |--- |\+\+\+ |new file mode|deleted file mode|similarity|rename |old mode|new mode|Binary files)/.test(line)) continue;
     if (line.startsWith('\\')) continue; // "\ No newline at end of file"
     const row = (cls: string, o: string, n: string, sign: string, text: string) => {
       const code = h('code', {});

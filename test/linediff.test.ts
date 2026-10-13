@@ -75,7 +75,7 @@ describe('inline change marks', () => {
   });
 
   it('sums up removed lines by the first one with text', () => {
-    assert.equal(removedSummary(['> `nemt/README.md` still opens', '']), '− > `nemt/README.md` still opens  (+1 more line)');
+    assert.equal(removedSummary(['> `docs/README.md` still opens', '']), '− > `docs/README.md` still opens  (+1 more line)');
     assert.equal(removedSummary(['']), '− blank line');
   });
 });

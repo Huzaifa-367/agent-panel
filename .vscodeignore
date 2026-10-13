@@ -7,10 +7,13 @@ dist-test/**
 *.ts
 tsconfig.json
 esbuild.mjs
-PLAN.md
+docs/**
 .gitignore
 **/*.map
 *.vsix
 !dist/**
 !node_modules/@vscode/codicons/dist/**
 qa/**
+media/**
+!media/icon.png
+dist/**/*.map

@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { spawn, type ChildProcess } from 'node:child_process';
 import { createInterface } from 'node:readline';
 import { existsSync } from 'node:fs';
 import { homedir } from 'node:os';
@@ -261,9 +261,14 @@ export interface CursorEngine extends Engine {
 export function createCursorEngine(cliPath = resolveCursorBinary()): CursorEngine {
   let cached: ModelCatalog | undefined;
 
+  const live = new Map<string, ChildProcess>();
+
   return {
     id: 'cursor',
     bin: cliPath,
+    dispose(chatId?: string) {
+      for (const [id, proc] of live) if (chatId === undefined || id === chatId) proc.kill('SIGTERM');
+    },
     async catalog(fresh = false) {
       if (cached && !fresh) {
         return cached;
@@ -300,15 +305,23 @@ export function createCursorEngine(cliPath = resolveCursorBinary()): CursorEngin
       if (options.sessionId) {
         args.push('--resume', options.sessionId);
       }
-      args.push(options.prompt);
+      // `--` keeps a prompt that starts with a dash from being read as an option.
+      args.push('--', options.prompt);
 
+      let finished = false;
+      const chatKey = options.chatId ?? '';
+      let stopRequested = false;
+      const onEvent = (event: AgentEvent) => {
+        if (event.kind === 'done') finished = true;
+        options.onEvent(event);
+      };
       const proc = spawn(cliPath, args, {
         cwd: options.workspaceRoot,
         env: process.env,
         stdio: ['ignore', 'pipe', 'pipe'],
       });
 
-      const parser = new CursorStreamParser(options.onEvent);
+      const parser = new CursorStreamParser(onEvent);
       const rl = createInterface({ input: proc.stdout });
       rl.on('line', (line) => parser.pushLine(line));
 
@@ -317,29 +330,37 @@ export function createCursorEngine(cliPath = resolveCursorBinary()): CursorEngin
         stderr += buf.toString('utf8');
       });
       proc.on('error', (err) => {
-        options.onEvent({
+        onEvent({
           kind: 'done',
           ok: false,
           error: `Couldn't start Cursor's agent CLI (${err.message}). Install it with \`curl https://cursor.com/install -fsS | bash\`.`,
         });
       });
-      proc.on('exit', (code, signal) => {
-        if (signal === 'SIGTERM') {
-          options.onEvent({ kind: 'done', ok: false, error: 'Stopped.' });
+      live.set(chatKey, proc);
+      proc.on('close', () => {
+        if (live.get(chatKey) === proc) live.delete(chatKey);
+      });
+      // `close` fires after stdout is drained, so a late `result` line is never lost.
+      proc.on('close', (code, signal) => {
+        if (finished) return;
+        if (stopRequested) {
+          onEvent({ kind: 'done', ok: false, error: 'Stopped.' });
         } else if (code && code !== 0) {
-          options.onEvent({
-            kind: 'done',
-            ok: false,
-            error: describeCursorError(stderr || `agent exited with code ${code}`),
-          });
+          onEvent({ kind: 'done', ok: false, error: describeCursorError(stderr || `agent exited with code ${code}`) });
+        } else {
+          onEvent({ kind: 'done', ok: false, error: `Cursor's agent ended without a result${signal ? ` (${signal})` : ''}.` });
         }
       });
 
       return {
         stop() {
-          if (!proc.killed) {
-            proc.kill('SIGTERM');
-          }
+          if (proc.exitCode !== null || proc.signalCode !== null) return;
+          stopRequested = true;
+          proc.kill('SIGTERM');
+          // An agent that ignores SIGTERM would hang the turn: escalate.
+          setTimeout(() => {
+            if (proc.exitCode === null && proc.signalCode === null) proc.kill('SIGKILL');
+          }, 3000).unref();
         },
       };
     },

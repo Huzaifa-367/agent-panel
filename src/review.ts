@@ -397,6 +397,11 @@ export class ReviewController implements vscode.TreeDataProvider<FileChange>, vs
   async rejectCurrent(relPath?: string | FileChange): Promise<void> {
     const path = this.resolveRel(relPath);
     if (!path) return;
+    // From a keybinding or the palette nothing says which file is meant: ask before discarding work.
+    if (!relPath) {
+      const pick = await vscode.window.showWarningMessage(`Reject the agent's changes to ${path}? The file goes back to how it was before.`, { modal: true }, 'Reject');
+      if (pick !== 'Reject') return;
+    }
     await this.host.getTracker()?.reject(path);
     await this.afterMutate();
   }
@@ -425,6 +430,8 @@ export class ReviewController implements vscode.TreeDataProvider<FileChange>, vs
     if (ed) {
       const fromEditor = this.relForUri(ed.document.uri);
       if (fromEditor && this.fileHunks.has(fromEditor)) return fromEditor;
+      // Focus is on an unrelated file (e.g. Alt+Backspace to delete a word): act on nothing.
+      if (ed.document.uri.scheme === 'file') return undefined;
     }
     return this.activeRel ?? this.spots[this.spotIndex]?.relPath;
   }

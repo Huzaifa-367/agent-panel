@@ -56,22 +56,34 @@ function frontmatter(file: string): Record<string, string> {
 }
 
 function skillsIn(dir: string): SlashItem[] {
-  if (!existsSync(dir)) return [];
-  return readdirSync(dir)
-    .filter((d) => existsSync(join(dir, d, 'SKILL.md')))
-    .map((d) => {
-      const fm = frontmatter(join(dir, d, 'SKILL.md'));
-      return { name: fm.name || d, description: fm.description ?? '', kind: 'skill' as const, path: join(dir, d, 'SKILL.md') };
-    });
+  try {
+    return readdirSync(dir)
+      .filter((d) => existsSync(join(dir, d, 'SKILL.md')))
+      .map((d) => {
+        const fm = frontmatter(join(dir, d, 'SKILL.md'));
+        return { name: fm.name || d, description: fm.description ?? '', kind: 'skill' as const, path: join(dir, d, 'SKILL.md') };
+      });
+  } catch {
+    return []; // missing folder, or a path that isn't one
+  }
 }
 
 function commandsIn(dir: string, prefix = ''): SlashItem[] {
-  if (!existsSync(dir)) return [];
   const out: SlashItem[] = [];
-  for (const f of readdirSync(dir)) {
+  let names: string[];
+  try {
+    names = readdirSync(dir);
+  } catch {
+    return out;
+  }
+  for (const f of names) {
     const p = join(dir, f);
-    if (statSync(p).isDirectory()) out.push(...commandsIn(p, `${prefix}${f}:`));
-    else if (f.endsWith('.md')) out.push({ name: `${prefix}${f.slice(0, -3)}`, description: frontmatter(p).description ?? '', kind: 'command', path: p });
+    try {
+      if (statSync(p).isDirectory()) out.push(...commandsIn(p, `${prefix}${f}:`));
+      else if (f.endsWith('.md')) out.push({ name: `${prefix}${f.slice(0, -3)}`, description: frontmatter(p).description ?? '', kind: 'command', path: p });
+    } catch {
+      /* a dangling symlink or unreadable file: skip just that entry */
+    }
   }
   return out;
 }

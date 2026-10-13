@@ -7,7 +7,7 @@
   --ap-hover: var(--vscode-list-hoverBackground);
   --ap-fg: var(--vscode-foreground);
   --ap-muted: var(--vscode-descriptionForeground);
-  --ap-border: var(--vscode-widget-border);
+  --ap-border: var(--vscode-widget-border, var(--vscode-panel-border, var(--vscode-contrastBorder, rgba(128, 128, 128, 0.35))));
   --ap-code-bg: var(--vscode-textCodeBlock-background);
   --ap-link: var(--vscode-textLink-foreground);
 
@@ -52,7 +52,7 @@
 
   /* menus */
   --ap-menu-bg: var(--vscode-menu-background);
-  --ap-menu-border: var(--vscode-menu-border);
+  --ap-menu-border: var(--vscode-menu-border, var(--vscode-widget-border, rgba(128, 128, 128, 0.35)));
   --ap-menu-sel: var(--vscode-menu-selectionBackground);
 
   /* type: two families, four sizes */

@@ -23,7 +23,7 @@ export function renderHeader(root: HTMLElement, rerender: () => void): void {
           rerender();
         })
       : null,
-    h('div', { class: 'ap-header__title', title }, title),
+    ui.view === 'chat' && host.tabsInline ? tabStrip() : h('div', { class: 'ap-header__title', title }, title),
     usageBtn,
     iconButton(
       'history',
@@ -52,6 +52,40 @@ export function renderHeader(root: HTMLElement, rerender: () => void): void {
   root.replaceChildren(header);
 }
 
+
+/** Chat tabs inside the sidebar, like Cursor's chat: each chat a tab, the running one marked. */
+function tabStrip(): HTMLElement {
+  const host = store.host!;
+  const strip = h('div', { class: 'ap-tabs ap-header__tabs', role: 'tablist', 'aria-label': 'Chats' });
+  for (const t of host.tabs) {
+    const active = t.id === host.thread.id;
+    const close = h('button', { type: 'button', class: 'ap-tab__close', title: 'Close chat', 'aria-label': `Close ${t.title}` }, icon('close'));
+    close.addEventListener('click', (e) => {
+      e.stopPropagation();
+      post({ type: 'closeTab', id: t.id });
+    });
+    const tab = h(
+      'div',
+      { class: `ap-tab${active ? ' is-active' : ''}`, role: 'tab', tabindex: active ? '0' : '-1', 'aria-selected': String(active), title: t.title },
+      t.running ? icon('loading', 'ap-spin ap-tab__icon') : icon('comment', 'ap-tab__icon'),
+      h('span', { class: 'ap-tab__title' }, t.title || 'New chat'),
+      close,
+    );
+    const go = () => {
+      if (!active) post({ type: 'switchTab', id: t.id });
+    };
+    tab.addEventListener('click', go);
+    tab.addEventListener('keydown', (e) => {
+      const k = (e as KeyboardEvent).key;
+      if (e.target === tab && (k === 'Enter' || k === ' ')) {
+        e.preventDefault();
+        go();
+      }
+    });
+    strip.append(tab);
+  }
+  return strip;
+}
 
 function usageButton(onClick: () => void): HTMLElement {
   const c = store.host!.usage.claude;
@@ -235,7 +269,7 @@ function item(title: string, updatedAt: number, meta: (Node | null)[], open: () 
   };
   li.addEventListener('click', go);
   li.addEventListener('keydown', (e) => {
-    if ((e as KeyboardEvent).key === 'Enter') go();
+    if ((e as KeyboardEvent).key === 'Enter' && e.target === li) go();
   });
   return li;
 }

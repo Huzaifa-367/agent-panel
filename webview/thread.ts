@@ -12,7 +12,7 @@ const ROLE_LABEL = { planner: 'Planner', builder: 'Builder', reviewer: 'Review' 
 function signature(m: ChatMessage, latest: Map<string, string>): string {
   const host = store.host!;
   const fileBits = (m.files ?? []).map((f) => `${f.relPath}:${latest.get(f.relPath) === m.id ? host.fileStates[f.relPath] ?? '' : 'old'}`);
-  return JSON.stringify([m.text.length, m.thinking?.length ?? 0, m.parts?.length ?? 0, m.parts?.map((p) => (p.kind === 'steps' ? p.ids.length : p.kind === 'thinking' ? Boolean(p.endedAt) : 0)), m.steps, m.meta, m.plan, fileBits, isRunning(m.id), store.ui.editingPlan === m.id]);
+  return JSON.stringify([m.text.length, m.thinking?.length ?? 0, m.parts?.length ?? 0, m.parts?.map((p) => (p.kind === 'steps' ? p.ids.length : p.kind === 'thinking' ? Boolean(p.endedAt) : 0)), m.steps, m.meta, m.plan, fileBits, isRunning(m.id), isRunning(), hasCheckpoint(m), store.ui.editingPlan === m.id]);
 }
 
 const rendered = new Map<string, { sig: string; el: HTMLElement }>();
@@ -50,6 +50,17 @@ function watch(list: HTMLElement): void {
 export function scrollToEnd(list: HTMLElement): void {
   pinned = true;
   list.scrollTop = list.scrollHeight;
+}
+
+/** One message that fails to draw must not stop the rest of the thread from updating. */
+function safeMessageEl(m: ChatMessage, latest: Map<string, string>): HTMLElement {
+  try {
+    return messageEl(m, latest);
+  } catch (err) {
+    console.error('Agent Panel: could not draw a message', err);
+    const box = h('div', { class: 'ap-alert ap-alert--error' }, icon('error'), h('span', {}, 'This message could not be drawn. The agent is unaffected.'));
+    return h('div', { class: 'ap-msg-fallback' }, box, m.text ? h('pre', { class: 'ap-output' }, m.text) : null);
+  }
 }
 
 /** Bring the thread up to date, rebuilding only the messages that changed. */
@@ -94,10 +105,15 @@ export function renderThread(list: HTMLElement): void {
 
     let prev: Element | null = null;
     for (const m of g.ms) {
-      const sig = signature(m, latest);
+      let sig: string;
+      try {
+        sig = signature(m, latest);
+      } catch {
+        sig = `x${Date.now()}`;
+      }
       let r = rendered.get(m.id);
       if (!r || r.sig !== sig) {
-        const el = messageEl(m, latest);
+        const el = safeMessageEl(m, latest);
         sizes?.observe(el);
         if (r) {
           sizes?.unobserve(r.el);
@@ -578,7 +594,11 @@ function filesSection(m: ChatMessage, latest: Map<string, string>): HTMLElement 
 
 function markdown(text: string): HTMLElement {
   const md = h('div', { class: 'ap-md' });
-  md.innerHTML = renderMarkdown(text);
+  try {
+    md.innerHTML = renderMarkdown(text);
+  } catch {
+    md.textContent = text; // e.g. absurdly deep quoting: show it plain rather than break the thread
+  }
   wireMarkdown(md);
   return md;
 }

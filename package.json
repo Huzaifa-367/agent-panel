@@ -1,23 +1,18 @@
 {
   "name": "agent-panel",
   "displayName": "Agent Panel",
-  "description": "Chat panel that runs the local Claude Code CLI and Cursor Agent CLI in one thread.",
-  "version": "0.6.13",
+  "description": "An agent chat panel for VS Code and Cursor that runs your local Claude Code and Cursor Agent CLIs in one thread, with per-file Accept / Reject review.",
+  "version": "0.7.0",
   "publisher": "local",
-  "private": true,
   "engines": {
     "vscode": "^1.90.0"
   },
   "categories": [
+    "AI",
+    "Chat",
     "Other"
   ],
   "activationEvents": [
-    "onCommand:agentPanel.addSelection",
-    "onCommand:agentPanel.newChat",
-    "onCommand:agentPanel.open",
-    "onCommand:agentPanel.review.nextChange",
-    "onView:agentPanel.changes",
-    "onView:agentPanel.sidebar",
     "onWebviewPanel:agentPanel.chat"
   ],
   "main": "./dist/extension.js",
@@ -29,6 +24,13 @@
           "title": "Agent Panel",
           "icon": "$(comment-discussion)"
         }
+      ],
+      "activitybar": [
+        {
+          "id": "agentPanelLauncher",
+          "title": "Agent Panel",
+          "icon": "media/activity.svg"
+        }
       ]
     },
     "views": {
@@ -37,11 +39,20 @@
           "type": "webview",
           "id": "agentPanel.sidebar",
           "name": "Agent Panel"
-        },
+        }
+      ],
+      "explorer": [
         {
           "id": "agentPanel.changes",
           "name": "Review",
-          "contextualTitle": "Edited files"
+          "contextualTitle": "Edited files",
+          "when": "agentPanel.hasReview"
+        }
+      ],
+      "agentPanelLauncher": [
+        {
+          "id": "agentPanel.launcher",
+          "name": "Agent Panel"
         }
       ]
     },
@@ -221,6 +232,48 @@
           "when": "editorHasSelection",
           "group": "9_agentPanel@1"
         }
+      ],
+      "commandPalette": [
+        {
+          "command": "agentPanel.review.nextChange",
+          "when": "agentPanel.hasReview"
+        },
+        {
+          "command": "agentPanel.review.prevChange",
+          "when": "agentPanel.hasReview"
+        },
+        {
+          "command": "agentPanel.review.nextFile",
+          "when": "agentPanel.hasReview"
+        },
+        {
+          "command": "agentPanel.review.prevFile",
+          "when": "agentPanel.hasReview"
+        },
+        {
+          "command": "agentPanel.review.acceptFile",
+          "when": "agentPanel.hasReview"
+        },
+        {
+          "command": "agentPanel.review.rejectFile",
+          "when": "agentPanel.hasReview"
+        },
+        {
+          "command": "agentPanel.review.acceptAll",
+          "when": "agentPanel.hasReview"
+        },
+        {
+          "command": "agentPanel.review.rejectAll",
+          "when": "agentPanel.hasReview"
+        },
+        {
+          "command": "agentPanel.review.openDiff",
+          "when": "agentPanel.hasReview"
+        },
+        {
+          "command": "agentPanel.review.refresh",
+          "when": "agentPanel.hasReview"
+        }
       ]
     },
     "configuration": {
@@ -229,26 +282,47 @@
         "agentPanel.claudePath": {
           "type": "string",
           "default": "",
-          "description": "Path to the Claude Code CLI. Empty: the one bundled with the Claude Code extension, else `claude` on your PATH."
+          "description": "Path to the Claude Code CLI. Empty: the one bundled with the Claude Code extension, else `claude` on your PATH.",
+          "scope": "machine"
         },
         "agentPanel.cursorPath": {
           "type": "string",
           "default": "",
-          "description": "Path to Cursor's `agent` CLI. Empty: ~/.local/bin/agent, else `agent` on your PATH."
+          "description": "Path to Cursor's `agent` CLI. Empty: ~/.local/bin/agent, else `agent` on your PATH.",
+          "scope": "machine"
         },
         "agentPanel.openEditsInEditor": {
           "type": "boolean",
           "default": false,
           "description": "Open the first changed file with its highlights when a turn finishes."
+        },
+        "agentPanel.chatLocation": {
+          "type": "string",
+          "enum": [
+            "sidebar",
+            "editor"
+          ],
+          "enumDescriptions": [
+            "Chats are tabs inside the Agent Panel secondary sidebar, a fixed space of their own like Cursor's chat (default).",
+            "Each chat is an editor tab, all in one locked editor group that nothing else opens in."
+          ],
+          "default": "sidebar",
+          "description": "Where chats open."
         }
       }
-    }
+    },
+    "viewsWelcome": [
+      {
+        "view": "agentPanel.launcher",
+        "contents": "Agent Panel opens in the secondary sidebar, in a space of its own.\n[Open Agent Panel](command:agentPanel.open)"
+      }
+    ]
   },
   "scripts": {
     "build": "node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
     "test": "npm run build && node --test dist-test/*.test.js",
-    "package": "node esbuild.mjs --release && npx @vscode/vsce package --no-dependencies --allow-missing-repository --skip-license"
+    "package": "node esbuild.mjs --release && npx @vscode/vsce package --no-dependencies --allow-missing-repository"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
@@ -266,5 +340,22 @@
       "description": "Agent Panel runs coding agents that edit files and run commands, so it only works in trusted folders."
     },
     "virtualWorkspaces": false
-  }
+  },
+  "license": "MIT",
+  "keywords": [
+    "ai",
+    "agent",
+    "chat",
+    "claude",
+    "claude code",
+    "cursor",
+    "coding agent",
+    "code review",
+    "diff"
+  ],
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "icon": "media/icon.png"
 }

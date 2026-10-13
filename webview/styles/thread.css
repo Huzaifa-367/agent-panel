@@ -306,6 +306,7 @@
 }
 
 .ap-banner {
+  padding-right: 28px; /* room for the close button */
   flex: none;
   margin: var(--ap-2) var(--ap-3) 0;
 }

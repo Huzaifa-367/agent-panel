@@ -25,6 +25,8 @@ export interface HostState {
   gitOk: boolean;
   gitMessage: string;
   running: { messageId: string; engine: EngineId; threadId?: string } | null;
+  /** Show the tab strip in the header (chats live in this sidebar). */
+  tabsInline?: boolean;
   /** Open chat tabs. */
   tabs: { id: string; title: string; running: boolean; engine: EngineId }[];
   pending: PendingFile[];

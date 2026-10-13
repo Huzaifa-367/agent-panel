@@ -36,4 +36,11 @@ describe('markdown', () => {
     assert.match(renderMarkdown('> note'), /<blockquote><p>note<\/p><\/blockquote>/);
     assert.equal(renderMarkdown('---'), '<hr>');
   });
+
+  it('keeps underscores inside a link target intact', () => {
+    const html = renderMarkdown('see [docs](https://example.com/a__b__c) and https://example.com/_x_/y');
+    assert.ok(html.includes('href="https://example.com/a__b__c"'));
+    assert.ok(html.includes('href="https://example.com/_x_/y"'));
+    assert.ok(!html.includes('<strong>b</strong>'));
+  });
 });

@@ -44,8 +44,8 @@
       threads: [
         { id: 't-1', title: 'Support tables overflow on phones', updatedAt: now - 2 * min, engines: ['claude', 'cursor'], files: 4, mode: 'agent' },
         { id: 't-2', title: 'SLA countdown on support tickets', updatedAt: now - 70 * min, engines: ['claude', 'cursor'], files: 6, mode: 'handoff' },
-        { id: 't-3', title: 'Why does the odometer query sort the whole history?', updatedAt: now - 26 * 60 * min, engines: ['claude'], files: 0, mode: 'plan' },
-        { id: 't-4', title: 'Billing cutover in batches of 500', updatedAt: now - 3 * 24 * 60 * min, engines: ['cursor'], files: 3, mode: 'agent' },
+        { id: 't-3', title: 'Why does the orders query sort the whole table?', updatedAt: now - 26 * 60 * min, engines: ['claude'], files: 0, mode: 'plan' },
+        { id: 't-4', title: 'Backfill invoices in batches of 500', updatedAt: now - 3 * 24 * 60 * min, engines: ['cursor'], files: 3, mode: 'agent' },
       ],
       gitOk: true,
       gitMessage: '',
@@ -54,10 +54,10 @@
       fileStates: {},
       usage: {
         claude: { fiveHour: 0.1, fiveHourResetsAt: now / 1000 + 3 * 3600, sevenDay: 0.88, sevenDayResetsAt: now / 1000 + 2.4 * 86400, updatedAt: now - 3 * min },
-        cursor: { tier: 'ultra', email: 'engineering@atomcamp.com', signedIn: true, cliVersion: '2026.10.01-e373342', appEmail: 'huzaifanawaz367@gmail.com', appPlan: 'pro', appStatus: 'active' },
+        cursor: { tier: 'ultra', email: 'dev@example.com', signedIn: true, cliVersion: '2026.10.01-e373342', appEmail: 'dev@example.com', appPlan: 'pro', appStatus: 'active' },
       },
       catalogs: window.QA_CATALOGS,
-      slashCommands: ['compact', 'clear', 'init', 'review', 'security-review', 'tax-fraud', 'zero-sleep'],
+      slashCommands: ['compact', 'clear', 'init', 'review', 'security-review', 'simplify', 'loop'],
       slashItems: [
         { name: 'tax-fraud', description: 'Hunts cost everywhere: trims tokens and redundant calls', kind: 'skill' },
         { name: 'zero-sleep', description: 'Keeps the thread across long multi-step builds', kind: 'skill' },
@@ -68,6 +68,7 @@
         { name: 'clear', description: 'Start the conversation fresh', kind: 'command' },
         { name: 'init', description: 'Write a CLAUDE.md for this project', kind: 'command' },
       ],
+      tabsInline: true,
       tabs: [
         { id: 't-1', title: 'Support tables overflow on phones', running: false, engine: 'claude' },
         { id: 't-2', title: 'SLA countdown on support tickets', running: false, engine: 'cursor' },
@@ -218,10 +219,10 @@
       s.thread.title = 'SLA badge colours';
       s.thread.mode = 'plan';
       s.thread.messages = [
-        { id: 'u1', role: 'user', engine: 'claude', createdAt: now - 3 * min, text: 'Which colour tokens does the NEMT kit use for warning and danger?' },
+        { id: 'u1', role: 'user', engine: 'claude', createdAt: now - 3 * min, text: 'Which colour tokens does the UI kit use for warning and danger?' },
         {
           id: 'a1', role: 'assistant', engine: 'claude', createdAt: now - 3 * min + 1,
-          text: 'Both live in `nemt/resources/css/shared/tokens.css`:\n\n| Token | Used for |\n| --- | --- |\n| `--warning` | Amber states, due soon |\n| `--destructive` | Red states, overdue |\n\n```css\n.sla-soon { color: var(--warning); }\n.sla-overdue { color: var(--destructive); }\n```',
+          text: 'Both live in `resources/css/shared/tokens.css`:\n\n| Token | Used for |\n| --- | --- |\n| `--warning` | Amber states, due soon |\n| `--destructive` | Red states, overdue |\n\n```css\n.sla-soon { color: var(--warning); }\n.sla-overdue { color: var(--destructive); }\n```',
           meta: { model: 'sonnet', modelLabel: 'Sonnet', mode: 'plan', durationMs: 9000, usage: { costUsd: 0.02 } },
         },
       ];
@@ -257,6 +258,21 @@
     ],
   };
 
+  // `&click=sel~sel` clicks those elements in turn once the panel has rendered, so a screenshot can show an open menu.
+  const clicks = (params.get('click') || '').split('~').filter(Boolean);
+  const type = params.get('type');
+  window.addEventListener('load', () => {
+    let delay = 500;
+    for (const sel of clicks) {
+      setTimeout(() => document.querySelector(sel)?.click(), delay);
+      delay += 250;
+    }
+    if (type) setTimeout(() => {
+      const ta = document.querySelector('.ap-composer__input');
+      if (ta) { ta.focus(); ta.value = type; ta.dispatchEvent(new Event('input', { bubbles: true })); }
+    }, delay);
+  });
+
   let current = null;
   window.acquireVsCodeApi = () => ({
     postMessage(msg) {
@@ -271,7 +287,7 @@
         reply({ type: 'external', loadingCursor: false,
           claude: [
             { source: 'claude', id: 'c05d6eb1', title: 'Anthropic.claude-code extension ID', updatedAt: now - 3 * min },
-            { source: 'claude', id: '28018c24', title: 'AiLixar monorepo codebase overview', updatedAt: now - 60 * min },
+            { source: 'claude', id: '28018c24', title: 'Monorepo codebase overview', updatedAt: now - 60 * min },
           ],
           cursor: [{ source: 'cursor', id: '805a0af0', title: 'Agent panel build process', updatedAt: now - 2 * 60 * min }],
         });

@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { safeAbs, OBJECT_ID } from './changes';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { readFile } from 'node:fs/promises';
@@ -307,20 +308,21 @@ export class MentionService {
       if (budget <= 0) break;
       try {
         if (m.kind === 'file' || m.kind === 'rule') {
-          const text = await readFile(join(root, m.id), 'utf8');
+          const text = await readFile(safeAbs(root, m.id), 'utf8');
           add(`File: ${m.id}`, text, extOf(m.id));
         } else if (m.kind === 'folder') {
           const files = (await this.index()).filter((f) => f.startsWith(`${m.id}/`)).slice(0, 300);
           add(`Folder: ${m.id} (${files.length} files listed)`, files.join('\n'));
         } else if (m.kind === 'symbol') {
           const [file, line] = splitLoc(m.id);
-          const lines = (await readFile(join(root, file), 'utf8')).split('\n');
+          const lines = (await readFile(safeAbs(root, file), 'utf8')).split('\n');
           add(`${m.label} in ${file}:${line + 1}`, lines.slice(line, line + 60).join('\n'), extOf(file));
         } else if (m.kind === 'git-diff') {
           const { stdout } = await exec('git', ['diff', 'HEAD'], { cwd: root, maxBuffer: 20 * 1024 * 1024 });
           add('Working changes (git diff HEAD)', stdout || '(no changes)', 'diff');
         } else if (m.kind === 'commit') {
-          const { stdout } = await exec('git', ['show', '--stat', '--patch', m.id], { cwd: root, maxBuffer: 20 * 1024 * 1024 });
+          if (!OBJECT_ID.test(m.id)) throw new Error('Invalid commit id');
+          const { stdout } = await exec('git', ['show', '--stat', '--patch', m.id, '--'], { cwd: root, maxBuffer: 20 * 1024 * 1024 });
           add(`Commit ${m.id}: ${m.label}`, stdout, 'diff');
         } else if (m.kind === 'branch') {
           const base = await defaultBranch(root);

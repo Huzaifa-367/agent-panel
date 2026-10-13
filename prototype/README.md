@@ -36,7 +36,7 @@ Everything inside `<!-- the webview starts here -->` is the webview's markup. Ke
 ## Rules
 
 - Colours, fonts and borders come only from `--ap-*` tokens. No hard-coded colours in components.
-- Icons are codicons. Bundle `@vscode/codicons` (`codicon.css` and `codicon.ttf`) with the webview; it is a build-time asset, not a runtime library, and needs the owner's OK like any other package.
+- Icons are codicons. Bundle `@vscode/codicons` (`codicon.css` and `codicon.ttf`) with the webview; it is a build-time asset, not a runtime library,.
 - Accept and Reject act per file; Accept all and Reject all act on every pending file in the thread. The changes bar totals only count pending files and hide when there are none.
 - A running step group stays open; a finished one folds to its summary.
 - Errors and permission prompts stay in the thread where they happened. No modals, no toasts.

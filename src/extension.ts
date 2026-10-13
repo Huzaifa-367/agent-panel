@@ -2,13 +2,13 @@ import * as vscode from 'vscode';
 import { join } from 'node:path';
 import { createClaudeEngine } from './engines/claude';
 import { createCursorEngine, type CursorEngine } from './engines/cursor';
-import type { AgentEvent, AgentMode, Engine, EngineId, ImageInput, PermissionDecision } from './engines/types';
+import type { AgentEvent, AgentMode, Engine, EngineHandle, EngineId, ImageInput, PermissionDecision } from './engines/types';
 import { subagentReport } from './engines/types';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { stepEdit } from './editdiff';
 import { slashItems, cursorSlashItems, expandForCursor } from './commands';
 import { tmpdir } from 'node:os';
-import { ChangeTracker, assertGitRepo } from './changes';
+import { ChangeTracker, assertGitRepo, safeAbs } from './changes';
 import {
   ThreadStore,
   createThread,
@@ -45,6 +45,10 @@ export function activate(context: vscode.ExtensionContext): void {
   const claudePath = cfg.get<string>('claudePath')?.trim() || undefined;
   const cursorPath = cfg.get<string>('cursorPath')?.trim() || undefined;
   const provider = new AgentPanelProvider(context, createClaudeEngine(claudePath), cursorPath ? createCursorEngine(cursorPath) : createCursorEngine());
+  // The activity-bar entry (listed beside Explorer, Search, ...): choosing it opens the chat in its own space.
+  const launcher = vscode.window.createTreeView('agentPanel.launcher', {
+    treeDataProvider: { getTreeItem: (e: never) => e, getChildren: () => [] },
+  });
   const review = new ReviewController(context, {
     getTracker: () => provider.getTracker(),
     workspaceRoot: () => provider.getWorkspaceRoot(),
@@ -68,12 +72,22 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('agentPanel.addSelection', () => provider.addSelection()),
     vscode.commands.registerCommand('agentPanel.showLog', () => log?.show()),
     log,
+    launcher,
+    launcher.onDidChangeVisibility((e) => {
+      if (e.visible) void provider.openFromLauncher();
+    }),
+    { dispose: () => provider.disposeEngines() },
     vscode.workspace.registerTextDocumentContentProvider(BASE_SCHEME, provider.baseContentProvider),
   );
 }
 
+/** A tab that shows one of this extension's chats. */
+function isChatTab(tab: vscode.Tab | undefined): boolean {
+  return tab?.input instanceof vscode.TabInputWebview && tab.input.viewType.includes('agentPanel.chat');
+}
+
 export function deactivate(): void {
-  /* processes end with the extension host */
+  /* child CLIs are ended by the disposable registered in activate */
 }
 
 type WebviewMessage =
@@ -152,6 +166,7 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
   /** Open chat tabs, live objects; `thread` is the visible one. */
   private tabs: Thread[] = [];
   private draining = false;
+  private starting = false;
   private slash?: ReturnType<typeof slashItems>;
   private cursorSlash?: ReturnType<typeof cursorSlashItems>;
   /** Answers that ran a tool since their last text: the next text starts a new paragraph. */
@@ -240,6 +255,12 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
     view.onDidDispose(() => this.bindings.delete(webview));
   }
 
+  /** The activity-bar entry was chosen: show the chat and close the primary sidebar, so nothing lands on the Explorer. */
+  async openFromLauncher(): Promise<void> {
+    await vscode.commands.executeCommand('workbench.action.closeSidebar');
+    this.openChatTab(this.thread);
+  }
+
   async openAsEditor(): Promise<void> {
     this.openChatTab(this.thread);
   }
@@ -250,18 +271,78 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
    */
   openChatTab(t: Thread): void {
     this.activate(t);
+    // Default: chats are tabs inside the Agent Panel sidebar, a fixed space of their own like Cursor's chat.
+    if (this.inSidebar()) {
+      this.postState();
+      void vscode.commands.executeCommand('agentPanel.sidebar.focus');
+      return;
+    }
     for (const b of this.bindings.values()) {
       if (b.panel && b.threadId === t.id) {
         b.panel.reveal(undefined, false);
         return;
       }
     }
-    const panel = vscode.window.createWebviewPanel('agentPanel.chat', t.title, { viewColumn: vscode.ViewColumn.Active, preserveFocus: false }, {
-      enableScripts: true,
-      retainContextWhenHidden: true,
-      localResourceRoots: [vscode.Uri.file(join(this.context.extensionPath, 'dist'))],
-    });
+    // Chats get a space of their own, like Cursor's chat: one editor group that only holds chat tabs.
+    const dedicated = true;
+    const existing = this.chatColumn();
+    const panel = vscode.window.createWebviewPanel(
+      'agentPanel.chat',
+      t.title,
+      { viewColumn: dedicated ? existing ?? vscode.ViewColumn.Beside : vscode.ViewColumn.Active, preserveFocus: false },
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+        localResourceRoots: [vscode.Uri.file(join(this.context.extensionPath, 'dist'))],
+      },
+    );
     this.adoptPanel(panel, t.id);
+    if (dedicated && existing === undefined) void this.lockActiveGroup(panel);
+  }
+
+  /** Where chats live: the sidebar (default) or editor tabs in a locked group of their own. */
+  private inSidebar(): boolean {
+    return vscode.workspace.getConfiguration('agentPanel').get<string>('chatLocation') !== 'editor';
+  }
+
+  /** The sidebar shows whichever chat is current, so a switch or a new tab is seen there. */
+  private followSidebar(): void {
+    if (!this.inSidebar()) return;
+    for (const b of this.bindings.values()) if (b.sidebar) b.threadId = this.thread.id;
+  }
+
+  /** The editor group that already holds chat tabs, if any. */
+  private chatColumn(): vscode.ViewColumn | undefined {
+    for (const group of vscode.window.tabGroups.all) {
+      if (group.tabs.some(isChatTab)) return group.viewColumn;
+    }
+    return undefined;
+  }
+
+  /**
+   * Lock the group a chat tab just opened in. VS Code sends editors opened from elsewhere (files, diffs,
+   * search) to another group, so nothing but chat tabs ever lands here. A new group starts unlocked, so
+   * the toggle command only ever locks it.
+   */
+  private async lockActiveGroup(panel: vscode.WebviewPanel): Promise<void> {
+    try {
+      if (!panel.active) {
+        await new Promise<void>((resolve) => {
+          const done = () => {
+            sub.dispose();
+            clearTimeout(timer);
+            resolve();
+          };
+          const sub = panel.onDidChangeViewState((e) => e.webviewPanel.active && done());
+          const timer = setTimeout(done, 1500);
+        });
+      }
+      if (isChatTab(vscode.window.tabGroups.activeTabGroup.activeTab)) {
+        await vscode.commands.executeCommand('workbench.action.lockEditorGroup');
+      }
+    } catch (err) {
+      log?.warn(`could not lock the chat group · ${err instanceof Error ? err.message : String(err)}`);
+    }
   }
 
   /** Wire an editor tab to its chat (new, or restored after a reload). */
@@ -344,6 +425,12 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
     if (i >= 0) t = this.tabs[i];
     else this.tabs.push(t);
     this.thread = t;
+    this.followSidebar();
+  }
+
+  disposeEngines(chatId?: string): void {
+    this.claude.dispose(chatId);
+    this.cursor.dispose(chatId);
   }
 
   private closeTab(id: string): void {
@@ -354,10 +441,13 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
     const i = this.tabs.findIndex((x) => x.id === id);
     if (i < 0) return;
     this.tabs.splice(i, 1);
+    this.disposeEngines(id);
     if (this.thread.id === id) {
       const next = this.tabs[Math.min(i, this.tabs.length - 1)];
-      if (next) this.thread = next;
-      else this.activate(createThread(this.prefs()));
+      if (next) {
+        this.thread = next;
+        this.followSidebar();
+      } else this.activate(createThread(this.prefs()));
     }
     this.postState();
     this.watchSession();
@@ -477,6 +567,8 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
    * state of its own chat, and editor tabs carry the chat's title.
    */
   private postState(): void {
+    // Buffered text deltas would otherwise arrive after a state that already contains them, and print twice.
+    this.flushStream();
     const active = this.thread;
     try {
       for (const [webview, b] of [...this.bindings]) {
@@ -529,6 +621,7 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
       gitOk: this.gitOk,
       gitMessage: this.gitMessage,
       running: this.running ? { messageId: this.running.messageId, engine: this.running.engine, threadId: this.running.threadId } : null,
+      tabsInline: this.inSidebar() && [...this.bindings.values()].some((b) => b.sidebar && b.threadId === this.thread.id),
       tabs: this.tabs.map((t) => ({ id: t.id, title: t.title, running: t.id === this.running?.threadId, engine: t.engine })),
       pending: tracker?.getPending().map(({ relPath, additions, deletions, status }) => ({ relPath, additions, deletions, status })) ?? [],
       fileStates,
@@ -583,13 +676,24 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
         this.mentions.warm();
         break;
       case 'send':
-        if (this.running || this.draining) {
+        // `starting` covers the gap before `running` is set (snapshot, @ context): a second Enter must queue.
+        if (this.running || this.draining || this.starting) {
           this.queue.push({ threadId: this.thread.id, text: msg.text, mentions: msg.mentions ?? [], images: msg.images ?? [] });
           this.postState();
           break;
         }
-        await this.handleSend(this.thread, msg.text, msg.mentions ?? [], msg.images ?? []);
-        await this.drainQueue();
+        this.starting = true;
+        try {
+          await this.handleSend(this.thread, msg.text, msg.mentions ?? [], msg.images ?? []);
+        } catch (err) {
+          log?.error(`send failed · ${err instanceof Error ? err.stack ?? err.message : String(err)}`);
+          this.running = undefined;
+          this.notice(err instanceof Error ? err.message : String(err), 'error');
+        } finally {
+          this.starting = false;
+          await this.drainQueue();
+          this.postState();
+        }
         break;
       case 'refreshUsage':
         await this.refreshCursorAccount();
@@ -611,6 +715,7 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
         const t = this.tabs.find((x) => x.id === msg.id);
         if (t) {
           this.thread = t;
+          this.followSidebar();
           this.postState();
           this.watchSession();
         }
@@ -661,6 +766,7 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
       }
       case 'deleteThread':
         await this.store.remove(msg.id);
+        if (msg.id !== this.running?.threadId) this.disposeEngines(msg.id);
         for (const b of [...this.bindings.values()]) if (b.panel && b.threadId === msg.id && msg.id !== this.running?.threadId) b.panel.dispose();
         this.tabs = this.tabs.filter((x) => x.id !== msg.id || x.id === this.running?.threadId);
         if (msg.id === this.thread.id && msg.id !== this.running?.threadId) this.activate(createThread(this.prefs()));
@@ -777,7 +883,7 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
       await this.review.openFile(relPath, { revealFirst: true });
       return;
     }
-    const doc = await vscode.workspace.openTextDocument(vscode.Uri.file(join(root, relPath)));
+    const doc = await vscode.workspace.openTextDocument(vscode.Uri.file(safeAbs(root, relPath)));
     const ed = await vscode.window.showTextDocument(doc, { preview: true });
     if (line !== undefined) {
       const pos = new vscode.Position(Math.max(0, line), 0);
@@ -1029,7 +1135,7 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
       ...this.saveImages(images).map((file, i) => ({ kind: 'image', id: file, label: images[i].name })),
     ];
     // Slash commands go to Claude untouched, so the CLI runs them.
-    if (prompt.startsWith('/') && t.engine === 'claude' && t.mode !== 'handoff') {
+    if (/^\/[\w:.-]+(\s|$)/.test(prompt) && t.engine === 'claude' && t.mode !== 'handoff') {
       await this.runTurn('claude', prompt, turnModeOf(t.mode), { userText: prompt, thread: t });
       return;
     }
@@ -1101,12 +1207,20 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
     if (!planMsg || !plan || plan.state !== 'ready' || this.running) return;
     plan.state = 'building';
     this.pushNote(`Plan and request passed to ${engineName(plan.builder)}`, 'arrow-right', thread);
-    const built = await this.runTurn(plan.builder, buildPrompt(plan.request, planMsg.text), 'agent', {
-      thread,
-      hiddenUser: true,
-      role: 'builder',
-    });
-    plan.state = 'built';
+    let built: Awaited<ReturnType<AgentPanelProvider['runTurn']>>;
+    try {
+      built = await this.runTurn(plan.builder, buildPrompt(plan.request, planMsg.text), 'agent', {
+        thread,
+        hiddenUser: true,
+        role: 'builder',
+      });
+    } catch (err) {
+      plan.state = 'ready';
+      this.postState();
+      throw err;
+    }
+    // A failed or stopped build can be tried again.
+    plan.state = built.ok ? 'built' : 'ready';
     this.postState();
     if (built.ok && plan.reviewAfter) {
       const files = (built.message.files ?? []).map((f) => f.relPath);
@@ -1243,17 +1357,34 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
 
     await new Promise<void>((resolve) => {
       let settled = false;
+      let timer: ReturnType<typeof setTimeout> | undefined;
       const finish = () => {
         if (settled) return;
         settled = true;
+        if (timer) clearTimeout(timer);
         this.flushStream();
         resolve();
       };
-      const onEvent = (event: AgentEvent) => this.onEngineEvent(thread, assistant, event, (done) => {
-        ok = done;
-        finish();
-      });
-      const handle = engine.startTurn({
+      let handle: EngineHandle | undefined;
+      // No events for 30 minutes means the CLI is stuck; a long turn that keeps reporting is left alone.
+      const arm = () => {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          if (!settled) {
+            handle?.stop();
+            meta.error = 'Stopped: no output from the agent for 30 minutes.';
+            finish();
+          }
+        }, 30 * 60 * 1000);
+      };
+      const onEvent = (event: AgentEvent) => {
+        if (!settled) arm();
+        this.onEngineEvent(thread, assistant, event, (done) => {
+          ok = done;
+          finish();
+        });
+      };
+      handle = engine.startTurn({
         workspaceRoot: root,
         model: meta.model!,
         effort: meta.effort,
@@ -1267,13 +1398,7 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
       });
       this.running = { threadId: thread.id, messageId: assistant.id, engine: engineId, stopRequested: false, ...bindHandle(handle) };
       this.post({ type: 'running', running: { messageId: assistant.id, engine: engineId, threadId: thread.id } });
-      setTimeout(() => {
-        if (!settled) {
-          handle.stop();
-          meta.error = 'Stopped after 30 minutes with no end.';
-          finish();
-        }
-      }, 30 * 60 * 1000);
+      arm();
     });
 
     // The panel's own turn is in the session file now; don't import it back.
@@ -1471,7 +1596,7 @@ class AgentPanelProvider implements vscode.WebviewViewProvider {
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'none'; img-src ${csp} https: data:; style-src ${csp} 'unsafe-inline'; script-src ${csp}; font-src ${csp};" />
+    content="default-src 'none'; img-src ${csp} data:; style-src ${csp} 'unsafe-inline'; base-uri 'none'; form-action 'none'; script-src ${csp}; font-src ${csp};" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="${uri('codicons/codicon.css')}" rel="stylesheet" />
   <link href="${uri('webview.css')}" rel="stylesheet" />

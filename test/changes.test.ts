@@ -4,7 +4,7 @@ import { mkdtempSync, writeFileSync, rmSync, readFileSync, existsSync } from 'no
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { ChangeTracker } from '../src/changes';
+import { ChangeTracker, safeAbs, blobAt } from '../src/changes';
 
 describe('ChangeTracker', () => {
   let root: string;
@@ -80,5 +80,20 @@ describe('ChangeTracker', () => {
 
     const patch = await tracker.patchBetween(turn.baseTree, turn.afterTree, 'a.txt');
     assert.match(patch, /\+changed/);
+  });
+
+  it('refuses paths that leave the workspace', () => {
+    assert.throws(() => safeAbs(root, '../outside.txt'));
+    assert.throws(() => safeAbs(root, '/etc/passwd'));
+    assert.equal(safeAbs(root, 'sub/x.txt'), join(root, 'sub', 'x.txt'));
+  });
+
+  it('only reports a file as absent when git confirms it, never on a git failure', async () => {
+    const tracker = new ChangeTracker(root);
+    const tree = await tracker.snapshotTree();
+    assert.equal(await blobAt(root, tree, 'no-such-file.txt'), null);
+    assert.ok(await blobAt(root, tree, 'a.txt'));
+    // A tree git does not know is an error, not "the file is missing".
+    await assert.rejects(() => blobAt(root, '0'.repeat(40), 'a.txt'));
   });
 });

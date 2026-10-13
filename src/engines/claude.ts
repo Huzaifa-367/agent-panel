@@ -564,16 +564,22 @@ export function createClaudeEngine(cliPath?: string): Engine {
       proc.on('error', (err) => {
         if (current()) slot.onEvent?.({ kind: 'done', ok: false, error: `Couldn't start Claude: ${err.message}` });
       });
-      proc.on('exit', (code) => {
+      proc.stdin.on('error', () => {
+        /* EPIPE after the process died: the exit handler reports it */
+      });
+      proc.on('exit', (code, signal) => {
         if (!current()) return;
+        const wasBusy = slot.busy;
         slot.busy = false;
-        if (code && code !== 0) {
+        // A turn in flight must always end, whatever the exit code: a signal or a clean exit has code 0 or null.
+        if (wasBusy) {
           slot.onEvent?.({
             kind: 'done',
             ok: false,
-            error: describeExit(stderr, code),
+            error: code ? describeExit(stderr, code) : `Claude stopped unexpectedly${signal ? ` (${signal})` : ''}.${stderr.trim() ? ` ${stderr.trim().slice(-300)}` : ''}`,
           });
         }
+        slot.onEvent = undefined;
         slot.proc = undefined;
         slot.bound = false;
       });
@@ -585,6 +591,14 @@ export function createClaudeEngine(cliPath?: string): Engine {
 
   return {
     id: 'claude',
+    dispose(chatId?: string) {
+      for (const [key, slot] of slots) {
+        if (chatId !== undefined && key !== chatId) continue;
+        slot.onEvent = undefined;
+        slot.proc?.kill();
+        slots.delete(key);
+      }
+    },
     prewarm(workspaceRoot: string, model: string, effort?: string, sessionId?: string, fast?: boolean, chatId?: string) {
       // Cold Claude spawn is the main delay; start the chat's long-lived process early.
       try {
@@ -738,6 +752,7 @@ export function describeClaude(cliPath?: string, cwd?: string): Promise<ClaudeIn
         /* not JSON */
       }
     });
+    proc.stdin.on('error', () => finish(undefined));
     proc.stdin.write(`${JSON.stringify({ type: 'control_request', request_id: 'init-1', request: { subtype: 'initialize' } })}\n`);
   });
 }

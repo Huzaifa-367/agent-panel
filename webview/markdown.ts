@@ -155,6 +155,9 @@ function renderCode(code: string, lang: string): string {
 /** Inline markdown. Code spans are cut out first so nothing inside them is formatted. */
 function inline(text: string): string {
   const codes: string[] = [];
+  // URLs are swapped for placeholders so the emphasis rules below can't rewrite `a__b__c` inside an href.
+  const urls: string[] = [];
+  const link = (u: string) => `\u0001${urls.push(u) - 1}\u0001`;
   let s = text.replace(/`([^`]+)`/g, (_, c: string) => {
     // Inline code that names a file (with a folder or a known extension) opens it.
     const isPath = /^(?:\.{0,2}\/)?[\w@.-]+(?:\/[\w@.-]+)*\.[a-z0-9]{1,8}(?::\d+(?::\d+)?)?$/i.test(c) && /\/|\.(ts|tsx|js|jsx|php|py|css|md|json|ya?ml|go|rs|java|rb|vue|html|sh|sql|blade\.php)(:|$)/i.test(c);
@@ -164,15 +167,15 @@ function inline(text: string): string {
   s = escapeHtml(s);
   s = s.replace(/\[([^\]]+)\]\(((?:[^()\s]|\([^()\s]*\))+)\)/g, (_, label: string, href: string) => {
     const safe = /^(https:\/\/|http:\/\/|\.{0,2}\/|[\w-]+\/|[\w-]+\.[a-z]+)/i.test(href) && !/^javascript:/i.test(href);
-    return safe ? `<a href="${href}">${label}</a>` : label;
+    return safe ? `<a href="${link(href)}" title="${link(href)}">${label}</a>` : label;
   });
-  s = s.replace(/(^|[\s(])(https:\/\/[^\s<)]+)/g, '$1<a href="$2">$2</a>');
+  s = s.replace(/(^|[\s(])(https:\/\/[^\s<)]+)/g, (_, pre: string, url: string) => `${pre}<a href="${link(url)}" title="${link(url)}">${url}</a>`);
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   s = s.replace(/__([^_]+)__/g, '<strong>$1</strong>');
   s = s.replace(/(^|[^*\w])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>');
   s = s.replace(/(^|[^_\w])_([^_\s][^_]*)_(?!\w)/g, '$1<em>$2</em>');
   s = s.replace(/~~([^~]+)~~/g, '<del>$1</del>');
-  return s.replace(/\u0000(\d+)\u0000/g, (_, n: string) => codes[Number(n)]);
+  return s.replace(/\u0001(\d+)\u0001/g, (_, n: string) => urls[Number(n)]).replace(/\u0000(\d+)\u0000/g, (_, n: string) => codes[Number(n)]);
 }
 
 function escapeHtml(s: string): string {

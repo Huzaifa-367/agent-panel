@@ -490,6 +490,8 @@ export function createComposer(): Composer {
   };
 
   ta.addEventListener('keydown', (e) => {
+    // Enter that commits an IME composition must not send or pick a menu row.
+    if (e.isComposing || e.keyCode === 229) return;
     if (slashKey(e)) return;
     if (mentionKey(e, ta, update)) return;
     if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
